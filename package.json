@@ -14,6 +14,7 @@
   },
   "homepage": "https://github.com/What1s1ove/573447-typoteka-3#readme",
   "scripts": {
+    "start": "node ./src/service/service.js",
     "test": "npm run eslint",
     "eslint": "eslint --ext .js src/"
   },
