@@ -15,13 +15,25 @@ const generatePublication = () => ({
   title: getRandomItem(MocksConfig.TITLES),
   createdDate: new Date(
       Date.now() -
-        getRandomNumber(
-            MocksConfig.DATE.MIN_MONTHS_BREAK,
-            MONTH_MILLISECONDS * MocksConfig.DATE.MAX_MONTHS_BREAK
-        )
+      getRandomNumber(
+          MocksConfig.DATE.MIN_MONTHS_BREAK,
+          MONTH_MILLISECONDS * MocksConfig.DATE.MAX_MONTHS_BREAK
+      )
   ),
-  announce: getRandomItems(MocksConfig.TEXT.TEXTS, MocksConfig.TEXT.MAX_ANNOUNCE_COUNT),
-  fullText: getRandomItems(MocksConfig.TEXT.TEXTS, MocksConfig.TEXT.TEXTS.length),
+  announce: getRandomItems(
+      MocksConfig.TEXT.TEXTS,
+      getRandomNumber(
+          MocksConfig.TEXT.MIN_ANNOUNCE_COUNT,
+          MocksConfig.TEXT.MAX_ANNOUNCE_COUNT
+      )
+  ).join(` `),
+  fullText: getRandomItems(
+      MocksConfig.TEXT.TEXTS,
+      getRandomNumber(
+          MocksConfig.TEXT.MIN_FULL_TEXT_COUNT,
+          MocksConfig.TEXT.TEXTS.length
+      )
+  ).join(` `),
   category: getRandomItems(
       MocksConfig.CATEGORY.CATEGORIES,
       getRandomNumber(

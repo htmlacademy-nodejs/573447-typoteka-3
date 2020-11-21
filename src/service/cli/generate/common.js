@@ -20,6 +20,8 @@ const MocksConfig = {
   ],
   TEXT: {
     MAX_ANNOUNCE_COUNT: 5,
+    MIN_ANNOUNCE_COUNT: 1,
+    MIN_FULL_TEXT_COUNT: 1,
     TEXTS: [
       `Ёлки — это не просто красивое дерево. Это прочная древесина.`,
       `Первая большая ёлка была установлена только в 1938 году.`,
