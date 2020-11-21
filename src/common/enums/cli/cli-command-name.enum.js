@@ -2,6 +2,7 @@
 
 const CliCommandName = {
   VERSION: `--version`,
+  HELP: `--help`,
 };
 
 module.exports = {
