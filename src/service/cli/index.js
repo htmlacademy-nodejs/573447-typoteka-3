@@ -1,6 +1,6 @@
 'use strict';
 
-const version = require(`./version`);
+const version = require(`./version/version`);
 
 const cli = {
   version,
