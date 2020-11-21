@@ -1,7 +1,8 @@
 'use strict';
 
-const {CliCommandName} = require(`./cli`);
+const {CliCommandName, CliExitCode} = require(`./cli`);
 
 module.exports = {
   CliCommandName,
+  CliExitCode,
 };
