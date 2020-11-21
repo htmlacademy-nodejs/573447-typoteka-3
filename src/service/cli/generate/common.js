@@ -1,5 +1,7 @@
 'use strict';
 
+const MONTH_MILLISECONDS = 2592000000;
+
 const MocksConfig = {
   DEFAULT_COUNT: 1,
   MAX_COUNT: 1000,
@@ -66,5 +68,6 @@ const MocksConfig = {
 };
 
 module.exports = {
+  MONTH_MILLISECONDS,
   MocksConfig,
 };

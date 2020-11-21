@@ -7,9 +7,7 @@ const {
   writeToFile,
 } = require(`~/helpers`);
 const {CliCommandName, CliExitCode} = require(`~/common/enums`);
-const {MocksConfig} = require(`./common`);
-
-const MONTH_MILLISECONDS = 2592000000;
+const {MONTH_MILLISECONDS, MocksConfig} = require(`./common`);
 
 const generatePublication = () => ({
   title: getRandomItem(MocksConfig.TITLES),
