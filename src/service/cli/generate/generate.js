@@ -1,6 +1,11 @@
 'use strict';
 
-const {getRandomItem, getRandomItems, getRandomNumber} = require(`~/helpers`);
+const {
+  getRandomItem,
+  getRandomItems,
+  getRandomNumber,
+  writeToFile,
+} = require(`~/helpers`);
 const {CliCommandName, CliExitCode} = require(`~/common/enums`);
 const {MocksConfig} = require(`./common`);
 
@@ -46,6 +51,16 @@ module.exports = {
 
     const mockedPublications = generatePublications(publicationsCount);
 
-    console.log(mockedPublications);
+    writeToFile(MocksConfig.FILE_NAME, JSON.stringify(mockedPublications), (err) => {
+      if (err) {
+        console.error(`Can't write data to file...`);
+
+        process.exit(CliExitCode.ERROR);
+      }
+
+      console.log(`Operation success. File created.`);
+
+      process.exit(CliExitCode.SUCCESS);
+    });
   },
 };
