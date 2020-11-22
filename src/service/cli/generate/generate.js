@@ -50,7 +50,7 @@ const generatePublications = (count) => {
 
 module.exports = {
   name: CliCommandName.GENERATE,
-  run(args) {
+  async run(args) {
     const [count] = args;
     const publicationsCount = Number(count) || MocksConfig.DEFAULT_COUNT;
 
@@ -62,14 +62,14 @@ module.exports = {
 
     const mockedPublications = generatePublications(publicationsCount);
 
-    writeToFile(MocksConfig.FILE_NAME, JSON.stringify(mockedPublications), (err) => {
-      if (err) {
-        console.error(paintMessage(`Can't write data to file...`, MessageColor.RED));
-
-        process.exit(CliExitCode.ERROR);
-      }
+    try {
+      await writeToFile(MocksConfig.FILE_NAME, JSON.stringify(mockedPublications));
 
       console.log(paintMessage(`Operation success. File created.`, MessageColor.GREEN));
-    });
+    } catch (err) {
+      console.error(paintMessage(`Can't write data to file...`, MessageColor.RED));
+
+      process.exit(CliExitCode.ERROR);
+    }
   },
 };

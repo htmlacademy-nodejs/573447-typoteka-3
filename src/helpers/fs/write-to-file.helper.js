@@ -1,8 +1,10 @@
 'use strict';
 
-const fs = require(`fs`);
+const fs = require(`fs/promises`);
 
-const writeToFile = (path, content, cb) => fs.writeFile(path, content, cb);
+const writeToFile = async (path, content) => {
+  await fs.writeFile(path, content);
+};
 
 module.exports = {
   writeToFile,
