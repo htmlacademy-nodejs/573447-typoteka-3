@@ -2,7 +2,7 @@
   "name": "573447-typoteka-3",
   "version": "1.0.0",
   "description": "Типотека",
-  "main": "./src/service/service.js",
+  "main": "./src/service",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/What1s1ove/573447-typoteka-3.git"
@@ -17,7 +17,7 @@
     "~": "src"
   },
   "scripts": {
-    "start": "node ./src/service/service.js",
+    "start": "node ./src/service",
     "test": "npm run eslint",
     "eslint": "eslint --ext .js src/"
   },
