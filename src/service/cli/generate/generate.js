@@ -49,7 +49,7 @@ const generatePublications = (count) => {
 
 module.exports = {
   name: CliCommandName.GENERATE,
-  run: (args) => {
+  run(args) {
     const [count] = args;
     const publicationsCount = Number(count) || MocksConfig.DEFAULT_COUNT;
 
