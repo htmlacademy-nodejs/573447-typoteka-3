@@ -1,14 +1,9 @@
 'use strict';
 
-const {
-  getRandomItem,
-  getRandomItems,
-  getRandomNumber,
-  paintMessage,
-  writeToFile,
-} = require(`~/helpers`);
-const {CliCommandName, CliExitCode, MessageColor} = require(`~/common/enums`);
+const {getRandomItem, getRandomItems, getRandomNumber} = require(`~/helpers`);
+const {CliCommandName, CliExitCode} = require(`~/common/enums`);
 const {MONTH_MILLISECONDS, MocksConfig} = require(`./common`);
+const {savePublicationsToFile} = require(`./helpers`);
 
 const generatePublication = () => ({
   title: getRandomItem(MocksConfig.TITLES),
@@ -62,14 +57,6 @@ module.exports = {
 
     const mockedPublications = generatePublications(publicationsCount);
 
-    try {
-      await writeToFile(MocksConfig.FILE_NAME, JSON.stringify(mockedPublications));
-
-      console.log(paintMessage(`Operation success. File created.`, MessageColor.GREEN));
-    } catch (err) {
-      console.error(paintMessage(`Can't write data to file...`, MessageColor.RED));
-
-      process.exit(CliExitCode.ERROR);
-    }
+    savePublicationsToFile(mockedPublications);
   },
 };
