@@ -4,9 +4,10 @@ const {
   getRandomItem,
   getRandomItems,
   getRandomNumber,
+  paintMessage,
   writeToFile,
 } = require(`~/helpers`);
-const {CliCommandName, CliExitCode} = require(`~/common/enums`);
+const {CliCommandName, CliExitCode, MessageColor} = require(`~/common/enums`);
 const {MONTH_MILLISECONDS, MocksConfig} = require(`./common`);
 
 const generatePublication = () => ({
@@ -63,14 +64,12 @@ module.exports = {
 
     writeToFile(MocksConfig.FILE_NAME, JSON.stringify(mockedPublications), (err) => {
       if (err) {
-        console.error(`Can't write data to file...`);
+        console.error(paintMessage(`Can't write data to file...`, MessageColor.RED));
 
         process.exit(CliExitCode.ERROR);
       }
 
-      console.log(`Operation success. File created.`);
-
-      process.exit(CliExitCode.SUCCESS);
+      console.log(paintMessage(`Operation success. File created.`, MessageColor.GREEN));
     });
   },
 };
