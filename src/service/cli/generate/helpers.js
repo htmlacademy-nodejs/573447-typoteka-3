@@ -1,6 +1,6 @@
 'use strict';
 
-const {writeToFile, paintMessage} = require(`~/helpers`);
+const {writeToFile, paintMessage, readFile} = require(`~/helpers`);
 const {MessageColor, CliExitCode} = require(`~/common/enums`);
 const {MocksConfig} = require(`./common`);
 
@@ -16,6 +16,19 @@ const savePublicationsToFile = async (mockedPublications) => {
   }
 };
 
+const readPublicationsFileContent = async (path) => {
+  try {
+    const content = await readFile(path);
+
+    return content.split(`\n`);
+  } catch (err) {
+    console.error(paintMessage(err, `red`));
+
+    return [];
+  }
+};
+
 module.exports = {
   savePublicationsToFile,
+  readPublicationsFileContent,
 };
