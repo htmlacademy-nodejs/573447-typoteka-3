@@ -57,6 +57,6 @@ module.exports = {
 
     const mockedPublications = generatePublications(publicationsCount);
 
-    savePublicationsToFile(mockedPublications);
+    await savePublicationsToFile(mockedPublications);
   },
 };
