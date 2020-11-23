@@ -2,7 +2,7 @@
 
 const {getRandomNumber} = require(`./number`);
 const {getRandomItem, getRandomItems, getShuffledItems} = require(`./array`);
-const {writeToFile} = require(`./fs`);
+const {writeToFile, readFile} = require(`./fs`);
 const {paintMessage} = require(`./string`);
 
 module.exports = {
@@ -11,5 +11,6 @@ module.exports = {
   getRandomItems,
   getShuffledItems,
   writeToFile,
+  readFile,
   paintMessage,
 };

@@ -28,7 +28,20 @@ const readPublicationsFileContent = async (path) => {
   }
 };
 
+const getPublicationsData = async () => {
+  const titles = await readPublicationsFileContent(MocksConfig.TITLE.FILE_PATH);
+  const descriptions = await readPublicationsFileContent(MocksConfig.TEXT.FILE_PATH);
+  const categories = await readPublicationsFileContent(MocksConfig.CATEGORY.FILE_PATH);
+
+  return {
+    titles,
+    descriptions,
+    categories,
+  };
+};
+
 module.exports = {
   savePublicationsToFile,
   readPublicationsFileContent,
+  getPublicationsData,
 };

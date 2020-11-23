@@ -14,9 +14,7 @@ const MocksConfig = {
     MAX_ANNOUNCE_COUNT: 5,
     MIN_ANNOUNCE_COUNT: 1,
     MIN_FULL_TEXT_COUNT: 1,
-    TEXTS: {
-      FILE_PATH: `${DATA_PATH}/sentences.txt`,
-    },
+    FILE_PATH: `${DATA_PATH}/sentences.txt`,
   },
   DATE: {
     MIN_MONTHS_BREAK: 0,
