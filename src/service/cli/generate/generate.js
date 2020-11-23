@@ -2,11 +2,11 @@
 
 const {getRandomItem, getRandomItems, getRandomNumber} = require(`~/helpers`);
 const {CliCommandName, CliExitCode} = require(`~/common/enums`);
+const {savePublicationsToFile, getPublicationsData} = require(`./helpers`);
 const {MONTH_MILLISECONDS, MocksConfig} = require(`./common`);
-const {savePublicationsToFile} = require(`./helpers`);
 
-const generatePublication = () => ({
-  title: getRandomItem(MocksConfig.TITLES),
+const generatePublication = ({titles, descriptions, categories}) => ({
+  title: getRandomItem(titles),
   createdDate: new Date(
       Date.now() -
       getRandomNumber(
@@ -15,30 +15,36 @@ const generatePublication = () => ({
       )
   ),
   announce: getRandomItems(
-      MocksConfig.TEXT.TEXTS,
+      descriptions,
       getRandomNumber(
           MocksConfig.TEXT.MIN_ANNOUNCE_COUNT,
           MocksConfig.TEXT.MAX_ANNOUNCE_COUNT
       )
   ).join(` `),
   fullText: getRandomItems(
-      MocksConfig.TEXT.TEXTS,
+      descriptions,
       getRandomNumber(
           MocksConfig.TEXT.MIN_FULL_TEXT_COUNT,
-          MocksConfig.TEXT.TEXTS.length
+          descriptions.length
       )
   ).join(` `),
   category: getRandomItems(
-      MocksConfig.CATEGORY.CATEGORIES,
+      categories,
       getRandomNumber(
           MocksConfig.CATEGORY.MIN_COUNT,
-          MocksConfig.CATEGORY.CATEGORIES.length
+          categories.length
       )
   ),
 });
 
-const generatePublications = (count) => {
-  const generatedPublications = Array.from(new Array(count), generatePublication);
+const generatePublications = ({count, titles, descriptions, categories}) => {
+  const generatedPublications = Array.from(new Array(count), () =>
+    generatePublication({
+      titles,
+      descriptions,
+      categories,
+    })
+  );
 
   return generatedPublications;
 };
@@ -55,7 +61,13 @@ module.exports = {
       process.exit(CliExitCode.ERROR);
     }
 
-    const mockedPublications = generatePublications(publicationsCount);
+    const {titles, descriptions, categories} = await getPublicationsData();
+    const mockedPublications = generatePublications({
+      count: publicationsCount,
+      titles,
+      descriptions,
+      categories,
+    });
 
     await savePublicationsToFile(mockedPublications);
   },
