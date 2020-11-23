@@ -1,7 +1,7 @@
 'use strict';
 
 require(`module-alias/register`);
-const {CliCommandName, CliExitCode} = require(`~/common/enums`);
+const {CliCommandName} = require(`~/common/enums`);
 const {USER_ARGV_IDX, COMMAND_ARGS_IDX} = require(`~/common/constants`);
 const {Cli} = require(`./cli/cli`);
 
@@ -11,8 +11,6 @@ const commandArguments = userArguments.slice(COMMAND_ARGS_IDX);
 
 if (!userArguments.length || !Cli[userCommand]) {
   Cli[CliCommandName.HELP].run(commandArguments);
-
-  process.exit(CliExitCode.SUCCESS);
+} else {
+  Cli[userCommand].run(commandArguments);
 }
-
-Cli[userCommand].run(commandArguments);
