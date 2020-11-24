@@ -2,11 +2,7 @@
 
 const fs = require(`fs/promises`);
 
-const readFile = async (filePath) => {
-  const content = await fs.readFile(filePath, `utf8`);
-
-  return content;
-};
+const readFile = async (filePath) => fs.readFile(filePath, `utf8`);
 
 module.exports = {
   readFile,
