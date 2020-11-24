@@ -20,7 +20,7 @@ const readPublicationsFileContent = async (path) => {
   try {
     const content = await readFile(path);
 
-    return content.split(`\n`);
+    return content.trim().split(`\n`);
   } catch (err) {
     console.error(paintMessage(err, `red`));
 
