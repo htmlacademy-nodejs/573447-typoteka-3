@@ -18,6 +18,7 @@
   },
   "scripts": {
     "start": "node ./src/service/service.js",
+    "server": "nodemon ./src/service/service.js --server",
     "test": "npm run eslint",
     "eslint": "eslint --ext .js src/"
   },
