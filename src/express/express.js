@@ -1,5 +1,6 @@
 'use strict';
 
+require(`module-alias/register`);
 const express = require(`express`);
 const {ApiRoute} = require(`~/common/enums`);
 const mainRouter = require(`~/express/routes/main/main.router`);
