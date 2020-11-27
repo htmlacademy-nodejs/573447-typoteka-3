@@ -1,0 +1,25 @@
+extends ../layout
+
+block content
+  main
+    section.post
+      h1.visually-hidden Пост
+      section.post__content
+        h2.visually-hidden Основное содержание
+        .post__wrapper
+          .post__head
+            a.post__backwards.button.button--backwards(href='#') Назад
+            time.post__date(datetime=article.date.stamp)= `${article.date.day}, ${article.date.time} `
+            h2.post__title.title.title--main= article.title
+
+            include ../../common/themes
+
+          if article.image
+            .post__picture
+              img(src= `img/${article.image.fileName}` alt= article.image.alt)
+          .post__text
+            h3= article.subTitle
+            each paragraph in article.text
+              p= paragraph
+
+      include ../../common/comments

@@ -1,0 +1,28 @@
+extends layout
+
+block content
+  main
+    section.search-page
+      div(class=`search-page__wrapper` + (searchResult.type === `empty` ? ` search-page__wrapper--empty` : ``))
+        h1 Поиск
+        .search.search-page__form
+          form(action='#' method='get')
+            label
+              input(type='text' placeholder='Что ищем?')
+            button.search__button.button.button--transparent(type='submit') Найти
+          if searchResult.type === 'list'
+            each result in searchResult.list
+              .search__result
+                time.search__date(datetime=result.date.stamp)= `${result.date.day}, ${result.date.time}`
+                a.search__link(href=result.link.href)= result.link.text
+        if searchResult.type === `empty`
+          p.search-page__empty Ничего не нашлось
+
+
+
+
+
+
+
+
+

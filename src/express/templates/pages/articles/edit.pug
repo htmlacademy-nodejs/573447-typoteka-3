@@ -1,0 +1,48 @@
+extends ../layout
+
+block content
+  main
+    section.modal.modal--flex
+      .popup.popup--new-publication.popup--flex
+        .new-publication
+          .new-publication__header
+            if type === `add`
+              h1 Новая публикация
+            if type === `edit`
+              h1 Редактирование публикации
+            .new-publication__date-form
+              h3 Дата публикации
+              form(action='#' method='POST')
+                .new-publication__date-block
+                  label(for='new-publication-date' aria-label='Календарь')
+                  input#new-publication-date(type='text' name='login' placeholder=article.date ? article.date.day : ``)
+            button.new-publication__button.button.button--colored(type='submit') Опубликовать
+          button.popup__button.button.button--popup-close(type='button' aria-label='Закрыть окно') Закрыть окно
+          .new-publication__form.form
+            form(action='#' method='get')
+              .form__wrapper.form__wrapper--intro
+                .form__field
+                  label
+                    input(type='text' placeholder='Заголовок' value=article.title required)
+                .form__field.form__field--post-image
+                  label
+                    input#image-name-field(type='text' value=(article.image ? article.image.fileName : ``) placeholder='Фотография' readonly)
+                  .form__image-loader.form__image-loader--publication
+                    label
+                      input.visually-hidden(type='file')
+                      | Обзор
+                  button.button.button--transparent Удалить
+                .new-publication__checkbox.new-publication__checkbox--auto
+                  each category in article.categoryList
+                    input(id=category.id type='checkbox' name=category.id)
+                    label(for=category.id)= category.name
+                a.new-publication__form-link.button.button--transparent(href='#') Добавить категорию
+              .form__wrapper.form__wrapper--text
+                .form__field.form__field--publication-text
+                  label
+                    textarea(rows='2' placeholder='Анонс публикации')= article.subTitle
+                .form__field.form__field--publication-text
+                  label
+                    textarea(rows='5' placeholder='Полный текст публикации')= article.text.join(`\n\r`)
+
+      .modal__overlay

@@ -1,0 +1,17 @@
+extends ../layout
+
+block content
+  main.main-page.main-page--padding
+    section.main-page__publication.publication
+      h1.publication__title Комментарии
+      ul.publication__list
+        each comment in commentList
+          li.publication__list-item
+            .publication__header
+              img.publication__list-image(src=comment.account.avatar width='20' height='20' alt='Аватар пользователя')
+              b.publication__list-name= comment.account.name
+              time.publication__item-time(datetime=comment.date.stamp)= `${comment.date.day}, ${comment.date.time}`
+            a.publication__item-text(href='#')= comment.text
+            p.publication__text-strong= comment.articleTitle
+            button.publication__button.button.button--close-item(type='button')
+              span.visually-hidden Закрыть строку списка

@@ -1,0 +1,20 @@
+section.main-page__last.last
+  h2.last__name
+    | Последние комментарии
+    span.last__icon.last__icon--cloud
+  if hasLastComments
+    ul.last__list
+      li.last__list-item
+        img.last__list-image(src='img/avatar-small-1.png' width='20' height='20' alt='Аватар пользователя')
+        b.last__list-name Анна Артамонова
+        a.last__list-link(href='#') Сервис аренды жилья Airbnb стал глобальным партнером Международного олимпийского комитета (МОК) на девять лет, в течение которых пройдет пять Олимпиад, в том числе в Токио в 2020 году.
+      li.last__list-item
+        img.last__list-image(src='img/avatar-small-2.png' width='20' height='20' alt='Аватар пользователя')
+        b.last__list-name Александр Петров
+        a.last__list-link(href='#') Главреды «Дождя», Forbes и других СМИ попросили Роскомнадзор разъяснить штрафы за ссылки на сайты с матом
+      li.last__list-item.last__list-item--end
+        img.last__list-image(src='img/avatar-small-3.png' width='20' height='20' alt='Аватар пользователя')
+        b.last__list-name Игорь Шманский
+        a.last__list-link(href='#') Что-то все электрокары в последнее время все на одно лицо делаются))
+  else
+    p.hot__empty Здесь пока ничего нет...
