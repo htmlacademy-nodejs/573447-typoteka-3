@@ -3,7 +3,7 @@
 const ApiRoute = {
   MAIN: `/`,
   MY: `/my`,
-  OFFERS: `/offers`,
+  ARTICLES: `/articles`,
 };
 
 module.exports = {
