@@ -42,7 +42,7 @@ mainRouter.get(ApiMainRoute.LOGIN, (_, res) => {
   res.render(`pages/login`, content);
 });
 
-mainRouter.get(ApiMainRoute.SEARCH, (req, res) => {
+mainRouter.get(ApiMainRoute.SEARCH, (_, res) => {
   const content = {
     title: `Типотека`,
     hiddenTitle: ` Страница поиска личного блога Типотека`,

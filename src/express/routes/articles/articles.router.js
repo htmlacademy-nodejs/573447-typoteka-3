@@ -5,7 +5,7 @@ const {ApiArticlesRoute} = require(`~/common/enums`);
 
 const articlesRouter = new Router();
 
-articlesRouter.get(ApiArticlesRoute.ARTICLE, (req, res) => {
+articlesRouter.get(ApiArticlesRoute.ARTICLE, (_, res) => {
   const content = {
     isPost: true,
     article: {
@@ -160,7 +160,7 @@ articlesRouter.get(ApiArticlesRoute.ADD, (_, res) => {
   res.render(`pages/articles/edit`, content);
 });
 
-articlesRouter.get(ApiArticlesRoute.CATEGORY, (req, res) => {
+articlesRouter.get(ApiArticlesRoute.CATEGORY, (_, res) => {
   const content = {
     title: `Типотека`,
     displayedTitle: `Бизнес`,
