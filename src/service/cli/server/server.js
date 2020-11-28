@@ -22,18 +22,18 @@ app.get(ApiPath.POSTS, async (_, res) => {
 
 app.use((_, res) => res.status(HttpCode.NOT_FOUND).send(`Not found`));
 
-app.once(`error`, (err) => {
-  console.error(`Ошибка при создании сервера`, err);
-});
-
 module.exports = {
   name: CliCommandName.SERVER,
   run(args) {
     const [customPort] = args;
     const port = Number(customPort) || DEFAULT_PORT;
 
-    app.listen(port, () => {
+    const server = app.listen(port, () => {
       console.info(paintMessage(`Ожидаю соединений на ${port}`, `green`));
+    });
+
+    server.once(`error`, (err) => {
+      console.error(`Ошибка при создании сервера`, err);
     });
   },
 };
