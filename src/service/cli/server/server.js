@@ -2,7 +2,7 @@
 
 const express = require(`express`);
 const {paintMessage} = require(`~/helpers`);
-const {CliCommandName, HttpCode} = require(`~/common/enums`);
+const {CliCommandName, HttpCode, MessageColor} = require(`~/common/enums`);
 const {getMocks} = require(`./helpers`);
 const {ApiPath, DEFAULT_PORT} = require(`./common`);
 
@@ -29,7 +29,7 @@ module.exports = {
     const port = Number(customPort) || DEFAULT_PORT;
 
     const server = app.listen(port, () => {
-      console.info(paintMessage(`Ожидаю соединений на ${port}`, `green`));
+      console.info(paintMessage(`Ожидаю соединений на ${port}`, MessageColor.GREEN));
     });
 
     server.once(`error`, (err) => {
