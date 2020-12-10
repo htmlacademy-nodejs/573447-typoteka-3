@@ -24,6 +24,13 @@ const MocksConfig = {
     MIN_COUNT: 1,
     FILE_PATH: `${DATA_PATH}/categories.txt`,
   },
+  COMMENTS: {
+    FILE_PATH: `${DATA_PATH}/comments.txt`,
+    MIN_COUNT: 1,
+    MAX_COUNT: 4,
+    MIN_SENTENCES_COUNT: 1,
+    MAX_SENTENCES_COUNT: 3,
+  },
 };
 
 module.exports = {

@@ -12,7 +12,26 @@ const {
 const {MessageColor, CliExitCode} = require(`~/common/enums`);
 const {MONTH_MILLISECONDS, MocksConfig} = require(`./common`);
 
-const generatePublication = ({titles, descriptions, categories}) => ({
+const generateMockedComment = ({comments}) => ({
+  id: getRandomId(),
+  text: getRandomItems(
+      comments,
+      getRandomNumber(
+          MocksConfig.COMMENTS.MIN_SENTENCES_COUNT,
+          MocksConfig.COMMENTS.MAX_SENTENCES_COUNT
+      )
+  ).join(` `),
+});
+
+const generateMockedComments = ({count, comments}) => {
+  const mockedComments = Array.from(new Array(count), () =>
+    generateMockedComment({comments})
+  );
+
+  return mockedComments;
+};
+
+const generatePublication = ({titles, descriptions, categories, comments}) => ({
   id: getRandomId(),
   title: getRandomItem(titles),
   createdDate: new Date(
@@ -43,14 +62,28 @@ const generatePublication = ({titles, descriptions, categories}) => ({
           categories.length
       )
   ),
+  comments: generateMockedComments({
+    count: getRandomNumber(
+        MocksConfig.COMMENTS.MIN_COUNT,
+        MocksConfig.COMMENTS.MAX_COUNT
+    ),
+    comments
+  }),
 });
 
-const generatePublications = ({count, titles, descriptions, categories}) => {
+const generatePublications = ({
+  count,
+  titles,
+  descriptions,
+  categories,
+  comments,
+}) => {
   const generatedPublications = Array.from(new Array(count), () =>
     generatePublication({
       titles,
       descriptions,
       categories,
+      comments,
     })
   );
 
@@ -85,15 +118,19 @@ const getPublicationsData = async () => {
   const titles = await readPublicationsFileContent(MocksConfig.TITLE.FILE_PATH);
   const descriptions = await readPublicationsFileContent(MocksConfig.TEXT.FILE_PATH);
   const categories = await readPublicationsFileContent(MocksConfig.CATEGORY.FILE_PATH);
+  const comments = await readPublicationsFileContent(MocksConfig.COMMENTS.FILE_PATH);
 
   return {
     titles,
     descriptions,
     categories,
+    comments,
   };
 };
 
 module.exports = {
+  generateMockedComment,
+  generateMockedComments,
   generatePublication,
   generatePublications,
   savePublicationsToFile,

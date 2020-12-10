@@ -20,12 +20,13 @@ module.exports = {
       process.exit(CliExitCode.ERROR);
     }
 
-    const {titles, descriptions, categories} = await getPublicationsData();
+    const {titles, descriptions, categories, comments} = await getPublicationsData();
     const mockedPublications = generatePublications({
       count: publicationsCount,
       titles,
       descriptions,
       categories,
+      comments,
     });
 
     await savePublicationsToFile(mockedPublications);
