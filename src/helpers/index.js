@@ -3,7 +3,7 @@
 const {getRandomNumber} = require(`./number`);
 const {getRandomItem, getRandomItems, getShuffledItems} = require(`./array`);
 const {writeToFile, readFile} = require(`./fs`);
-const {paintMessage} = require(`./string`);
+const {paintMessage, getRandomId} = require(`./string`);
 
 module.exports = {
   getRandomNumber,
@@ -13,4 +13,5 @@ module.exports = {
   writeToFile,
   readFile,
   paintMessage,
+  getRandomId,
 };
