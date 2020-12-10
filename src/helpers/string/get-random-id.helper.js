@@ -1,6 +1,6 @@
 'use strict';
 
-const nanoid = require(`nanoid`);
+const {nanoid} = require(`nanoid`);
 
 const DEFAULT_ID_LENGTH = 6;
 
