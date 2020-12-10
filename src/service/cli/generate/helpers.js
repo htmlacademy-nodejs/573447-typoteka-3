@@ -4,6 +4,7 @@ const {
   writeToFile,
   paintMessage,
   readFile,
+  getRandomId,
   getRandomItem,
   getRandomItems,
   getRandomNumber,
@@ -12,6 +13,7 @@ const {MessageColor, CliExitCode} = require(`~/common/enums`);
 const {MONTH_MILLISECONDS, MocksConfig} = require(`./common`);
 
 const generatePublication = ({titles, descriptions, categories}) => ({
+  id: getRandomId(),
   title: getRandomItem(titles),
   createdDate: new Date(
       Date.now() -
