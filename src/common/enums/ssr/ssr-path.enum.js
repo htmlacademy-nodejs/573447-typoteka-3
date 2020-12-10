@@ -1,11 +1,11 @@
 'use strict';
 
-const ApiRoute = {
+const SsrPath = {
   MAIN: `/`,
   MY: `/my`,
   ARTICLES: `/articles`,
 };
 
 module.exports = {
-  ApiRoute,
+  SsrPath,
 };

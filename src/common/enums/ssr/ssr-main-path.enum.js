@@ -1,6 +1,6 @@
 'use strict';
 
-const ApiMainRoute = {
+const SsrMainPath = {
   ROOT: `/`,
   REGISTER: `/register`,
   LOGIN: `/login`,
@@ -8,5 +8,5 @@ const ApiMainRoute = {
 };
 
 module.exports = {
-  ApiMainRoute,
+  SsrMainPath,
 };

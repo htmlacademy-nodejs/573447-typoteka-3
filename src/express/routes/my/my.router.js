@@ -1,11 +1,11 @@
 'use strict';
 
 const {Router} = require(`express`);
-const {ApiMyRoute} = require(`~/common/enums`);
+const {SsrMyPath} = require(`~/common/enums`);
 
 const myRouter = new Router();
 
-myRouter.get(ApiMyRoute.ROOT, (_, res) => {
+myRouter.get(SsrMyPath.ROOT, (_, res) => {
   const content = {
     articleList: [
       {
@@ -40,7 +40,7 @@ myRouter.get(ApiMyRoute.ROOT, (_, res) => {
 
   res.render(`pages/my/my`, content);
 });
-myRouter.get(ApiMyRoute.COMMENTS, (_, res) => {
+myRouter.get(SsrMyPath.COMMENTS, (_, res) => {
   const content = {
     commentList: [
       {

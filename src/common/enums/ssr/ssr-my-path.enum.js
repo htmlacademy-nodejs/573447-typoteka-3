@@ -1,10 +1,10 @@
 'use strict';
 
-const ApiMyRoute = {
+const SsrMyPath = {
   ROOT: `/`,
   COMMENTS: `/comments`,
 };
 
 module.exports = {
-  ApiMyRoute,
+  SsrMyPath,
 };

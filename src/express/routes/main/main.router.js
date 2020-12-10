@@ -1,11 +1,11 @@
 'use strict';
 
 const {Router} = require(`express`);
-const {ApiMainRoute} = require(`~/common/enums`);
+const {SsrMainPath} = require(`~/common/enums`);
 
 const mainRouter = new Router();
 
-mainRouter.get(ApiMainRoute.ROOT, (_, res) => {
+mainRouter.get(SsrMainPath.ROOT, (_, res) => {
   const content = {
     title: `Типотека`,
     hiddenTitle: ` Главная страница личного блога Типотека`,
@@ -18,7 +18,7 @@ mainRouter.get(ApiMainRoute.ROOT, (_, res) => {
   res.render(`pages/main`, content);
 });
 
-mainRouter.get(ApiMainRoute.REGISTER, (_, res) => {
+mainRouter.get(SsrMainPath.REGISTER, (_, res) => {
   const content = {
     title: `Типотека`,
     error: {
@@ -30,7 +30,7 @@ mainRouter.get(ApiMainRoute.REGISTER, (_, res) => {
   res.render(`pages/register`, content);
 });
 
-mainRouter.get(ApiMainRoute.LOGIN, (_, res) => {
+mainRouter.get(SsrMainPath.LOGIN, (_, res) => {
   const content = {
     title: `Типотека`,
     error: {
@@ -42,7 +42,7 @@ mainRouter.get(ApiMainRoute.LOGIN, (_, res) => {
   res.render(`pages/login`, content);
 });
 
-mainRouter.get(ApiMainRoute.SEARCH, (_, res) => {
+mainRouter.get(SsrMainPath.SEARCH, (_, res) => {
   const content = {
     title: `Типотека`,
     hiddenTitle: ` Страница поиска личного блога Типотека`,

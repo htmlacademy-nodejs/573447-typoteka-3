@@ -1,11 +1,11 @@
 'use strict';
 
 const {Router} = require(`express`);
-const {ApiArticlesRoute} = require(`~/common/enums`);
+const {SsrArticlePath} = require(`~/common/enums`);
 
 const articlesRouter = new Router();
 
-articlesRouter.get(ApiArticlesRoute.ARTICLE, (_, res) => {
+articlesRouter.get(SsrArticlePath.ARTICLE, (_, res) => {
   const content = {
     isPost: true,
     article: {
@@ -97,7 +97,7 @@ articlesRouter.get(ApiArticlesRoute.ARTICLE, (_, res) => {
   res.render(`pages/articles/article`, content);
 });
 
-articlesRouter.get(ApiArticlesRoute.EDIT, (_, res) => {
+articlesRouter.get(SsrArticlePath.EDIT_$ARTICLE_ID, (_, res) => {
   const content = {
     type: `edit`,
     article: {
@@ -140,7 +140,7 @@ articlesRouter.get(ApiArticlesRoute.EDIT, (_, res) => {
   res.render(`pages/articles/edit`, content);
 });
 
-articlesRouter.get(ApiArticlesRoute.ADD, (_, res) => {
+articlesRouter.get(SsrArticlePath.ADD, (_, res) => {
   const content = {
     type: `add`,
     article: {
@@ -160,7 +160,7 @@ articlesRouter.get(ApiArticlesRoute.ADD, (_, res) => {
   res.render(`pages/articles/edit`, content);
 });
 
-articlesRouter.get(ApiArticlesRoute.CATEGORY, (_, res) => {
+articlesRouter.get(SsrArticlePath.CATEGORY_$ARTICLE_ID, (_, res) => {
   const content = {
     title: `Типотека`,
     displayedTitle: `Бизнес`,
