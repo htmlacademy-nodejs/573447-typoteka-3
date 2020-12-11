@@ -2,7 +2,7 @@
 
 const {CliCommandName, CliExitCode} = require(`./cli`);
 const {MessageColor} = require(`./message`);
-const {HttpCode} = require(`./api`);
+const {HttpCode, ApiPath, SearchApiPath} = require(`./api`);
 const {SsrPath, SsrMainPath, SsrArticlePath, SsrMyPath} = require(`./ssr`);
 
 module.exports = {
@@ -10,6 +10,8 @@ module.exports = {
   CliExitCode,
   MessageColor,
   HttpCode,
+  ApiPath,
+  SearchApiPath,
   SsrPath,
   SsrMainPath,
   SsrArticlePath,
