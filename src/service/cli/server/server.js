@@ -1,14 +1,17 @@
 'use strict';
 
 const express = require(`express`);
+const apiRouter = require(`~/service/api/api`);
 const {paintMessage} = require(`~/helpers`);
 const {CliCommandName, HttpCode, MessageColor} = require(`~/common/enums`);
+const {API_PREFIX} = require(`~/common/constants`);
 const {getMocks} = require(`./helpers`);
 const {ApiPath, DEFAULT_PORT} = require(`./common`);
 
 const app = express();
 
 app.use(express.json());
+app.use(API_PREFIX, apiRouter);
 
 app.get(ApiPath.POSTS, async (_, res) => {
   try {
