@@ -9,12 +9,12 @@ const {
   getRandomItems,
   getRandomNumber,
 } = require(`~/helpers`);
-const {MessageColor, CliExitCode, ArticleKey} = require(`~/common/enums`);
+const {MessageColor, CliExitCode, ArticleKey, CommentKey} = require(`~/common/enums`);
 const {MONTH_MILLISECONDS, MocksConfig} = require(`./common`);
 
 const generateMockedComment = ({comments}) => ({
-  id: getRandomId(),
-  text: getRandomItems(
+  [CommentKey.ID]: getRandomId(),
+  [CommentKey.TEXT]: getRandomItems(
       comments,
       getRandomNumber(
           MocksConfig.COMMENTS.MIN_SENTENCES_COUNT,
