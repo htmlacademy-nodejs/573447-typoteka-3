@@ -9,7 +9,7 @@ const {
   getRandomItems,
   getRandomNumber,
 } = require(`~/helpers`);
-const {MessageColor, CliExitCode} = require(`~/common/enums`);
+const {MessageColor, CliExitCode, ArticleKey} = require(`~/common/enums`);
 const {MONTH_MILLISECONDS, MocksConfig} = require(`./common`);
 
 const generateMockedComment = ({comments}) => ({
@@ -32,37 +32,37 @@ const generateMockedComments = ({count, comments}) => {
 };
 
 const generatePublication = ({titles, descriptions, categories, comments}) => ({
-  id: getRandomId(),
-  title: getRandomItem(titles),
-  createdDate: new Date(
+  [ArticleKey.ID]: getRandomId(),
+  [ArticleKey.TITLE]: getRandomItem(titles),
+  [ArticleKey.CREATED_DATE]: new Date(
       Date.now() -
       getRandomNumber(
           MocksConfig.DATE.MIN_MONTHS_BREAK,
           MONTH_MILLISECONDS * MocksConfig.DATE.MAX_MONTHS_BREAK
       )
   ),
-  announce: getRandomItems(
+  [ArticleKey.ANNOUNCE]: getRandomItems(
       descriptions,
       getRandomNumber(
           MocksConfig.TEXT.MIN_ANNOUNCE_COUNT,
           MocksConfig.TEXT.MAX_ANNOUNCE_COUNT
       )
   ).join(` `),
-  fullText: getRandomItems(
+  [ArticleKey.FULL_TEXT]: getRandomItems(
       descriptions,
       getRandomNumber(
           MocksConfig.TEXT.MIN_FULL_TEXT_COUNT,
           descriptions.length
       )
   ).join(` `),
-  category: getRandomItems(
+  [ArticleKey.CATEGORY]: getRandomItems(
       categories,
       getRandomNumber(
           MocksConfig.CATEGORY.MIN_COUNT,
           categories.length
       )
   ),
-  comments: generateMockedComments({
+  [ArticleKey.COMMENTS]: generateMockedComments({
     count: getRandomNumber(
         MocksConfig.COMMENTS.MIN_COUNT,
         MocksConfig.COMMENTS.MAX_COUNT
