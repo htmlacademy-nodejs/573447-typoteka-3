@@ -19,7 +19,7 @@ const initArticlesApi = (app, {articlesService, commentsService}) => {
     return res.status(HttpCode.OK).json(articles);
   });
 
-  articlesRouter.post(ArticlesApiPath.ROOT, existArticle, (req, res) => {
+  articlesRouter.post(ArticlesApiPath.ROOT, validateArticle, (req, res) => {
     const article = articlesService.create(req.body);
 
     return res.status(HttpCode.CREATED).json(article);
