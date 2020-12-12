@@ -1,8 +1,8 @@
 'use strict';
 
-const getCategories = (offers) => {
-  const categories = offers.reduce(
-      (acc, offer) => [...acc, ...offer.category],
+const getCategories = (articles) => {
+  const categories = articles.reduce(
+      (acc, article) => [...acc, ...article.category],
       []
   );
 
