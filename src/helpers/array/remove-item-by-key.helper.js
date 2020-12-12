@@ -1,9 +1,9 @@
 'use strict';
 
 const removeItemByKey = (items, key, value) => {
-  const updatedOffers = items.filter((item) => item[key] !== value);
+  const updatedItems = items.filter((item) => item[key] !== value);
 
-  return updatedOffers;
+  return updatedItems;
 };
 
 module.exports = {
