@@ -6,6 +6,8 @@ const {
   getRandomItems,
   getShuffledItems,
   getUniqueItems,
+  getItemByKey,
+  removeItemByKey,
 } = require(`./array`);
 const {writeToFile, readFile} = require(`./fs`);
 const {paintMessage, getRandomId} = require(`./string`);
@@ -16,6 +18,8 @@ module.exports = {
   getRandomItems,
   getUniqueItems,
   getShuffledItems,
+  getItemByKey,
+  removeItemByKey,
   writeToFile,
   readFile,
   paintMessage,
