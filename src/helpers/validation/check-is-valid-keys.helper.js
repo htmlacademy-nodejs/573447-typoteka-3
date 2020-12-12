@@ -2,7 +2,7 @@
 
 const checkIsValidByKeys = (entity, keys) => {
   const entityKeys = Object.keys(entity);
-  const isValid = entityKeys.every((key) => keys.includes(key));
+  const isValid = keys.every((key) => entityKeys.includes(key));
 
   return isValid;
 };
