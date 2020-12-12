@@ -1,9 +1,10 @@
 'use strict';
 
 const {Router} = require(`express`);
-const {Search, Category} = require(`~/service/data`);
+const {Search, Category, Articles, Comments} = require(`~/service/data`);
 const {initSearchApi} = require(`./search/search`);
 const {initCategoryApi} = require(`./category/category`);
+const {initArticlesApi} = require(`./articles/articles`);
 const {getMockedDate} = require(`./helpers`);
 
 const apiRouter = new Router();
@@ -21,6 +22,13 @@ const apiRouter = new Router();
     categoryService: new Category({
       articles: mockedData,
     }),
+  });
+
+  initArticlesApi(apiRouter, {
+    articlesService: new Articles({
+      articles: mockedData,
+    }),
+    commentsService: new Comments(),
   });
 })();
 
