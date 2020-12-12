@@ -2,7 +2,13 @@
 
 const {CliCommandName, CliExitCode} = require(`./cli`);
 const {MessageColor} = require(`./message`);
-const {HttpCode, ApiPath, SearchApiPath, CategoryApiPath} = require(`./api`);
+const {
+  HttpCode,
+  ApiPath,
+  SearchApiPath,
+  CategoryApiPath,
+  ArticlesApiPath,
+} = require(`./api`);
 const {SsrPath, SsrMainPath, SsrArticlePath, SsrMyPath} = require(`./ssr`);
 const {ArticleKey} = require(`./article`);
 const {CommentKey} = require(`./comment`);
@@ -21,4 +27,5 @@ module.exports = {
   SsrMyPath,
   ArticleKey,
   CommentKey,
+  ArticlesApiPath,
 };
