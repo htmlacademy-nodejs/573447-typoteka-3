@@ -11,6 +11,7 @@ const {
 } = require(`./array`);
 const {writeToFile, readFile} = require(`./fs`);
 const {paintMessage, getRandomId} = require(`./string`);
+const {checkIsValidByKeys} = require(`./validation`);
 
 module.exports = {
   getRandomNumber,
@@ -24,4 +25,5 @@ module.exports = {
   readFile,
   paintMessage,
   getRandomId,
+  checkIsValidByKeys,
 };
