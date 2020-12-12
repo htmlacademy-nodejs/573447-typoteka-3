@@ -14,6 +14,7 @@ const getNewArticle = (article) => {
     ...article,
     [ArticleKey.ID]: getRandomId(),
     [ArticleKey.COMMENTS]: [],
+    [ArticleKey.CREATED_DATE]: new Date().toISOString(),
   };
 
   return newArticle;
