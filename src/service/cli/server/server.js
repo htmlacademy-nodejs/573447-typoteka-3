@@ -30,6 +30,10 @@ app.use((req, res) => {
   return res.status(HttpCode.NOT_FOUND).send(`Not found`);
 });
 
+app.use((err, _req, _res, _next) => {
+  logger.error(`An error occured on processing request: ${err.message}`);
+});
+
 module.exports = {
   name: CliCommandName.SERVER,
   run(args) {
