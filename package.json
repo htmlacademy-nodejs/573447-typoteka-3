@@ -20,8 +20,9 @@
     "start": "node ./src/service/service.js",
     "start:front-server": "nodemon ./src/express/express.js",
     "server": "nodemon ./src/service/service.js --server",
-    "test": "npm run eslint",
-    "eslint": "eslint --ext .js src/"
+    "test": "npm run eslint && npm run jest",
+    "eslint": "eslint --ext .js src/",
+    "jest": "jest"
   },
   "devDependencies": {
     "eslint": "7.13.0",
