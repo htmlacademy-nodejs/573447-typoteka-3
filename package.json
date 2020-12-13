@@ -18,9 +18,9 @@
   },
   "scripts": {
     "start": "cross-env LOG_LEVEL=error node ./src/service/service.js",
-    "start:debug": "LOG_LEVEL=info node ./src/service/service.js --server | ./node_modules/.bin/pino-pretty",
+    "start:debug": "cross-env LOG_LEVEL=info node ./src/service/service.js --server | pino-pretty",
     "start:front-server": "nodemon ./src/express/express.js",
-    "server": "cross-env nodemon ./src/service/service.js --server",
+    "server": "nodemon ./src/service/service.js --server",
     "test": "npm run eslint && npm run jest",
     "eslint": "eslint --ext .js src/",
     "jest": "jest"
