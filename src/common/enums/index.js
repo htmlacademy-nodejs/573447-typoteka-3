@@ -12,6 +12,7 @@ const {
 const {SsrPath, SsrMainPath, SsrArticlePath, SsrMyPath} = require(`./ssr`);
 const {ArticleKey} = require(`./article`);
 const {CommentKey} = require(`./comment`);
+const {AppEnvironment, ENV, LogLevel, LoggerName} = require(`./app`);
 
 module.exports = {
   CliCommandName,
@@ -28,4 +29,8 @@ module.exports = {
   ArticleKey,
   CommentKey,
   ArticlesApiPath,
+  AppEnvironment,
+  ENV,
+  LogLevel,
+  LoggerName,
 };
