@@ -1,6 +1,7 @@
 'use strict';
 
-const {readFile, logger} = require(`~/helpers`);
+const {readFile, logger, paintMessage} = require(`~/helpers`);
+const {MessageColor} = require(`~/common/enums`);
 const {MOCKS_FILE_PATH} = require(`~/common/constants`);
 
 const data = [];
@@ -15,7 +16,12 @@ const getMockedDate = async () => {
       return data;
     }
   } catch (err) {
-    logger.error(`An error occurred on reading mocked data: ${err.message}.`);
+    logger.error(
+        paintMessage(
+            `An error occurred on reading mocked data: ${err.message}.`,
+            MessageColor
+        )
+    );
 
     return Promise.reject(err);
   }

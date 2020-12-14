@@ -10,7 +10,7 @@ const {
   getRandomNumber,
   logger
 } = require(`~/helpers`);
-const {CliExitCode, ArticleKey, CommentKey} = require(`~/common/enums`);
+const {CliExitCode, ArticleKey, CommentKey, MessageColor} = require(`~/common/enums`);
 const {MONTH_MILLISECONDS, MocksConfig} = require(`./common`);
 
 const generateMockedComment = ({comments}) => ({
@@ -95,9 +95,14 @@ const savePublicationsToFile = async (mockedPublications) => {
   try {
     await writeToFile(MocksConfig.FILE_NAME, JSON.stringify(mockedPublications));
 
-    logger.info(paintMessage(`Operation success. File with mocks was created.`));
+    logger.info(logger(`Operation success. File with mocks was created.`, MessageColor.GREEN));
   } catch (err) {
-    logger.error(paintMessage(`An error occurred on saving mocked-data: can't write mocked-data to file...`));
+    logger.error(
+        paintMessage(
+            `An error occurred on saving mocked-data: can't write mocked-data to file...`,
+            MessageColor.RED
+        )
+    );
 
     process.exit(CliExitCode.ERROR);
   }
@@ -109,7 +114,12 @@ const readPublicationsFileContent = async (path) => {
 
     return content.trim().split(`\n`);
   } catch (err) {
-    logger.error(`An error occurred on reading mocked-data: can't read mocked-data from file...`);
+    logger.error(
+        paintMessage(
+            `An error occurred on reading mocked-data: can't read mocked-data from file...`,
+            MessageColor.RED
+        )
+    );
 
     return [];
   }
