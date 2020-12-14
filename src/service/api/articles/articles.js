@@ -44,7 +44,7 @@ const initArticlesApi = (app, {articlesService, commentsService}) => {
       return res.status(HttpCode.NOT_FOUND).send(`Not found with ${articleId}`);
     }
 
-    const updatedArticle = articlesService.update(req.body);
+    const updatedArticle = articlesService.update(req.body, articleId);
 
     return res.status(HttpCode.OK).json(updatedArticle);
   });
