@@ -30,10 +30,12 @@ class Articles {
     return newArticle;
   }
 
-  update(article) {
-    this._articles = updateArticle(this._articles, article);
+  update(article, articleId) {
+    this._articles = updateArticle(this._articles, articleId, article);
 
-    return article;
+    const updatedArticle = getArticleById(this._articles, articleId);
+
+    return updatedArticle;
   }
 
   drop(id) {

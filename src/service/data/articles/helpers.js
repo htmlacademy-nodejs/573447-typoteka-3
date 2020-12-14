@@ -20,9 +20,9 @@ const getNewArticle = (article) => {
   return newArticle;
 };
 
-const updateArticle = (articles, updatedArticle) => {
+const updateArticle = (articles, articleId, updatedArticle) => {
   const updatedArticles = articles.map((article) =>
-    article.id === updatedArticle.id ? updatedArticle : article
+    article.id === articleId ? {...article, ...updatedArticle} : article
   );
 
   return updatedArticles;
