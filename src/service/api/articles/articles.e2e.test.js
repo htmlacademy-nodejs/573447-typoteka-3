@@ -9,13 +9,12 @@ const {mockedArticles} = require(`./articles.mocks`);
 
 const createAPI = () => {
   const app = express();
-  const cloneData = JSON.parse(JSON.stringify(mockedArticles));
 
   app.use(express.json());
 
   initArticlesApi(app, {
     articlesService: new Articles({
-      articles: cloneData,
+      articles: mockedArticles.slice(),
     }),
     commentsService: new Comments(),
   });

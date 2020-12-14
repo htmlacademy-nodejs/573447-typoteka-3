@@ -7,20 +7,26 @@ const {ApiPath, HttpCode} = require(`~/common/enums`);
 const {initSearchApi} = require(`./search`);
 const {mockedArticles} = require(`./search.mocks`);
 
-const app = express();
+const createAPI = () => {
+  const app = express();
 
-app.use(express.json());
+  app.use(express.json());
 
-initSearchApi(app, {
-  searchService: new Search({
-    articles: mockedArticles,
-  }),
-});
+  initSearchApi(app, {
+    searchService: new Search({
+      articles: mockedArticles.slice(),
+    }),
+  });
+
+  return app;
+};
 
 describe(`API returns articles based on search query`, () => {
+  let app = null;
   let response = null;
 
   beforeAll(async () => {
+    app = createAPI();
     response = await request(app).get(ApiPath.SEARCH).query({
       query: `Как начать`,
     });
@@ -36,6 +42,8 @@ describe(`API returns articles based on search query`, () => {
 });
 
 test(`API returns code 200 if nothing is found`, async () => {
+  const app = createAPI();
+
   await request(app)
     .get(ApiPath.SEARCH)
     .query({
@@ -45,5 +53,7 @@ test(`API returns code 200 if nothing is found`, async () => {
 });
 
 test(`API returns 400 when query string is absent`, async () => {
+  const app = createAPI();
+
   await request(app).get(ApiPath.SEARCH).expect(HttpCode.BAD_REQUEST);
 });

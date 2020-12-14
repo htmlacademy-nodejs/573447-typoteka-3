@@ -7,20 +7,26 @@ const {ApiPath, HttpCode} = require(`~/common/enums`);
 const {initCategoryApi} = require(`./category`);
 const {mockedArticles} = require(`./category.mocks`);
 
-const app = express();
+const createAPI = () => {
+  const app = express();
 
-app.use(express.json());
+  app.use(express.json());
 
-initCategoryApi(app, {
-  categoryService: new Category({
-    articles: mockedArticles,
-  }),
-});
+  initCategoryApi(app, {
+    categoryService: new Category({
+      articles: mockedArticles.slice(),
+    }),
+  });
+
+  return app;
+};
 
 describe(`API returns category list`, () => {
+  let app = null;
   let response = null;
 
   beforeAll(async () => {
+    app = createAPI();
     response = await request(app).get(ApiPath.CATEGORIES);
   });
 
