@@ -3,9 +3,9 @@
 const {Router} = require(`express`);
 const {ApiPath, HttpCode, SearchApiPath} = require(`~/common/enums`);
 
-const searchRouter = new Router();
-
 const initSearchApi = (app, {searchService}) => {
+  const searchRouter = new Router();
+
   app.use(ApiPath.SEARCH, searchRouter);
 
   searchRouter.get(SearchApiPath.ROOT, async (req, res) => {

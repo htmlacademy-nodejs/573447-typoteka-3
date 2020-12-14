@@ -8,9 +8,9 @@ const {
   validateArticle,
 } = require(`~/service/middlewares`);
 
-const articlesRouter = new Router();
-
 const initArticlesApi = (app, {articlesService, commentsService}) => {
+  const articlesRouter = new Router();
+
   app.use(ApiPath.ARTICLES, articlesRouter);
 
   articlesRouter.get(ArticlesApiPath.ROOT, (_req, res) => {

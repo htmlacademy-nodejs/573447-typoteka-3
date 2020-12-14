@@ -3,9 +3,9 @@
 const {Router} = require(`express`);
 const {ApiPath, CategoryApiPath, HttpCode} = require(`~/common/enums`);
 
-const categoryRouter = new Router();
-
 const initCategoryApi = (app, {categoryService}) => {
+  const categoryRouter = new Router();
+
   app.use(ApiPath.CATEGORIES, categoryRouter);
 
   categoryRouter.get(CategoryApiPath.ROOT, async (_req, res) => {
