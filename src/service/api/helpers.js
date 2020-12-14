@@ -1,6 +1,6 @@
 'use strict';
 
-const {readFile} = require(`~/helpers`);
+const {readFile, logger} = require(`~/helpers`);
 const {MOCKS_FILE_PATH} = require(`~/common/constants`);
 
 const data = [];
@@ -15,7 +15,7 @@ const getMockedDate = async () => {
       return data;
     }
   } catch (err) {
-    console.log(err);
+    logger.error(`An error occurred on reading mocked data: ${err.message}.`);
 
     return Promise.reject(err);
   }

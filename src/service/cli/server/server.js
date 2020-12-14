@@ -31,7 +31,7 @@ app.use((req, res) => {
 });
 
 app.use((err, _req, _res, _next) => {
-  logger.error(`An error occured on processing request: ${err.message}`);
+  logger.error(`An error occurred on processing request: ${err.message}`);
 });
 
 module.exports = {
@@ -46,7 +46,7 @@ module.exports = {
 
     server.once(`error`, (err) => {
       return logger.error(
-          `An error occured on server creation: ${err.message}`,
+          `An error occurred on server creation: ${err.message}`,
       );
     });
   },

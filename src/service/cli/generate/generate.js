@@ -1,6 +1,7 @@
 'use strict';
 
 const {CliCommandName, CliExitCode} = require(`~/common/enums`);
+const {logger} = require(`~/helpers`);
 const {
   generatePublications,
   savePublicationsToFile,
@@ -15,8 +16,7 @@ module.exports = {
     const publicationsCount = Number(count) || MocksConfig.DEFAULT_COUNT;
 
     if (publicationsCount > MocksConfig.MAX_COUNT) {
-      console.error(`Не больше 1000 публикаций`);
-
+      logger.error(`An error occurred on creating mocked data: No more than 1000 publications.`);
       process.exit(CliExitCode.ERROR);
     }
 

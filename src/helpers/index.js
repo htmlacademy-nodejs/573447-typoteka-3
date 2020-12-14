@@ -12,7 +12,7 @@ const {
 const {writeToFile, readFile} = require(`./fs`);
 const {paintMessage, getRandomId} = require(`./string`);
 const {checkIsValidByKeys} = require(`./validation`);
-const {getLogger} = require(`./log`);
+const {getLogger, logger} = require(`./log`);
 
 module.exports = {
   getRandomNumber,
@@ -28,4 +28,5 @@ module.exports = {
   getRandomId,
   checkIsValidByKeys,
   getLogger,
+  logger,
 };

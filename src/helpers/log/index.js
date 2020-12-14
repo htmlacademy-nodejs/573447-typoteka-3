@@ -1,7 +1,8 @@
 'use strict';
 
-const {getLogger} = require(`./get-logger.helper`);
+const {getLogger, logger} = require(`./get-logger.helper`);
 
 module.exports = {
   getLogger,
+  logger,
 };

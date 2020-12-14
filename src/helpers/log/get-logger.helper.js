@@ -7,7 +7,7 @@ const LOG_FILE = `./logs/api.log`;
 const isDevMode = ENV.NODE_ENV === AppEnvironment.DEVELOPMENT;
 const defaultLogLevel = isDevMode ? LogLevel.INFO : LogLevel.ERROR;
 
-const loggerInstance = pino(
+const logger = pino(
     {
       name: LoggerName.BASE_LOGGER,
       level: ENV.LOG_LEVEL || defaultLogLevel,
@@ -17,9 +17,10 @@ const loggerInstance = pino(
 );
 
 const getLogger = (options = {}) => {
-  return loggerInstance.child(options);
+  return logger.child(options);
 };
 
 module.exports = {
+  logger,
   getLogger,
 };
