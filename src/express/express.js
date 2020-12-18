@@ -3,7 +3,7 @@
 require(`module-alias/register`);
 const path = require(`path`);
 const express = require(`express`);
-const {SsrPath, HttpCode} = require(`~/common/enums`);
+const {SsrPath, HttpCode, ENV} = require(`~/common/enums`);
 const mainRouter = require(`~/express/routes/main/main.router`);
 const myRouter = require(`~/express/routes/my/my.router`);
 const articlesRouter = require(`~/express/routes/articles/articles.router`);
@@ -29,4 +29,4 @@ app.use((_err, _req, res, _next) =>
 app.set(`views`, path.resolve(__dirname, `templates`));
 app.set(`view engine`, `pug`);
 
-app.listen(DEFAULT_PORT);
+app.listen(ENV.PORT || DEFAULT_PORT);
