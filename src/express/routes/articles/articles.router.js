@@ -5,7 +5,7 @@ const {SsrArticlePath} = require(`~/common/enums`);
 
 const articlesRouter = new Router();
 
-articlesRouter.get(SsrArticlePath.ARTICLE, (_, res) => {
+articlesRouter.get(SsrArticlePath.$ARTICLE_ID, (_, res) => {
   const content = {
     isPost: true,
     article: {
