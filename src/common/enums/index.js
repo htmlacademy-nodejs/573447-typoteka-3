@@ -8,6 +8,8 @@ const {
   SearchApiPath,
   CategoryApiPath,
   ArticlesApiPath,
+  HttpMethod,
+  SuccessHTTPStatusRange,
 } = require(`./api`);
 const {SsrPath, SsrMainPath, SsrArticlePath, SsrMyPath} = require(`./ssr`);
 const {ArticleKey} = require(`./article`);
@@ -29,6 +31,8 @@ module.exports = {
   ArticleKey,
   CommentKey,
   ArticlesApiPath,
+  HttpMethod,
+  SuccessHTTPStatusRange,
   AppEnvironment,
   ENV,
   LogLevel,
