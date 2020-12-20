@@ -1,21 +1,21 @@
 extends layout
 
 block content
+  - const hasResults = Boolean(results.length)
   main
     section.search-page
-      div(class=`search-page__wrapper` + (searchResult.type === `empty` ? ` search-page__wrapper--empty` : ``))
+      div(class=`search-page__wrapper ${!hasResults ? ` search-page__wrapper--empty` : ``}`)
         h1 Поиск
         .search.search-page__form
-          form(action='#' method='get')
+          form(method='get' action='/search')
             label
-              input(type='text' placeholder='Что ищем?')
+              input(value=`${searchValue || ``}` type="search" name="search" placeholder='Что ищем?')
             button.search__button.button.button--transparent(type='submit') Найти
-          if searchResult.type === 'list'
-            each result in searchResult.list
-              .search__result
-                time.search__date(datetime=result.date.stamp)= `${result.date.day}, ${result.date.time}`
-                a.search__link(href=result.link.href)= result.link.text
-        if searchResult.type === `empty`
+          each result in results
+            div.search__result
+              time.search__date(datetime=result.createdDate) 21.03.2019, 20:33
+              a.search__link(href=`/articles/${result.id}`) #{result.title}
+        if !hasResults
           p.search-page__empty Ничего не нашлось
 
 
