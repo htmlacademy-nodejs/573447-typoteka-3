@@ -22,6 +22,7 @@ const MocksConfig = {
     MIN_MONTHS_BREAK: 0,
     MAX_MONTHS_BREAK: 3,
   },
+  IMAGES: [`forest`, `sea`, `forest`],
   CATEGORY: {
     MIN_COUNT: 1,
     MAX_COUNT: 3,

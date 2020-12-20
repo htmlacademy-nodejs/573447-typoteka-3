@@ -56,6 +56,7 @@ const generatePublication = ({titles, descriptions, categories, comments}) => ({
           descriptions.length
       )
   ).join(` `),
+  [ArticleKey.IMAGE]: `${getRandomItem(MocksConfig.IMAGES)}.jpg`,
   [ArticleKey.CATEGORY]: getRandomItems(
       categories,
       getRandomNumber(
