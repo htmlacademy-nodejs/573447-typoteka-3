@@ -63,11 +63,11 @@ class Api {
   }
 
   getCategories() {
-    return this.load(ApiPath.CATEGORIES).then(Api.getData);
+    return this._load(ApiPath.CATEGORIES).then(Api.getData);
   }
 
   createArticle(payload) {
-    return this.load(ApiPath.ARTICLES, {
+    return this._load(ApiPath.ARTICLES, {
       method: HttpMethod.POST,
       data: payload,
     }).then(Api.getData);
