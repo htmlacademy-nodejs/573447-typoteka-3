@@ -24,6 +24,7 @@ const MocksConfig = {
   },
   CATEGORY: {
     MIN_COUNT: 1,
+    MAX_COUNT: 3,
     FILE_PATH: `${DATA_PATH}/categories.txt`,
   },
   COMMENTS: {

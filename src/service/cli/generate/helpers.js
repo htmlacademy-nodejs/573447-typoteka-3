@@ -60,7 +60,7 @@ const generatePublication = ({titles, descriptions, categories, comments}) => ({
       categories,
       getRandomNumber(
           MocksConfig.CATEGORY.MIN_COUNT,
-          categories.length
+          MocksConfig.CATEGORY.MAX_COUNT
       )
   ),
   [ArticleKey.COMMENTS]: generateMockedComments({
@@ -95,11 +95,11 @@ const savePublicationsToFile = async (mockedPublications) => {
   try {
     await writeToFile(MocksConfig.FILE_NAME, JSON.stringify(mockedPublications));
 
-    logger.info(logger(`Operation success. File with mocks was created.`, MessageColor.GREEN));
+    logger.info(paintMessage(`Operation success. File with mocks was created.`, MessageColor.GREEN));
   } catch (err) {
     logger.error(
         paintMessage(
-            `An error occurred on saving mocked-data: can't write mocked-data to file...`,
+            `An error occurred on saving mocked-data: can't write mocked-data to file...: ${err.message}`,
             MessageColor.RED
         )
     );
