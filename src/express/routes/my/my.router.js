@@ -13,7 +13,6 @@ const initMyRouter = (app, settings) => {
     const articles = await api.getArticles();
 
     return res.render(`pages/my/my`, {
-      scriptList: [`js/main.js`],
       articles,
     });
   });

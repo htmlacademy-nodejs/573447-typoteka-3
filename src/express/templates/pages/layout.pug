@@ -16,6 +16,6 @@ html(lang='ru')
       block content
       include ../common/footer
 
-    if scriptList && scriptList.length !== 0
-      each script in scriptList
-        script(src=script)
+    script(src='/js/vendor.js')
+    script(src='/js/main.js')
+

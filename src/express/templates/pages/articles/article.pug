@@ -16,7 +16,7 @@ block content
 
           if article.image
             .post__picture
-              img(src= `img/${article.image.fileName}` alt= article.image.alt)
+              img(src= `img/${article.image}` alt= article.title)
           .post__text
             h3= article.subTitle
             each paragraph in article.text

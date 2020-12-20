@@ -58,7 +58,6 @@ const initMainRouter = (app, settings) => {
         name: `Алёна Фролова`,
         avatar: `img/avatar-2.png`,
       },
-      scriptList: [`js/main.js`],
     });
   });
 };
