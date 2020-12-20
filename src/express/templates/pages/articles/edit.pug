@@ -6,7 +6,7 @@ block content
       div.popup.popup--new-publication.popup--anti
         div.new-publication
           div.new-publication__header
-            h1 #{article.id ? 'Редактирование публикаци' : 'Новая публикация'}
+            h1 #{article.id ? `Редактирование публикаци` : `Новая публикация`}
             div.new-publication__date-form
               h3 Дата публикации
               form(action='#' method='POST')

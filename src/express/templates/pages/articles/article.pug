@@ -6,20 +6,45 @@ block content
       h1.visually-hidden Пост
       section.post__content
         h2.visually-hidden Основное содержание
-        .post__wrapper
-          .post__head
+        div.post__wrapper
+          div.post__head
             a.post__backwards.button.button--backwards(href='#') Назад
-            time.post__date(datetime=article.date.stamp)= `${article.date.day}, ${article.date.time} `
-            h2.post__title.title.title--main= article.title
+            time.post__date(datetime=article.createdDate) 21.03.2019, 20:33
+            h2.post__title.title.title--main #{article.title}
 
             include ../../common/themes
 
-          if article.image
-            .post__picture
-              img(src= `img/${article.image}` alt= article.title)
-          .post__text
-            h3= article.subTitle
-            each paragraph in article.text
-              p= paragraph
-
-      include ../../common/comments
+          div.post__picture
+            img(src= `img/${article.image}` alt= article.title)
+          div.post__text
+            h3 #{article.announce}
+            p #{article.fullText}
+      div.post__wrapper.post__wrapper--comments
+        section.post__comments.comments
+          h2.comments__title.title.title--middle #{article.comments.length ? `Комментарии` : `Комментарии отсутствуют`}
+          ul.comments__list
+            each comment in article.comments
+              li.comments__comment
+                div.comments__avatar.avatar
+                  img(src='img/avatar-1.png' alt='Аватар пользователя')
+                div.comments__text
+                  div.comments__head
+                    p Евгений Петров •
+                    time.comments__date(datetime=article.createdDate) 21.03.2019, 20:33
+                  p.comments__message= comment.text
+          if !account
+            div.comments__footer.comments__footer--visitor
+              button.comments__button.button.button--colored(type=`submit` ) Войти
+              div.comments__registration
+                p.text.text--signature
+                  b.title.title--small Регистрация
+                  | Чтобы присоединиться к переписке нужно зарегистрироваться
+          else if account.type === `user`
+            div.comments__footer.comments__footer--user
+              form(action='#' method='POST')
+                .avatar
+                  img(src= account.avatar alt='Аватар пользователя')
+                label
+                  textarea(rows='1' placeholder='Присоединиться к обсуждению')
+                button.comments__button.button.button--colored(type='submit') Опубликовать
+                //- p.comments__error Сообщение не может быть пустым, напишите что-нибудь!

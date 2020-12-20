@@ -10,10 +10,14 @@ const initMainRouter = (app, settings) => {
   app.use(SsrPath.MAIN, mainRouter);
 
   mainRouter.get(SsrMainPath.ROOT, async (_, res) => {
-    const articles = await api.getArticles();
+    const [articles, catagories] = await Promise.all([
+      api.getArticles(),
+      api.getCategories(),
+    ]);
 
     return res.render(`pages/main`, {
       previews: articles,
+      themes: catagories,
       title: `Типотека`,
       hiddenTitle: ` Главная страница личного блога Типотека`,
       description: `Это приветственный текст, который владелец блога может выбрать, чтобы описать себя 👏`,
