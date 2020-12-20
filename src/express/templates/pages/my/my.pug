@@ -5,7 +5,7 @@ block content
     section.main-page__notes.notes
       h1.notes__title Мои записи
       ul.notes__list
-        each article in articleList
+        each article in articles
           li.notes__list-item
             time.notes__item-time(datetime=article.createdDate) 21.03.2019, 20:33
             a.notes__item-text(href=`/articles/edit/${article.id}`) #{article.title}
