@@ -12,7 +12,7 @@ const initSearchApi = (app, {searchService}) => {
     const {query = ``} = req.query;
 
     if (!query) {
-      return res.status(HttpCode.BAD_REQUEST).json([]);
+      return res.status(HttpCode.OK).json([]);
     }
 
     const articles = searchService.findAll(query);
