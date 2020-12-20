@@ -1,11 +1,11 @@
 'use strict';
 
 const {Router} = require(`express`);
-const {SsrPath, SsrArticlePath} = require(`~/common/enums`);
+const {SsrPath, SsrArticlePath, ArticleKey} = require(`~/common/enums`);
 
 const initArticlesRouter = (app, settings) => {
   const articlesRouter = new Router();
-  const {api} = settings;
+  const {api, storage} = settings;
 
   app.use(SsrPath.ARTICLES, articlesRouter);
 
@@ -25,12 +25,37 @@ const initArticlesRouter = (app, settings) => {
     });
   });
 
-  articlesRouter.get(SsrArticlePath.ADD, (_, res) => {
+  articlesRouter.get(SsrArticlePath.ADD, async (_, res) => {
+    const categories = await api.getCategories();
+
     return res.render(`pages/articles/edit`, {
+      categories,
+      article: {},
       account: {
         type: `admin`,
       },
     });
+  });
+
+
+  articlesRouter.post(SsrArticlePath.ADD, storage.upload.single(`avatar`), async (req, res) => {
+    try {
+      const {body, file} = req;
+      const articleData = {
+        [ArticleKey.IMAGE]: file.filename,
+        [ArticleKey.TITLE]: body.title,
+        [ArticleKey.ANNOUNCE]: body.announce,
+        [ArticleKey.CREATED_DATE]: body.createdDate,
+        [ArticleKey.FULL_TEXT]: body.fullText,
+        [ArticleKey.CATEGORY]: body.category,
+      };
+
+      await api.createArticle(articleData);
+
+      return res.redirect(SsrPath.MY);
+    } catch (err) {
+      return res.redirect(`back`);
+    }
   });
 
   articlesRouter.get(SsrArticlePath.$ARTICLE_ID, async (req, res) => {
