@@ -6,7 +6,7 @@ const express = require(`express`);
 const {Api} = require(`~/express/services`);
 const {SsrPath, HttpCode} = require(`~/common/enums`);
 const {initMainRouter} = require(`~/express/routes/main/main.router`);
-const myRouter = require(`~/express/routes/my/my.router`);
+const {initMyRouter} = require(`~/express/routes/my/my.router`);
 const articlesRouter = require(`~/express/routes/articles/articles.router`);
 const {AppConfig} = require(`./common`);
 
@@ -18,13 +18,12 @@ const api = new Api({
 const routerSettings = {
   api,
 };
-const routerInits = [initMainRouter];
+const routerInits = [initMainRouter, initMyRouter];
 
 routerInits.forEach((initRouter) => {
   initRouter(app, routerSettings);
 });
 
-app.use(SsrPath.MY, myRouter);
 app.use(SsrPath.ARTICLES, articlesRouter);
 
 app.use(express.static(path.resolve(__dirname, AppConfig.PUBLIC_DIR)));
