@@ -39,22 +39,30 @@ const initArticlesRouter = (app, settings) => {
 
 
   articlesRouter.post(SsrArticlePath.ADD, storage.upload.single(`avatar`), async (req, res) => {
-    try {
-      const {body, file} = req;
-      const articleData = {
-        [ArticleKey.IMAGE]: file.filename,
-        [ArticleKey.TITLE]: body.title,
-        [ArticleKey.ANNOUNCE]: body.announce,
-        [ArticleKey.CREATED_DATE]: body.createdDate,
-        [ArticleKey.FULL_TEXT]: body.fullText,
-        [ArticleKey.CATEGORY]: body.category,
-      };
+    const {body, file} = req;
+    const articleData = {
+      [ArticleKey.IMAGE]: file.filename,
+      [ArticleKey.TITLE]: body.title,
+      [ArticleKey.ANNOUNCE]: body.announce,
+      [ArticleKey.CREATED_DATE]: body.createdDate,
+      [ArticleKey.FULL_TEXT]: body.fullText,
+      [ArticleKey.CATEGORY]: body.category,
+    };
 
+    try {
       await api.createArticle(articleData);
 
       return res.redirect(SsrPath.MY);
     } catch (err) {
-      return res.redirect(`back`);
+      const categories = await api.getCategories();
+
+      return res.render(`pages/articles/edit`, {
+        article: articleData,
+        categories,
+        account: {
+          type: `admin`,
+        },
+      });
     }
   });
 
