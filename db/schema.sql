@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS categories;
 DROP TABLE IF EXISTS articles;
 DROP TABLE IF EXISTS comments;
+DROP TABLE IF EXISTS articles_categories;
 
 CREATE TABLE users
 (
@@ -42,6 +43,21 @@ CREATE TABLE comments
 
   user_id INTEGER NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users (id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
+);
+
+CREATE TABLE articles_categories
+(
+  CONSTRAINT articles_categories_pk PRIMARY KEY (articles_id, category_id),
+
+  articles_id INTEGER NOT NULL,
+  FOREIGN KEY (articles_id) REFERENCES articles (id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+
+  category_id INTEGER NOT NULL,
+  FOREIGN KEY (category_id) REFERENCES categories (id)
     ON UPDATE CASCADE
     ON DELETE CASCADE
 );
