@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS categories;
+DROP TABLE IF EXISTS articles;
 
 CREATE TABLE users
 (
@@ -14,5 +15,20 @@ CREATE TABLE users
 CREATE TABLE categories
 (
   id SERIAL PRIMARY KEY,
-  name VARCHAR(50)
+  name VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE articles
+(
+  id SERIAL PRIMARY KEY,
+  title VARCHAR(100) NOT NULL,
+  created_date DATE NOT NULL,
+  announce VARCHAR(150) NOT NULL,
+  full_text VARCHAR(1000) NOT NULL,
+  image VARCHAR(50) NOT NULL,
+
+  user_id INTEGER NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users (id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
 )
