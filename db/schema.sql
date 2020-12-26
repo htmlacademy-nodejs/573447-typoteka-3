@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS categories;
 
 CREATE TABLE users
 (
@@ -9,3 +10,9 @@ CREATE TABLE users
   password VARCHAR(50) NOT NULL,
   picture VARCHAR(50) NOT NULL
 );
+
+CREATE TABLE categories
+(
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(50)
+)
