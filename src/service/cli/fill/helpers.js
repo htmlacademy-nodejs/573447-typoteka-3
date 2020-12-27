@@ -66,6 +66,20 @@ const generateArticlesSqlRows = ({users}, mockedPublications) => {
   });
 };
 
+const generateArticlesCategoriesRows = ({categories}, mockedPublications) => {
+  return mockedPublications.reduce((acc, publication, idx) => {
+    const publicationCategorySql = publication.category.map((category) => {
+      const currentCategoryIdx = categories.findIndex((it) => it === category);
+      const publicationId = idx + INCREASE_COUNT_FOR_IDX;
+      const categoryId = currentCategoryIdx + INCREASE_COUNT_FOR_IDX;
+
+      return `(${publicationId}, ${categoryId})`;
+    });
+
+    return [...acc, ...publicationCategorySql];
+  }, []);
+};
+
 module.exports = {
   generateInsertSql,
   generateInsertSqlRow,
@@ -74,4 +88,5 @@ module.exports = {
   generateUsersSqlRows,
   generateCommentsSqlRows,
   generateArticlesSqlRows,
+  generateArticlesCategoriesRows,
 };

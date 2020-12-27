@@ -14,7 +14,8 @@ const {
   generateCategoriesSqlRows,
   generateUsersSqlRows,
   generateCommentsSqlRows,
-  generateArticlesSqlRows
+  generateArticlesSqlRows,
+  generateArticlesCategoriesRows,
 } = require(`./helpers`);
 const {FILL_FILE_PATH, TableName} = require(`./common`);
 
@@ -23,6 +24,7 @@ const tableNameToSqlRowsGenerator = {
   [TableName.CATEGORIES]: generateCategoriesSqlRows,
   [TableName.COMMENTS]: generateCommentsSqlRows,
   [TableName.ARTICLES]: generateArticlesSqlRows,
+  [TableName.ARTICLES_CATEGORIES]: generateArticlesCategoriesRows,
 };
 
 module.exports = {
