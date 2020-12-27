@@ -25,8 +25,8 @@ CREATE TABLE articles
   id SERIAL PRIMARY KEY,
   title VARCHAR(100) NOT NULL,
   created_date DATE NOT NULL,
-  announce VARCHAR(150) NOT NULL,
-  full_text VARCHAR(1000) NOT NULL,
+  announce VARCHAR(500) NOT NULL,
+  full_text VARCHAR(1500) NOT NULL,
   image VARCHAR(50) NOT NULL,
 
   user_id INTEGER NOT NULL,
@@ -38,13 +38,13 @@ CREATE TABLE articles
 CREATE TABLE comments
 (
   id SERIAL PRIMARY KEY,
-  text VARCHAR(1000) NOT NULL,
   created_date DATE NOT NULL,
+  text VARCHAR(1500) NOT NULL,
 
   user_id INTEGER NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users (id)
     ON UPDATE CASCADE
-    ON DELETE CASCADE
+    ON DELETE CASCADE,
 
   article_id INTEGER NOT NULL,
   FOREIGN KEY (article_id) REFERENCES articles (id)
@@ -54,8 +54,8 @@ CREATE TABLE comments
 
 CREATE TABLE articles_categories
 (
-  articles_id INTEGER NOT NULL,
-  FOREIGN KEY (articles_id) REFERENCES articles (id)
+  article_id INTEGER NOT NULL,
+  FOREIGN KEY (article_id) REFERENCES articles (id)
     ON UPDATE CASCADE
     ON DELETE CASCADE,
 
@@ -64,5 +64,5 @@ CREATE TABLE articles_categories
     ON UPDATE CASCADE
     ON DELETE CASCADE,
 
-  CONSTRAINT articles_categories_pk PRIMARY KEY (articles_id, category_id)
+  CONSTRAINT articles_categories_pk PRIMARY KEY (article_id, category_id)
 );
