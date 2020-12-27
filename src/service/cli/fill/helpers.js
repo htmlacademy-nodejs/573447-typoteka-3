@@ -55,6 +55,17 @@ const generateCommentsSqlRows = ({users}, mockedPublications) => {
   }, []);
 };
 
+const generateArticlesSqlRows = ({users}, mockedPublications) => {
+  return mockedPublications.map((article) => {
+    const createdDate = article.createdDate.toISOString();
+    const userId = getRandomNumber(INCREASE_COUNT_FOR_IDX, users.length);
+
+    return generateInsertSqlRow(
+        `'${article.title}', '${createdDate}', '${article.announce}', '${article.fullText}', '${article.image}', ${userId}`
+    );
+  });
+};
+
 module.exports = {
   generateInsertSql,
   generateInsertSqlRow,
@@ -62,4 +73,5 @@ module.exports = {
   generateCategoriesSqlRows,
   generateUsersSqlRows,
   generateCommentsSqlRows,
+  generateArticlesSqlRows,
 };
