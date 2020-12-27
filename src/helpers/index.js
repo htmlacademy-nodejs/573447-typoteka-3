@@ -19,7 +19,7 @@ const {
   generateMockedComments,
   generatePublication,
   generatePublications,
-  getPublicationsData,
+  getMockedPublicationsData,
   readPublicationsFileContent,
 } = require(`./mocks`);
 
@@ -43,6 +43,6 @@ module.exports = {
   generateMockedComments,
   generatePublication,
   generatePublications,
-  getPublicationsData,
+  getMockedPublicationsData,
   readPublicationsFileContent,
 };

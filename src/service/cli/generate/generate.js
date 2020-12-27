@@ -4,7 +4,7 @@ const {
   logger,
   paintMessage,
   generatePublications,
-  getPublicationsData,
+  getMockedPublicationsData,
 } = require(`~/helpers`);
 const {
   CliCommandName,
@@ -29,7 +29,7 @@ module.exports = {
       process.exit(CliExitCode.ERROR);
     }
 
-    const {titles, descriptions, categories, comments} = await getPublicationsData();
+    const {titles, descriptions, categories, comments} = await getMockedPublicationsData();
     const mockedPublications = generatePublications({
       count: publicationsCount,
       titles,
