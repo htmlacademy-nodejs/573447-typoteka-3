@@ -54,8 +54,6 @@ CREATE TABLE comments
 
 CREATE TABLE articles_categories
 (
-  CONSTRAINT articles_categories_pk PRIMARY KEY (articles_id, category_id),
-
   articles_id INTEGER NOT NULL,
   FOREIGN KEY (articles_id) REFERENCES articles (id)
     ON UPDATE CASCADE
@@ -64,5 +62,7 @@ CREATE TABLE articles_categories
   category_id INTEGER NOT NULL,
   FOREIGN KEY (category_id) REFERENCES categories (id)
     ON UPDATE CASCADE
-    ON DELETE CASCADE
+    ON DELETE CASCADE,
+
+  CONSTRAINT articles_categories_pk PRIMARY KEY (articles_id, category_id)
 );
