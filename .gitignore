@@ -10,8 +10,11 @@ Thumbs.db
 # Вспомогательные файлы
 *.log*
 node_modules/
-mocks.json
 .env
+
+# Моки
+mocks.json
+fill-db.sql
 
 # Директория с загруженными изображениями
 src/express/upload/img/*.*
