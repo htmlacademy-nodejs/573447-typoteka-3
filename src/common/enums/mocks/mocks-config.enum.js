@@ -34,6 +34,15 @@ const MocksConfig = {
     MIN_SENTENCES_COUNT: 1,
     MAX_SENTENCES_COUNT: 3,
   },
+  USER_PICTURE: {
+    NUMBER: {
+      MIN: 1,
+      MAX: 5,
+    },
+  },
+  USERS: {
+    FILE_PATH: `${DATA_PATH}/users.txt`,
+  },
 };
 
 module.exports = {

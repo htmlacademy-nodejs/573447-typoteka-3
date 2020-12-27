@@ -10,12 +10,14 @@ const {
 const {CliCommandName, MocksConfig, MessageColor} = require(`~/common/enums`);
 const {
   generateInsertSql,
-  generateCategoriesSqlRows,
   joinSqlCommands,
+  generateCategoriesSqlRows,
+  generateUsersSqlRows
 } = require(`./helpers`);
 const {FILL_FILE_PATH, TableName} = require(`./common`);
 
 const tableNameToSqlRowsGenerator = {
+  [TableName.USERS]: generateUsersSqlRows,
   [TableName.CATEGORIES]: generateCategoriesSqlRows,
 };
 

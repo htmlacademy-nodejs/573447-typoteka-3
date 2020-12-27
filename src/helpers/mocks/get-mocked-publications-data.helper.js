@@ -10,10 +10,11 @@ const dataPaths = [
   MocksConfig.TEXT.FILE_PATH,
   MocksConfig.CATEGORY.FILE_PATH,
   MocksConfig.COMMENTS.FILE_PATH,
+  MocksConfig.USERS.FILE_PATH,
 ];
 
 const getMockedPublicationsData = async () => {
-  const [titles, descriptions, categories, comments] = await Promise.all(
+  const [titles, descriptions, categories, comments, users] = await Promise.all(
       dataPaths.map((path) => readPublicationsFileContent(path))
   );
 
@@ -22,6 +23,7 @@ const getMockedPublicationsData = async () => {
     descriptions,
     categories,
     comments,
+    users,
   };
 };
 
