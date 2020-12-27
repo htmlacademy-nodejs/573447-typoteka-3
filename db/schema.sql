@@ -45,6 +45,11 @@ CREATE TABLE comments
   FOREIGN KEY (user_id) REFERENCES users (id)
     ON UPDATE CASCADE
     ON DELETE CASCADE
+
+  article_id INTEGER NOT NULL,
+  FOREIGN KEY (article_id) REFERENCES articles (id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
 );
 
 CREATE TABLE articles_categories
