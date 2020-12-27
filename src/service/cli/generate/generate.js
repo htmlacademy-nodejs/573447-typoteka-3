@@ -1,20 +1,24 @@
 'use strict';
 
-const {logger, paintMessage} = require(`~/helpers`);
-const {CliCommandName, CliExitCode, MessageColor} = require(`~/common/enums`);
 const {
+  logger,
+  paintMessage,
   generatePublications,
-  savePublicationsToFile,
   getPublicationsData,
-} = require(`./helpers`);
-const {MocksConfig} = require(`./common`);
+} = require(`~/helpers`);
+const {
+  CliCommandName,
+  CliExitCode,
+  MessageColor,
+  MocksConfig,
+} = require(`~/common/enums`);
+const {savePublicationsToFile} = require(`./helpers`);
 
 module.exports = {
   name: CliCommandName.GENERATE,
   async run(args) {
     const [count] = args;
     const publicationsCount = Number(count) || MocksConfig.DEFAULT_COUNT;
-
     if (publicationsCount > MocksConfig.MAX_COUNT) {
       logger.error(
           paintMessage(

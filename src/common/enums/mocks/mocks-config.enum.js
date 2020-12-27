@@ -2,7 +2,6 @@
 
 const {MOCKS_FILE_PATH} = require(`~/common/constants`);
 
-const MONTH_MILLISECONDS = 2592000000;
 const DATA_PATH = `./data`;
 
 const MocksConfig = {
@@ -38,6 +37,5 @@ const MocksConfig = {
 };
 
 module.exports = {
-  MONTH_MILLISECONDS,
   MocksConfig,
 };

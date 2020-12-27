@@ -14,6 +14,14 @@ const {paintMessage, getRandomId} = require(`./string`);
 const {checkIsValidByKeys} = require(`./validation`);
 const {getLogger, logger} = require(`./log`);
 const {getFileExtension} = require(`./file`);
+const {
+  generateMockedComment,
+  generateMockedComments,
+  generatePublication,
+  generatePublications,
+  getPublicationsData,
+  readPublicationsFileContent,
+} = require(`./mocks`);
 
 module.exports = {
   getRandomNumber,
@@ -31,4 +39,10 @@ module.exports = {
   getLogger,
   getFileExtension,
   logger,
+  generateMockedComment,
+  generateMockedComments,
+  generatePublication,
+  generatePublications,
+  getPublicationsData,
+  readPublicationsFileContent,
 };
