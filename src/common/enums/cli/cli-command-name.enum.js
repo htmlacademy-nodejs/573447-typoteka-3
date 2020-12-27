@@ -5,6 +5,7 @@ const CliCommandName = {
   HELP: `--help`,
   GENERATE: `--generate`,
   SERVER: `--server`,
+  FILL: `--fill`,
 };
 
 module.exports = {
