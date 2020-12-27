@@ -2,6 +2,7 @@
 
 const {getRandomId, getRandomNumber} = require(`~/helpers`);
 const {MocksConfig} = require(`~/common/enums`);
+const {INCREASE_COUNT_FOR_IDX} = require(`~/common/constants`);
 
 const generateInsertSql = (tableName, rows) => {
   const comment = `/* ${tableName} */ `;
@@ -38,10 +39,27 @@ const generateUsersSqlRows = ({users}) => {
   });
 };
 
+const generateCommentsSqlRows = ({users}, mockedPublications) => {
+  return mockedPublications.reduce((acc, publication, idx) => {
+    const commentsSqls = publication.comments.map((comment) => {
+      const createdDate = new Date().toISOString();
+      const userId = getRandomNumber(INCREASE_COUNT_FOR_IDX, users.length);
+      const publicationIdx = idx + INCREASE_COUNT_FOR_IDX;
+
+      return generateInsertSqlRow(
+          `'${createdDate}', '${comment.text}', ${userId}, ${publicationIdx}`
+      );
+    });
+
+    return [...acc, ...commentsSqls];
+  }, []);
+};
+
 module.exports = {
   generateInsertSql,
   generateInsertSqlRow,
   joinSqlCommands,
   generateCategoriesSqlRows,
   generateUsersSqlRows,
+  generateCommentsSqlRows,
 };

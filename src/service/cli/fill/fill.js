@@ -12,13 +12,15 @@ const {
   generateInsertSql,
   joinSqlCommands,
   generateCategoriesSqlRows,
-  generateUsersSqlRows
+  generateUsersSqlRows,
+  generateCommentsSqlRows,
 } = require(`./helpers`);
 const {FILL_FILE_PATH, TableName} = require(`./common`);
 
 const tableNameToSqlRowsGenerator = {
   [TableName.USERS]: generateUsersSqlRows,
   [TableName.CATEGORIES]: generateCategoriesSqlRows,
+  [TableName.COMMENTS]: generateCommentsSqlRows,
 };
 
 module.exports = {
