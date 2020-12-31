@@ -79,3 +79,15 @@ GROUP BY
   users.first_name,
   users.last_name,
   users.email;
+
+/* Last 5 comments */
+SELECT
+	comments.id,
+	comments.article_id,
+	concat(users.first_name, ' ', users.last_name) AS "user_full_name",
+  comments.text
+FROM comments
+INNER JOIN users
+	ON comments.user_id = users.id
+ORDER by comments.id DESC
+LIMIT 5;
