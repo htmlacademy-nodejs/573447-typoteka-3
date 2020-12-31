@@ -19,3 +19,33 @@ FROM
 GROUP BY
   articles_categories.category_id,
   categories.name;
+
+/* All articles */
+SELECT
+  articles.id,
+  articles.title,
+  articles.announce,
+  articles.created_date,
+  concat(users.first_name, ' ', users.last_name) AS "user_full_name",
+  users.email,
+  count(comments.article_id) AS "comments_count",
+  (
+ 		SELECT
+ 			string_agg(categories.name, ', ') AS "categories"
+ 		FROM articles_categories
+ 		LEFT JOIN categories
+ 			ON articles_categories.category_id = categories.id
+			AND articles_categories.article_id = articles.id
+	)
+FROM
+  articles
+  INNER JOIN users
+    ON articles.user_id = users.id
+  INNER JOIN comments
+    ON articles.id = comments.article_id
+GROUP BY
+  articles.id,
+  users.first_name,
+  users.last_name,
+  users.email
+ORDER BY articles.created_date DESC;
