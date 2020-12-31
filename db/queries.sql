@@ -91,3 +91,15 @@ INNER JOIN users
 	ON comments.user_id = users.id
 ORDER by comments.id DESC
 LIMIT 5;
+
+/* Comment by article id */
+SELECT
+	comments.id,
+	comments.article_id,
+	comments.text,
+	concat(users.first_name, ' ', users.last_name) AS "user_full_name"
+FROM comments
+INNER JOIN users
+	ON comments.user_id = users.id
+WHERE comments.article_id = 1
+ORDER by comments.id DESC;
