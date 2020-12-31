@@ -103,3 +103,8 @@ INNER JOIN users
 	ON comments.user_id = users.id
 WHERE comments.article_id = 1
 ORDER by comments.id DESC;
+
+/* Update articles */
+UPDATE articles
+SET title = 'Как я встретил Новый год'
+WHERE articles.id = 2;
