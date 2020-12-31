@@ -92,7 +92,7 @@ INNER JOIN users
 ORDER by comments.id DESC
 LIMIT 5;
 
-/* Comment by article id */
+/* Comments by article id */
 SELECT
 	comments.id,
 	comments.article_id,
