@@ -17,8 +17,8 @@
     "~": "src"
   },
   "scripts": {
-    "start": "node ./src/service/service.js",
-    "start:debug": "cross-env LOG_LEVEL=debug node ./src/service/service.js --server | pino-pretty",
+    "start": "LOG_LEVEL=error node -r dotenv/config ./src/service/service.js",
+    "start:debug": "LOG_LEVEL=debug node -r dotenv/config ./src/service/service.js --server | pino-pretty",
     "start:front-server": "nodemon ./src/express/express.js",
     "server": "nodemon ./src/service/service.js --server",
     "test": "npm run eslint && npm run jest",
