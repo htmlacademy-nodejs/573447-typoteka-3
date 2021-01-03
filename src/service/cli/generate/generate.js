@@ -1,7 +1,6 @@
 'use strict';
 
 const {
-  logger,
   paintMessage,
   generatePublications,
   getMockedPublicationsData,
@@ -20,7 +19,7 @@ module.exports = {
     const [count] = args;
     const publicationsCount = Number(count) || MocksConfig.DEFAULT_COUNT;
     if (publicationsCount > MocksConfig.MAX_COUNT) {
-      logger.error(
+      console.error(
           paintMessage(
               `An error occurred on creating mocked data: No more than 1000 publications.`,
               MessageColor.RED

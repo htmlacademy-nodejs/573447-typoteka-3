@@ -1,13 +1,13 @@
 'use strict';
 
-const {logger, paintMessage} = require(`~/helpers`);
+const {paintMessage} = require(`~/helpers`);
 const {CliCommandName, MessageColor} = require(`~/common/enums`);
 const packageJsonFile = require(`~/../package.json`);
 
 const checkAppVersion = () => {
   const {version} = packageJsonFile;
 
-  logger.info(paintMessage(version, MessageColor.BLUE));
+  console.info(paintMessage(version, MessageColor.BLUE));
 };
 
 module.exports = {

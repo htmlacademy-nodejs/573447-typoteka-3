@@ -1,6 +1,6 @@
 'use strict';
 
-const {logger, paintMessage} = require(`~/helpers`);
+const {paintMessage} = require(`~/helpers`);
 const {CliCommandName, MessageColor} = require(`~/common/enums`);
 
 const outputHelpInfo = () => {
@@ -16,7 +16,7 @@ const outputHelpInfo = () => {
     --generate <count>    формирует файл mocks.json
   `;
 
-  logger.info(paintMessage(text, MessageColor.GRAY));
+  console.info(paintMessage(text, MessageColor.GRAY));
 };
 
 module.exports = {
