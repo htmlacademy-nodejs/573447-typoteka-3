@@ -2,6 +2,7 @@
 
 const express = require(`express`);
 const apiRouter = require(`~/service/api/api`);
+const sequelize = require(`~/service/db/db`);
 const {getLogger, paintMessage} = require(`~/helpers`);
 const {CliCommandName, HttpCode, LoggerName, MessageColor} = require(`~/common/enums`);
 const {API_PREFIX} = require(`~/common/constants`);
@@ -43,7 +44,19 @@ app.use((err, _req, _res, _next) => {
 
 module.exports = {
   name: CliCommandName.SERVER,
-  run(args) {
+  async run(args) {
+    try {
+      logger.info(`Trying to connect to database...`);
+
+      await sequelize.authenticate();
+
+      logger.info(`Connection to database established`);
+    } catch (err) {
+      logger.error(`An error occured: ${err.message}`);
+
+      throw err;
+    }
+
     const [customPort] = args;
     const port = Number(customPort) || DEFAULT_PORT;
 
