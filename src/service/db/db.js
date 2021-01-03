@@ -1,10 +1,10 @@
 'use strict';
 
 const {Sequelize} = require(`sequelize`);
-const {ENV} = require(`~/common/enums`);
+const {ENV, AppEnvironment} = require(`~/common/enums`);
 const {dbConfig} = require(`./sequelize-config`);
 
-const config = dbConfig[ENV.NODE_ENV];
+const config = dbConfig[ENV.NODE_ENV || AppEnvironment.DEVELOPMENT];
 
 const sequelize = new Sequelize(
     config.database,
