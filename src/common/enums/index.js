@@ -16,6 +16,7 @@ const {ArticleKey} = require(`./article`);
 const {CommentKey} = require(`./comment`);
 const {AppEnvironment, ENV, LogLevel, LoggerName} = require(`./app`);
 const {MocksConfig} = require(`./mocks`);
+const {ModelAlias, ModelName, TableName} = require(`./db`);
 
 module.exports = {
   CliCommandName,
@@ -38,5 +39,8 @@ module.exports = {
   ENV,
   LogLevel,
   LoggerName,
-  MocksConfig
+  MocksConfig,
+  ModelAlias,
+  ModelName,
+  TableName,
 };
