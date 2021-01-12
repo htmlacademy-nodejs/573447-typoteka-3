@@ -1,53 +1,52 @@
 'use strict';
 
-const {
-  getArticleById,
-  getNewArticle,
-  updateArticle,
-  removeArticle,
-} = require(`./helpers`);
+const {ModelAlias} = require(`~/common/enums`);
 
 class Articles {
-  constructor({articles}) {
-    this._articles = articles;
+  constructor({articleModel}) {
+    this._Article = articleModel;
   }
 
-  findAll() {
-    return this._articles;
+  async findAll() {
+    const offers = await this._Article.findAll({
+      include: [ModelAlias.CATEGORIES, ModelAlias.COMMENTS],
+    });
+
+    return offers.map((item) => item.get());
   }
 
   findOne(id) {
-    const articleById = getArticleById(this._articles, id);
-
-    return articleById;
+    return this._Article.findByPk(id, {
+      include: [ModelAlias.CATEGORIES, ModelAlias.COMMENTS],
+    });
   }
 
-  create(article) {
-    const newArticle = getNewArticle(article);
+  async create(createdArticle) {
+    const article = await this._Article.create(createdArticle);
 
-    this._articles.push(newArticle);
+    await article.addCategories(createdArticle.categories);
 
-    return newArticle;
+    return article.get();
   }
 
-  update(article, articleId) {
-    this._articles = updateArticle(this._articles, articleId, article);
+  async update(article, articleId) {
+    const [affectedRows] = await this._Article.update(article, {
+      where: {
+        id: articleId,
+      },
+    });
 
-    const updatedArticle = getArticleById(this._articles, articleId);
-
-    return updatedArticle;
+    return Boolean(affectedRows);
   }
 
-  drop(id) {
-    const deletedArticle = getArticleById(this._articles, id);
+  async drop(articleId) {
+    const deletedRows = await this._Article.destroy({
+      where: {
+        id: articleId,
+      },
+    });
 
-    if (!deletedArticle) {
-      return null;
-    }
-
-    this._articles = removeArticle(this._articles, deletedArticle);
-
-    return deletedArticle;
+    return Boolean(deletedRows);
   }
 }
 
