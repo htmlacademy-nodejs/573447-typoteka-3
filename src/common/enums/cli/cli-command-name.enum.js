@@ -3,9 +3,9 @@
 const CliCommandName = {
   VERSION: `--version`,
   HELP: `--help`,
-  GENERATE: `--generate`,
   SERVER: `--server`,
   FILL: `--fill`,
+  FILLDB: `--filldb`,
 };
 
 module.exports = {

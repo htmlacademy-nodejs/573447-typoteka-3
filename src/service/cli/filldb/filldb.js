@@ -1,9 +1,12 @@
 'use strict';
 
+const sequelize = require(`~/service/db/db`);
+const {initDb} = require(`~/service/db/init-db`);
 const {
   paintMessage,
   generatePublications,
   getMockedPublicationsData,
+  logger
 } = require(`~/helpers`);
 const {
   CliCommandName,
@@ -11,11 +14,22 @@ const {
   MessageColor,
   MocksConfig,
 } = require(`~/common/enums`);
-const {savePublicationsToFile} = require(`./helpers`);
 
 module.exports = {
-  name: CliCommandName.GENERATE,
+  name: CliCommandName.FILLDB,
   async run(args) {
+    try {
+      logger.info(`Trying to connect to database...`);
+
+      await sequelize.authenticate();
+
+      logger.info(`Connection to database established`);
+    } catch (err) {
+      logger.error(`An error occurred: ${err.message}`);
+
+      throw err;
+    }
+
     const [count] = args;
     const publicationsCount = Number(count) || MocksConfig.DEFAULT_COUNT;
     if (publicationsCount > MocksConfig.MAX_COUNT) {
@@ -28,7 +42,12 @@ module.exports = {
       process.exit(CliExitCode.ERROR);
     }
 
-    const {titles, descriptions, categories, comments} = await getMockedPublicationsData();
+    const {
+      titles,
+      descriptions,
+      categories,
+      comments,
+    } = await getMockedPublicationsData();
     const mockedPublications = generatePublications({
       count: publicationsCount,
       titles,
@@ -37,6 +56,9 @@ module.exports = {
       comments,
     });
 
-    await savePublicationsToFile(mockedPublications);
+    initDb(sequelize, {
+      articles: mockedPublications,
+      categories,
+    });
   },
 };
