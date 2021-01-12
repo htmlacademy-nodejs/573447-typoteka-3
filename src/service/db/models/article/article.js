@@ -14,19 +14,19 @@ const define = (sequelize) => {
           allowNull: false,
         },
         [ArticleKey.TITLE]: {
-          type: DataTypes.STRING,
+          type: new DataTypes.STRING(150),
           allowNull: false,
         },
         [ArticleKey.ANNOUNCE]: {
-          type: DataTypes.STRING,
+          type: new DataTypes.STRING(350),
           allowNull: false,
         },
         [ArticleKey.FULL_TEXT]: {
-          type: DataTypes.STRING,
+          type: DataTypes.TEXT,
           allowNull: false
         },
         [ArticleKey.IMAGE]: {
-          type: DataTypes.STRING,
+          type: new DataTypes.STRING(150),
         },
       },
       {

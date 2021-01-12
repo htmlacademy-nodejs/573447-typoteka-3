@@ -4,7 +4,7 @@ const {defineModels} = require(`~/service/db/define-models`);
 const {ModelAlias} = require(`~/common/enums`);
 
 const initDb = async (sequelize, {categories, articles}) => {
-  const {Category, Article} = defineModels;
+  const {Category, Article} = defineModels(sequelize);
 
   await sequelize.sync({
     force: true,
