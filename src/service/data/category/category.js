@@ -1,17 +1,14 @@
 'use strict';
 
-const {getUniqueItems} = require(`~/helpers`);
-const {getCategories} = require(`./helpers`);
-
 class Category {
-  constructor({articles}) {
-    this._articles = articles;
+  constructor({categoryModel}) {
+    this._Category = categoryModel;
   }
 
   findAll() {
-    const categories = getUniqueItems(getCategories(this._articles));
-
-    return categories;
+    return this._Category.findAll({
+      raw: true,
+    });
   }
 }
 
