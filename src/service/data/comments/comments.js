@@ -1,30 +1,34 @@
 'use strict';
 
-const {getNewComment, getCommentById, removeComment} = require(`./helpers`);
-
 class Comments {
-  findAll(article) {
-    return article.comments;
+  constructor({commentModel}) {
+    this._Comment = commentModel;
+  }
+
+  findAll(articleId) {
+    return this._Comment.findAll({
+      where: {
+        articleId,
+      },
+      raw: true,
+    });
   }
 
   create(article, comment) {
-    const newComment = getNewComment(comment);
-
-    article.comments.push(newComment);
-
-    return newComment;
+    return this._Comment.create({
+      articleId: article.id,
+      ...comment,
+    });
   }
 
-  drop(article, commentId) {
-    const removedComment = getCommentById(article.comments, commentId);
+  async drop(commentId) {
+    const deletedRows = await this._Comment.destroy({
+      where: {
+        id: commentId,
+      },
+    });
 
-    if (!removedComment) {
-      return null;
-    }
-
-    article.comments = removeComment(article.comments, removedComment);
-
-    return removedComment;
+    return Boolean(deletedRows);
   }
 }
 
