@@ -1,19 +1,23 @@
 'use strict';
 
-const {getArticlesByTitleValue} = require(`./helpers`);
+const {ModelAlias, DbOperator} = require(`~/common/enums`);
 
 class Search {
-  constructor({articles}) {
-    this._articles = articles;
+  constructor({articleModel}) {
+    this._Article = articleModel;
   }
 
-  findAll(titleValue) {
-    const articlesByTitleValue = getArticlesByTitleValue(
-        this._articles,
-        titleValue
-    );
+  async findAll(titleValue) {
+    const offers = await this._Article.findAll({
+      where: {
+        title: {
+          [DbOperator.substring]: titleValue,
+        },
+      },
+      include: [ModelAlias.CATEGORIES, ModelAlias.COMMENTS],
+    });
 
-    return articlesByTitleValue;
+    return offers.map((offer) => offer.get());
   }
 }
 
