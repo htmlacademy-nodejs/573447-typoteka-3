@@ -15,7 +15,7 @@ const initSearchApi = (app, {searchService}) => {
       return res.status(HttpCode.OK).json([]);
     }
 
-    const articles = searchService.findAll(query);
+    const articles = await searchService.findAll(query);
 
     return res.status(HttpCode.OK).json(articles);
   });
