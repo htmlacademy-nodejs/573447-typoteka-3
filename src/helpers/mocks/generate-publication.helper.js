@@ -2,7 +2,6 @@
 
 const {getRandomNumber} = require(`~/helpers/number`);
 const {getRandomItem, getRandomItems} = require(`~/helpers/array`);
-const {getRandomId} = require(`~/helpers/string`);
 const {
   generateMockedComments,
 } = require(`~/helpers/mocks/generate-mocked-comments.helper`);
@@ -11,7 +10,6 @@ const {MocksConfig, ArticleKey} = require(`~/common/enums`);
 const MONTH_MILLISECONDS = 2592000000;
 
 const generatePublication = ({titles, descriptions, categories, comments}) => ({
-  [ArticleKey.ID]: getRandomId(),
   [ArticleKey.TITLE]: getRandomItem(titles),
   [ArticleKey.CREATED_DATE]: new Date(
       Date.now() -
@@ -35,7 +33,7 @@ const generatePublication = ({titles, descriptions, categories, comments}) => ({
       )
   ).join(` `),
   [ArticleKey.IMAGE]: `${getRandomItem(MocksConfig.IMAGES)}.jpg`,
-  [ArticleKey.CATEGORY]: getRandomItems(
+  [ArticleKey.CATEGORIES]: getRandomItems(
       categories,
       getRandomNumber(
           MocksConfig.CATEGORY.MIN_COUNT,

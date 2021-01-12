@@ -6,7 +6,7 @@ const articleRequireKeys = [
   ArticleKey.TITLE,
   ArticleKey.ANNOUNCE,
   ArticleKey.FULL_TEXT,
-  ArticleKey.CATEGORY,
+  ArticleKey.CATEGORIES,
 ];
 
 module.exports = {

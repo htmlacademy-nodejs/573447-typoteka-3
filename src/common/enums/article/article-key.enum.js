@@ -7,7 +7,7 @@ const ArticleKey = {
   IMAGE: `image`,
   ANNOUNCE: `announce`,
   FULL_TEXT: `fullText`,
-  CATEGORY: `category`,
+  CATEGORIES: `categories`,
   COMMENTS: `comments`,
 };
 

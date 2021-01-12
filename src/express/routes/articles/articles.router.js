@@ -46,7 +46,7 @@ const initArticlesRouter = (app, settings) => {
       [ArticleKey.ANNOUNCE]: body.announce,
       [ArticleKey.CREATED_DATE]: body.createdDate,
       [ArticleKey.FULL_TEXT]: body.fullText,
-      [ArticleKey.CATEGORY]: body.category,
+      [ArticleKey.CATEGORIES]: body.category,
     };
 
     try {
