@@ -6,7 +6,12 @@ const {
   generatePublications,
   getMockedPublicationsData,
 } = require(`~/helpers`);
-const {CliCommandName, MocksConfig, MessageColor} = require(`~/common/enums`);
+const {
+  CliCommandName,
+  MocksConfig,
+  MessageColor,
+  TableName,
+} = require(`~/common/enums`);
 const {
   generateInsertSql,
   joinSqlCommands,
@@ -16,7 +21,7 @@ const {
   generateArticlesSqlRows,
   generateArticlesCategoriesRows,
 } = require(`./helpers`);
-const {FILL_FILE_PATH, TableName} = require(`./common`);
+const {FILL_FILE_PATH} = require(`./common`);
 
 const tableNameToSqlRowsGenerator = {
   [TableName.USERS]: generateUsersSqlRows,
