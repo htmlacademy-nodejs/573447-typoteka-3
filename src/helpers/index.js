@@ -5,7 +5,6 @@ const {
   getRandomItem,
   getRandomItems,
   getShuffledItems,
-  getUniqueItems,
   getItemByKey,
   removeItemByKey,
 } = require(`./array`);
@@ -27,7 +26,6 @@ module.exports = {
   getRandomNumber,
   getRandomItem,
   getRandomItems,
-  getUniqueItems,
   getShuffledItems,
   getItemByKey,
   removeItemByKey,
