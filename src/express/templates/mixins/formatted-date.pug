@@ -1,0 +1,7 @@
+mixin formattedDate(dateString)
+  - const date = new Date(dateString);
+  - const day = date.toLocaleString('en-US', {day: 'numeric'});
+  - const month = date.toLocaleString('en-US', {month: '2-digit'});
+  - const year = date.toLocaleString('en-US', {year: 'numeric'});
+  - const time = date.toLocaleTimeString('en-US', {hour12: false, timeStyle: 'short'});
+  span #{day}.#{month}.#{year}, #{time}

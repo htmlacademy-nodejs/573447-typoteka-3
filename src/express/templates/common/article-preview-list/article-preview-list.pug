@@ -9,7 +9,8 @@ section.main-page__list.preview
               a.preview__breadcrumbs-link(href=`/category/${category.id}`) #{category.name}
         div.preview__background
           img.preview__background-image(src=`/img/${preview.image}` width='460' height='240' alt='Фотография небоскреба')
-        time.preview__time(datetime='2019-03-21T20:33') 21.03.2019, 20:33
+        time.preview__time(datetime=preview.createdAt)
+          +formattedDate(preview.createdAt)
         h3.preview__name
           a.preview__name-link(href=`/articles/${preview.id}`) #{preview.title}
         p.preview__text #{preview.announce}

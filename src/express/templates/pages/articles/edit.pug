@@ -14,7 +14,7 @@ block content
                 div.new-publication__date-form-division
                   div.new-publication__date-block
                     label(for='new-publication-date' aria-label='Календарь')
-                    input#new-publication-date(type='text' name='createdDate' placeholder='2019-03-21' required)
+                    input#new-publication-date(type='text' name='createdAt' placeholder='2019-03-21' required)
               button.new-publication__button.button.button--colored(type='submit') Опубликовать
             button.popup__button.button.button--popup-close(type='button' aria-label='Закрыть окно') Закрыть окно
             div.new-publication__form.form
@@ -33,9 +33,9 @@ block content
                 div.new-publication__category-wrapper
                   each category in categories
                     div.new-publication__checkbox.new-publication__checkbox--auto
-                      - const isChecked = isEdit && article.category.includes(category)
-                      input(id=category type='checkbox' name="category" value=category checked=isChecked)
-                      label(for=category) #{category}
+                      - const isChecked = isEdit && article.categories.some((item) => item.id === category.id)
+                      input(id=`category${category.id}` type='checkbox' name="category" value=category.id checked=isChecked)
+                      label(for=`category${category.id}`) #{category.name}
                   a.new-publication__form-link.button.button--transparent(href='#') Добавить категорию
               div.form__wrapper.form__wrapper--text
                 div.form__field.form__field--publication-text
