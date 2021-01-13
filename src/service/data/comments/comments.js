@@ -14,9 +14,9 @@ class Comments {
     });
   }
 
-  create(article, comment) {
+  create(articleId, comment) {
     return this._Comment.create({
-      articleId: article.id,
+      articleId,
       ...comment,
     });
   }
