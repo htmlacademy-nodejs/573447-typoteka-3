@@ -1,35 +1,37 @@
 'use strict';
 
 const {Router} = require(`express`);
+const sequelize = require(`~/service/db/db`);
+const {defineModels} = require(`~/service/db/define-models`);
 const {Search, Category, Articles, Comments} = require(`~/service/data`);
 const {initSearchApi} = require(`./search/search`);
 const {initCategoryApi} = require(`./category/category`);
 const {initArticlesApi} = require(`./articles/articles`);
-const {getMockedDate} = require(`./helpers`);
+
+defineModels(sequelize);
 
 const apiRouter = new Router();
+const {models} = sequelize;
 
-(async () => {
-  const mockedData = await getMockedDate();
+initSearchApi(apiRouter, {
+  searchService: new Search({
+    articleModel: models.Article,
+  }),
+});
 
-  initSearchApi(apiRouter, {
-    searchService: new Search({
-      articles: mockedData,
-    }),
-  });
+initCategoryApi(apiRouter, {
+  categoryService: new Category({
+    categoryModel: models.Category,
+  }),
+});
 
-  initCategoryApi(apiRouter, {
-    categoryService: new Category({
-      articles: mockedData,
-    }),
-  });
-
-  initArticlesApi(apiRouter, {
-    articlesService: new Articles({
-      articles: mockedData,
-    }),
-    commentsService: new Comments(),
-  });
-})();
+initArticlesApi(apiRouter, {
+  articlesService: new Articles({
+    articleModel: models.Article,
+  }),
+  commentsService: new Comments({
+    commentModel: models.Comment,
+  }),
+});
 
 module.exports = apiRouter;
