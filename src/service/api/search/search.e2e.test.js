@@ -1,20 +1,30 @@
 'use strict';
 
 const express = require(`express`);
+const {Sequelize} = require(`sequelize`);
 const request = require(`supertest`);
 const {Search} = require(`~/service/data`);
+const {initDb} = require(`~/service/db/init-db`);
 const {ApiPath, HttpCode} = require(`~/common/enums`);
 const {initSearchApi} = require(`./search`);
-const {mockedArticles} = require(`./search.mocks`);
+const {mockedArticles, mockedCategories} = require(`./search.mocks`);
 
-const createAPI = () => {
+const createAPI = async () => {
   const app = express();
+  const mockedDB = new Sequelize(`sqlite::memory:`, {
+    logging: false,
+  });
 
   app.use(express.json());
 
+  await initDb(mockedDB, {
+    categories: mockedCategories,
+    articles: mockedArticles,
+  });
+
   initSearchApi(app, {
     searchService: new Search({
-      articles: mockedArticles.slice(),
+      articleModel: mockedDB.models.Article,
     }),
   });
 
@@ -26,7 +36,7 @@ describe(`API returns articles based on search query`, () => {
   let response = null;
 
   beforeAll(async () => {
-    app = createAPI();
+    app = await createAPI();
     response = await request(app).get(ApiPath.SEARCH).query({
       query: `Как начать`,
     });
@@ -42,7 +52,7 @@ describe(`API returns articles based on search query`, () => {
 });
 
 test(`API returns code 200 if nothing is found`, async () => {
-  const app = createAPI();
+  const app = await createAPI();
 
   await request(app)
     .get(ApiPath.SEARCH)
@@ -53,7 +63,7 @@ test(`API returns code 200 if nothing is found`, async () => {
 });
 
 test(`API returns 200 when query string is absent`, async () => {
-  const app = createAPI();
+  const app = await createAPI();
 
   await request(app).get(ApiPath.SEARCH).expect(HttpCode.OK);
 });
