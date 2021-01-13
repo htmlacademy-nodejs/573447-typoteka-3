@@ -2,9 +2,9 @@
 
 const {HttpCode} = require(`~/common/enums`);
 
-const existArticle = (service) => (req, res, next) => {
+const existArticle = (service) => async (req, res, next) => {
   const {articleId} = req.params;
-  const article = service.findOne(articleId);
+  const article = await service.findOne(articleId);
 
   if (!article) {
     return res
