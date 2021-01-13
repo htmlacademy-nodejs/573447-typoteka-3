@@ -4,9 +4,9 @@ section.main-page__list.preview
     each preview in previews
       li.preview__item
         ul.preview__breadcrumbs
-          each category in preview.category
+          each category in preview.categories
             li.preview__breadcrumbs-item
-              a.preview__breadcrumbs-link(href='#') #{category}
+              a.preview__breadcrumbs-link(href=`/category/${category.id}`) #{category.name}
         div.preview__background
           img.preview__background-image(src=`/img/${preview.image}` width='460' height='240' alt='Фотография небоскреба')
         time.preview__time(datetime='2019-03-21T20:33') 21.03.2019, 20:33
