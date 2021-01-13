@@ -13,21 +13,21 @@ const initArticlesApi = (app, {articlesService, commentsService}) => {
 
   app.use(ApiPath.ARTICLES, articlesRouter);
 
-  articlesRouter.get(ArticlesApiPath.ROOT, (_req, res) => {
-    const articles = articlesService.findAll();
+  articlesRouter.get(ArticlesApiPath.ROOT, async (_req, res) => {
+    const articles = await articlesService.findAll();
 
     return res.status(HttpCode.OK).json(articles);
   });
 
-  articlesRouter.post(ArticlesApiPath.ROOT, validateArticle, (req, res) => {
-    const article = articlesService.create(req.body);
+  articlesRouter.post(ArticlesApiPath.ROOT, validateArticle, async (req, res) => {
+    const article = await articlesService.create(req.body);
 
     return res.status(HttpCode.CREATED).json(article);
   });
 
-  articlesRouter.get(ArticlesApiPath.$ARTICLE_ID, (req, res) => {
+  articlesRouter.get(ArticlesApiPath.$ARTICLE_ID, async (req, res) => {
     const {articleId} = req.params;
-    const article = articlesService.findOne(articleId);
+    const article = await articlesService.findOne(Number(articleId));
 
     if (!article) {
       return res.status(HttpCode.NOT_FOUND).send(`Not found with ${articleId}`);
@@ -36,36 +36,37 @@ const initArticlesApi = (app, {articlesService, commentsService}) => {
     return res.status(HttpCode.OK).json(article);
   });
 
-  articlesRouter.put(ArticlesApiPath.$ARTICLE_ID, validateArticle, (req, res) => {
+  articlesRouter.put(ArticlesApiPath.$ARTICLE_ID, validateArticle, async (req, res) => {
     const {articleId} = req.params;
-    const article = articlesService.findOne(articleId);
+    const parsedArticleId = Number(articleId);
+    const article = await articlesService.findOne(parsedArticleId);
 
     if (!article) {
       return res.status(HttpCode.NOT_FOUND).send(`Not found with ${articleId}`);
     }
 
-    const updatedArticle = articlesService.update(req.body, articleId);
+    const updatedArticle = await articlesService.update(req.body, parsedArticleId);
 
     return res.status(HttpCode.OK).json(updatedArticle);
   });
 
-  articlesRouter.delete(ArticlesApiPath.$ARTICLE_ID, (req, res) => {
+  articlesRouter.delete(ArticlesApiPath.$ARTICLE_ID, async (req, res) => {
     const {articleId} = req.params;
-    const article = articlesService.drop(articleId);
+    const isArticleDeleted = await articlesService.drop(Number(articleId));
 
-    if (!article) {
+    if (!isArticleDeleted) {
       return res.status(HttpCode.NOT_FOUND).send(`Not found`);
     }
 
-    return res.status(HttpCode.OK).json(article);
+    return res.status(HttpCode.OK).json(isArticleDeleted);
   });
 
   articlesRouter.get(
       ArticlesApiPath.$ARTICLE_ID_COMMENTS,
       existArticle(articlesService),
-      (_, res) => {
-        const {article} = res.locals;
-        const comments = commentsService.findAll(article);
+      async (req, res) => {
+        const {articleId} = req.params;
+        const comments = await commentsService.findAll(Number(articleId));
 
         return res.status(HttpCode.OK).json(comments);
       }
@@ -74,9 +75,9 @@ const initArticlesApi = (app, {articlesService, commentsService}) => {
   articlesRouter.post(
       ArticlesApiPath.$ARTICLE_ID_COMMENTS,
       [existArticle(articlesService), validateComment],
-      (req, res) => {
-        const {article} = res.locals;
-        const comment = commentsService.create(article, req.body);
+      async (req, res) => {
+        const {articleId} = req.params;
+        const comment = await commentsService.create(Number(articleId), req.body);
 
         return res.status(HttpCode.CREATED).json(comment);
       }
@@ -85,16 +86,15 @@ const initArticlesApi = (app, {articlesService, commentsService}) => {
   articlesRouter.delete(
       ArticlesApiPath.$ARTICLE_ID_COMMENTS_$COMMENT_ID,
       existArticle(articlesService),
-      (req, res) => {
-        const {article} = res.locals;
+      async (req, res) => {
         const {commentId} = req.params;
-        const deletedComment = commentsService.drop(article, commentId);
+        const isCommentDeleted = await commentsService.drop(Number(commentId));
 
-        if (!deletedComment) {
+        if (!isCommentDeleted) {
           return res.status(HttpCode.NOT_FOUND).send(`Not found`);
         }
 
-        return res.status(HttpCode.OK).json(deletedComment);
+        return res.status(HttpCode.OK).json(isCommentDeleted);
       }
   );
 };
