@@ -13,8 +13,16 @@ const initArticlesApi = (app, {articlesService, commentsService}) => {
 
   app.use(ApiPath.ARTICLES, articlesRouter);
 
-  articlesRouter.get(ArticlesApiPath.ROOT, async (_req, res) => {
-    const articles = await articlesService.findAll();
+  articlesRouter.get(ArticlesApiPath.ROOT, async (req, res) => {
+    const {offset, limit} = req.query;
+    const isUsePagination = Boolean(offset || limit);
+
+    const articles = isUsePagination
+      ? await articlesService.findPage({
+        offset: Number(offset),
+        limit: Number(limit),
+      })
+      : await articlesService.findAll();
 
     return res.status(HttpCode.OK).json(articles);
   });
