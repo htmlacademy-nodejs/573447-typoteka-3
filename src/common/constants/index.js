@@ -7,6 +7,10 @@ const {
   INITIAL_ARRAY_IDX,
   INCREASE_COUNT_FOR_IDX,
 } = require(`./array.constants`);
+const {
+  ARTICLES_PER_PAGE,
+  ARTICLES_SKIP_PAGE_COUNT,
+} = require(`./articles.constants`);
 
 module.exports = {
   USER_ARGV_IDX,
@@ -15,4 +19,6 @@ module.exports = {
   API_PREFIX,
   INITIAL_ARRAY_IDX,
   INCREASE_COUNT_FOR_IDX,
+  ARTICLES_PER_PAGE,
+  ARTICLES_SKIP_PAGE_COUNT,
 };
