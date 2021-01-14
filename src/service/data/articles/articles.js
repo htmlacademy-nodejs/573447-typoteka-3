@@ -8,11 +8,25 @@ class Articles {
   }
 
   async findAll() {
-    const offers = await this._Article.findAll({
+    const articles = await this._Article.findAll({
       include: [ModelAlias.CATEGORIES, ModelAlias.COMMENTS],
     });
 
-    return offers.map((item) => item.get());
+    return articles.map((item) => item.get());
+  }
+
+  async findPage({limit, offset}) {
+    const {count, rows} = await this._Article.findAndCountAll({
+      limit,
+      offset,
+      include: [ModelAlias.CATEGORIES, ModelAlias.COMMENTS],
+      distinct: true,
+    });
+
+    return {
+      count,
+      articles: rows.map((item) => item.get()),
+    };
   }
 
   findOne(id) {
