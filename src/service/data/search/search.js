@@ -8,7 +8,7 @@ class Search {
   }
 
   async findAll(titleValue) {
-    const offers = await this._Article.findAll({
+    const articles = await this._Article.findAll({
       where: {
         title: {
           [DbOperator.substring]: titleValue,
@@ -17,7 +17,7 @@ class Search {
       include: [ModelAlias.CATEGORIES, ModelAlias.COMMENTS],
     });
 
-    return offers.map((offer) => offer.get());
+    return articles.map((offer) => offer.get());
   }
 }
 
