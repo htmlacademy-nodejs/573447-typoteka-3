@@ -50,6 +50,15 @@ class Api {
     return this._load(ApiPath.ARTICLES).then(Api.getData);
   }
 
+  getPageArticles({offset, limit}) {
+    return this._load(ApiPath.ARTICLES, {
+      params: {
+        offset,
+        limit,
+      },
+    }).then(Api.getData);
+  }
+
   getArticle(id) {
     return this._load(`${ApiPath.ARTICLES}/${id}`).then(Api.getData);
   }
