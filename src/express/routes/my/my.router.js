@@ -9,7 +9,7 @@ const initMyRouter = (app, settings) => {
 
   app.use(SsrPath.MY, myRouter);
 
-  myRouter.get(SsrMyPath.ROOT, async (_, res) => {
+  myRouter.get(SsrMyPath.ROOT, async (_req, res) => {
     const articles = await api.getArticles();
 
     return res.render(`pages/my/my`, {
@@ -17,7 +17,7 @@ const initMyRouter = (app, settings) => {
     });
   });
 
-  myRouter.get(SsrMyPath.COMMENTS, async (_, res) => {
+  myRouter.get(SsrMyPath.COMMENTS, async (_req, res) => {
     const articles = await api.getArticles();
 
     return res.render(`pages/my/comments`, {

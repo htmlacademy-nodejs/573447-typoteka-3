@@ -25,7 +25,7 @@ const initArticlesRouter = (app, settings) => {
     });
   });
 
-  articlesRouter.get(SsrArticlePath.ADD, async (_, res) => {
+  articlesRouter.get(SsrArticlePath.ADD, async (_req, res) => {
     const categories = await api.getCategories();
 
     return res.render(`pages/articles/edit`, {
@@ -84,7 +84,7 @@ const initArticlesRouter = (app, settings) => {
     });
   });
 
-  articlesRouter.get(SsrArticlePath.CATEGORY_$ARTICLE_ID, (_, res) => {
+  articlesRouter.get(SsrArticlePath.CATEGORY_$ARTICLE_ID, (_req, res) => {
     return res.render(`pages/articles/categories`, {
       title: `Типотека`,
       displayedTitle: `Бизнес`,
