@@ -99,7 +99,7 @@ describe(`API refuses to create an article if data is invalid`, () => {
     [ArticleKey.TITLE]: `Новый заголовок`,
     [ArticleKey.ANNOUNCE]: `Новый анонс`,
     [ArticleKey.FULL_TEXT]: `Новый текст`,
-    [ArticleKey.CATEGORY]: [1],
+    [ArticleKey.CATEGORIES]: [1],
   };
   let app = null;
 
