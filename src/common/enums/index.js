@@ -17,6 +17,12 @@ const {CommentKey} = require(`./comment`);
 const {AppEnvironment, ENV, LogLevel, LoggerName} = require(`./app`);
 const {MocksConfig} = require(`./mocks`);
 const {ModelAlias, ModelName, TableName, DbOperator} = require(`./db`);
+const {
+  CommentValidationMessage,
+  CommentValidationRule,
+  ArticleValidationMessage,
+  ArticleValidationRule,
+} = require(`./validation`);
 
 module.exports = {
   CliCommandName,
@@ -44,4 +50,8 @@ module.exports = {
   ModelName,
   TableName,
   DbOperator,
+  CommentValidationMessage,
+  CommentValidationRule,
+  ArticleValidationMessage,
+  ArticleValidationRule,
 };

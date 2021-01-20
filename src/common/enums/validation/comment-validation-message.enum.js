@@ -6,6 +6,7 @@ const {
 
 const CommentValidationMessage = {
   TEXT_MIN_LENGTH: `Коментарий должен быть минимум ${CommentValidationRule.TEXT_MIN_LENGTH} символов`,
+  TEXT_REQUIRE: `Коментарий обязательное поле`,
 };
 
 module.exports = {
