@@ -9,8 +9,8 @@ block content
         div.post__wrapper
           div.post__head
             a.post__backwards.button.button--backwards(href='#') Назад
-            time.post__date(datetime=article.createdAt)
-              +formattedDate(article.createdAt)
+            time.post__date(datetime=article.createdDate)
+              +formattedDate(article.createdDate)
             h2.post__title.title.title--main #{article.title}
 
             include ../../common/themes

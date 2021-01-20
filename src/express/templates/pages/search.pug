@@ -13,8 +13,8 @@ block content
             button.search__button.button.button--transparent(type='submit') Найти
           each result in results
             div.search__result
-              time.search__date(datetime=result.createdAt)
-                +formattedDate(result.createdAt)
+              time.search__date(datetime=result.createdDate)
+                +formattedDate(result.createdDate)
               a.search__link(href=`/articles/${result.id}`) #{result.title}
         if !hasResults
           p.search-page__empty Ничего не нашлось
