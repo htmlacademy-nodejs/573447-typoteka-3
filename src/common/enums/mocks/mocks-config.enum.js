@@ -12,7 +12,7 @@ const MocksConfig = {
     FILE_PATH: `${DATA_PATH}/titles.txt`,
   },
   TEXT: {
-    MAX_ANNOUNCE_COUNT: 5,
+    MAX_ANNOUNCE_COUNT: 3,
     MIN_ANNOUNCE_COUNT: 1,
     MIN_FULL_TEXT_COUNT: 1,
     FILE_PATH: `${DATA_PATH}/sentences.txt`,
