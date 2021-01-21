@@ -1,7 +1,9 @@
 'use strict';
 
 const {Router} = require(`express`);
-const {SsrPath, SsrArticlePath, ArticleKey} = require(`~/common/enums`);
+const {getHttpErrors} = require(`~/helpers`);
+const {SsrPath, SsrArticlePath} = require(`~/common/enums`);
+const {getArticleData} = require(`./helpers`);
 
 const initArticlesRouter = (app, settings) => {
   const articlesRouter = new Router();
@@ -38,33 +40,32 @@ const initArticlesRouter = (app, settings) => {
   });
 
 
-  articlesRouter.post(SsrArticlePath.ADD, storage.upload.single(`avatar`), async (req, res) => {
-    const {body, file} = req;
-    const articleData = {
-      [ArticleKey.IMAGE]: file.filename,
-      [ArticleKey.TITLE]: body.title,
-      [ArticleKey.ANNOUNCE]: body.announce,
-      [ArticleKey.CREATED_DATE]: body.createdDate,
-      [ArticleKey.FULL_TEXT]: body.fullText,
-      [ArticleKey.CATEGORIES]: body.category,
-    };
+  articlesRouter.post(
+      SsrArticlePath.ADD,
+      storage.upload.single(`avatar`),
+      async (req, res) => {
+        const {body, file} = req;
+        const fileName = file ? file.filename : null;
+        const articleData = getArticleData(body, fileName);
 
-    try {
-      await api.createArticle(articleData);
+        try {
+          await api.createArticle(articleData);
 
-      return res.redirect(SsrPath.MY);
-    } catch (err) {
-      const categories = await api.getCategories();
+          return res.redirect(SsrPath.MY);
+        } catch (err) {
+          const categories = await api.getCategories();
 
-      return res.render(`pages/articles/edit`, {
-        article: articleData,
-        categories,
-        account: {
-          type: `admin`,
-        },
-      });
-    }
-  });
+          return res.render(`pages/articles/edit`, {
+            categories,
+            article: articleData,
+            errorMessages: getHttpErrors(err),
+            account: {
+              type: `admin`,
+            },
+          });
+        }
+      }
+  );
 
   articlesRouter.get(SsrArticlePath.$ARTICLE_ID, async (req, res) => {
     const {id} = req.params;
