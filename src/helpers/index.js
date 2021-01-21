@@ -10,7 +10,6 @@ const {
 } = require(`./array`);
 const {writeToFile, readFile} = require(`./fs`);
 const {paintMessage, getRandomId} = require(`./string`);
-const {checkIsValidByKeys} = require(`./validation`);
 const {getLogger, logger} = require(`./log`);
 const {getFileExtension} = require(`./file`);
 const {
@@ -33,7 +32,6 @@ module.exports = {
   readFile,
   paintMessage,
   getRandomId,
-  checkIsValidByKeys,
   getLogger,
   getFileExtension,
   logger,
