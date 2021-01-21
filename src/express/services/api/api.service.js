@@ -74,6 +74,13 @@ class Api {
       data: payload,
     });
   }
+
+  updateArticle(articleId, payload) {
+    return this.load(`${ApiPath.ARTICLES}/${articleId}`, {
+      method: HttpMethod.PUT,
+      data: payload,
+    });
+  }
 }
 
 module.exports = Api;
