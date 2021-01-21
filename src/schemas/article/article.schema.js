@@ -18,7 +18,7 @@ const article = Joi.object({
       'any.required': ArticleValidationMessage.TITLE_REQUIRE,
     }),
   [ArticleKey.IMAGE]: Joi.string().allow(null).required(),
-  [ArticleKey.CREATED_DATE]: Joi.date().iso().required().messages({
+  [ArticleKey.CREATED_DATE]: Joi.string().isoDate().required().messages({
     'any.required': ArticleValidationMessage.CREATED_DATE_REQUIRE,
   }),
   [ArticleKey.CATEGORIES]: Joi.array()
