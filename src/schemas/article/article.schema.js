@@ -40,6 +40,7 @@ const article = Joi.object({
     }),
   [ArticleKey.FULL_TEXT]: Joi.string()
     .max(ArticleValidationRule.FULL_TEXT_MAX_LENGTH)
+    .allow(null)
     .messages({
       'string.max': ArticleValidationMessage.FULL_TEXT_MAX_LENGTH,
     }),
