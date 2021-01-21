@@ -20,6 +20,7 @@ const {
   getMockedPublicationsData,
   readPublicationsFileContent,
 } = require(`./mocks`);
+const {getHttpErrors} = require(`./exceptions`);
 
 module.exports = {
   getRandomNumber,
@@ -41,4 +42,5 @@ module.exports = {
   generatePublications,
   getMockedPublicationsData,
   readPublicationsFileContent,
+  getHttpErrors,
 };
