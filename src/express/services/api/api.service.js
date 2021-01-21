@@ -1,9 +1,8 @@
 'use strict';
 
 const axios = require(`axios`);
-const {ApiPath, HttpMethod} = require(`~/common/enums`);
+const {ApiPath, HttpMethod, HttpCode} = require(`~/common/enums`);
 const {HttpError} = require(`~/common/exceptions`);
-const {checkIsOkStatusCode} = require(`./helpers`);
 
 class Api {
   constructor({baseURL, timeout}) {
@@ -13,25 +12,19 @@ class Api {
     });
   }
 
-  static checkStatus(response) {
-    const isOk = checkIsOkStatusCode(response.status);
-
-    if (!isOk) {
-      throw new HttpError({
-        status: response.status,
-        message: `${response.status}: ${response.statusText}`,
-      });
-    }
-
-    return response;
-  }
-
   static getData(response) {
     return response.data;
   }
 
   static catchError(err) {
-    throw err;
+    const {response} = err;
+    const status = response.status || HttpCode.INTERNAL_SERVER_ERROR;
+    const messages = response.data.messages || [];
+
+    throw new HttpError({
+      status,
+      messages,
+    });
   }
 
   _load(
@@ -42,12 +35,12 @@ class Api {
   ) {
     return this._http
       .request({url, ...options})
-      .then(Api.checkStatus)
+      .then(Api.getData)
       .catch(Api.catchError);
   }
 
   getArticles() {
-    return this._load(ApiPath.ARTICLES).then(Api.getData);
+    return this._load(ApiPath.ARTICLES);
   }
 
   getPageArticles({offset, limit}) {
@@ -56,11 +49,11 @@ class Api {
         offset,
         limit,
       },
-    }).then(Api.getData);
+    });
   }
 
   getArticle(id) {
-    return this._load(`${ApiPath.ARTICLES}/${id}`).then(Api.getData);
+    return this._load(`${ApiPath.ARTICLES}/${id}`);
   }
 
   search(query) {
@@ -68,18 +61,18 @@ class Api {
       params: {
         query,
       },
-    }).then(Api.getData);
+    });
   }
 
   getCategories() {
-    return this._load(ApiPath.CATEGORIES).then(Api.getData);
+    return this._load(ApiPath.CATEGORIES);
   }
 
   createArticle(payload) {
     return this._load(ApiPath.ARTICLES, {
       method: HttpMethod.POST,
       data: payload,
-    }).then(Api.getData);
+    });
   }
 }
 
