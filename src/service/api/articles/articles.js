@@ -2,11 +2,8 @@
 
 const {Router} = require(`express`);
 const {ApiPath, HttpCode, ArticlesApiPath} = require(`~/common/enums`);
-const {
-  existArticle,
-  validateComment,
-  validateArticle,
-} = require(`~/service/middlewares`);
+const {existArticle, validateSchema} = require(`~/service/middlewares`);
+const {article: articleSchema, comment: commentSchema} = require(`~/schemas`);
 
 const initArticlesApi = (app, {articlesService, commentsService}) => {
   const articlesRouter = new Router();
@@ -27,11 +24,15 @@ const initArticlesApi = (app, {articlesService, commentsService}) => {
     return res.status(HttpCode.OK).json(articles);
   });
 
-  articlesRouter.post(ArticlesApiPath.ROOT, validateArticle, async (req, res) => {
-    const article = await articlesService.create(req.body);
+  articlesRouter.post(
+      ArticlesApiPath.ROOT,
+      validateSchema(articleSchema),
+      async (req, res) => {
+        const article = await articlesService.create(req.body);
 
-    return res.status(HttpCode.CREATED).json(article);
-  });
+        return res.status(HttpCode.CREATED).json(article);
+      }
+  );
 
   articlesRouter.get(ArticlesApiPath.$ARTICLE_ID, async (req, res) => {
     const {articleId} = req.params;
@@ -44,19 +45,28 @@ const initArticlesApi = (app, {articlesService, commentsService}) => {
     return res.status(HttpCode.OK).json(article);
   });
 
-  articlesRouter.put(ArticlesApiPath.$ARTICLE_ID, validateArticle, async (req, res) => {
-    const {articleId} = req.params;
-    const parsedArticleId = Number(articleId);
-    const article = await articlesService.findOne(parsedArticleId);
+  articlesRouter.put(
+      ArticlesApiPath.$ARTICLE_ID,
+      validateSchema(articleSchema),
+      async (req, res) => {
+        const {articleId} = req.params;
+        const parsedArticleId = Number(articleId);
+        const article = await articlesService.findOne(parsedArticleId);
 
-    if (!article) {
-      return res.status(HttpCode.NOT_FOUND).send(`Not found with ${articleId}`);
-    }
+        if (!article) {
+          return res
+            .status(HttpCode.NOT_FOUND)
+            .send(`Not found with ${articleId}`);
+        }
 
-    const updatedArticle = await articlesService.update(req.body, parsedArticleId);
+        const updatedArticle = await articlesService.update(
+            req.body,
+            parsedArticleId
+        );
 
-    return res.status(HttpCode.OK).json(updatedArticle);
-  });
+        return res.status(HttpCode.OK).json(updatedArticle);
+      }
+  );
 
   articlesRouter.delete(ArticlesApiPath.$ARTICLE_ID, async (req, res) => {
     const {articleId} = req.params;
@@ -82,7 +92,7 @@ const initArticlesApi = (app, {articlesService, commentsService}) => {
 
   articlesRouter.post(
       ArticlesApiPath.$ARTICLE_ID_COMMENTS,
-      [existArticle(articlesService), validateComment],
+      [existArticle(articlesService), validateSchema(commentSchema)],
       async (req, res) => {
         const {articleId} = req.params;
         const comment = await commentsService.create(Number(articleId), req.body);
