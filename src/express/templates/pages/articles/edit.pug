@@ -4,11 +4,12 @@ block content
   - const isEdit = Boolean(article.id);
   - const articleCategories = article.categories || [];
   - const hasErrors = Boolean(errorMessages && errorMessages.length);
+  - const actionPath = `/articles/${isEdit ? `edit/${article.id}` : 'add' }`;
   main
     section
       div.popup.popup--new-publication.popup--anti
         div.new-publication
-          form(action='/articles/add' method=`${isEdit ? `PUT` : `POST`}` enctype="multipart/form-data" autocomplete="off")
+          form(action=actionPath method="POST" enctype="multipart/form-data" autocomplete="off")
             div.new-publication__header
               h1 #{isEdit ? `Редактирование публикаци` : `Новая публикация`}
               div.new-publication__date-form
