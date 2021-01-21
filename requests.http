@@ -28,8 +28,10 @@ POST http://localhost:3000/api/articles HTTP/1.1
 Content-Type: application/json
 
 {
-  "title": "Новый заголовок",
-  "announce": "Новый анонс",
+  "title": "Новый заголовок статьи. Новый заголовок статьи.",
+  "image": null,
+  "createdDate": "2021-01-10T14:12:47.445Z",
+  "announce": "Новый анонс статьи. Новый анонс статьи.",
   "fullText": "Новый текст",
   "categories": [1]
 }
@@ -37,14 +39,16 @@ Content-Type: application/json
 ###
 
 # Update article
-PUT http://localhost:3000/api/articles/11 HTTP/1.1
+PUT http://localhost:3000/api/articles/6 HTTP/1.1
 Content-Type: application/json
 
 {
-  "title": "Новый-новый заголовок",
-  "announce": "Новый-новый анонс",
-  "fullText": "Новый-новый текст",
-  "categories": [1]
+  "title": "Новый-новый заголовок статьи. Новый-новый заголовок статьи.",
+  "image": null,
+  "createdDate": "2021-01-10T14:12:47.445Z",
+  "announce": "Новый-новый анонс статьи. Новый-новый анонс статьи.",
+  "fullText": "Новый-новый анонс статьи. Новый-новый анонс статьи.",
+  "categories": [1, 2]
 }
 
 ###
@@ -61,7 +65,7 @@ POST http://localhost:3000/api/articles/1/comments HTTP/1.1
 Content-Type: application/json
 
 {
-  "text": "Новый комментарий"
+  "text": "Новый комментарий. Новый комментарий."
 }
 
 ###
