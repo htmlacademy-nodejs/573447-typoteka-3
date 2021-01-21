@@ -2,6 +2,8 @@ extends ../layout
 
 block content
   - const isEdit = Boolean(article.id);
+  - const articleCategories = article.categories || [];
+  - const hasErrors = Boolean(errorMessages && errorMessages.length);
   main
     section
       div.popup.popup--new-publication.popup--anti
@@ -14,9 +16,13 @@ block content
                 div.new-publication__date-form-division
                   div.new-publication__date-block
                     label(for='new-publication-date' aria-label='Календарь')
-                    input#new-publication-date(type='text' name='createdDate' placeholder='2019-03-21' required)
+                    input#new-publication-date(value=article.createdDate type='text' name='createdDate' placeholder='2019-03-21' required)
               button.new-publication__button.button.button--colored(type='submit') Опубликовать
             button.popup__button.button.button--popup-close(type='button' aria-label='Закрыть окно') Закрыть окно
+            if hasErrors
+              ul.error-list
+                each errorMessage in errorMessages
+                  li.error-list__item #{errorMessage}
             div.new-publication__form.form
               div.form__wrapper.form__wrapper--intro
                 div.form__field
@@ -27,13 +33,13 @@ block content
                     input#image-name-field(type='text' name='photo' placeholder='Фотография' readonly)
                   div.form__image-loader.form__image-loader--publication
                     label
-                      input.visually-hidden(type='file' name='avatar' required)
+                      input.visually-hidden(type='file' name='avatar')
                       | Обзор
                   button.button.button--transparent Удалить
                 div.new-publication__category-wrapper
                   each category in categories
                     div.new-publication__checkbox.new-publication__checkbox--auto
-                      - const isChecked = isEdit && article.categories.some((item) => item.id === category.id)
+                      - const isChecked = articleCategories.some((item) => (isEdit ? item.id : item) === category.id)
                       input(id=`category${category.id}` type='checkbox' name="category" value=category.id checked=isChecked)
                       label(for=`category${category.id}`) #{category.name}
                   a.new-publication__form-link.button.button--transparent(href='#') Добавить категорию
@@ -43,4 +49,4 @@ block content
                     textarea(name='announce' rows='2' placeholder='Анонс публикации' required) #{article.announce}
                 div.form__field.form__field--publication-text
                   label
-                    textarea(name='fullText' rows='5' placeholder='Полный текст публикации' required) #{article.fullText}
+                    textarea(name='fullText' rows='5' placeholder='Полный текст публикации') #{article.fullText}
