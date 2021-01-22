@@ -22,6 +22,7 @@ const {
   CommentValidationRule,
   ArticleValidationMessage,
   ArticleValidationRule,
+  RouteIdValidationMessage,
 } = require(`./validation`);
 
 module.exports = {
@@ -54,4 +55,5 @@ module.exports = {
   CommentValidationRule,
   ArticleValidationMessage,
   ArticleValidationRule,
+  RouteIdValidationMessage,
 };
