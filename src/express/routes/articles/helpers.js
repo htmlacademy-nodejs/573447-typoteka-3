@@ -12,8 +12,8 @@ const getParsedCategories = (categories) => {
     : [Number(categories)];
 };
 
-const getArticleData = (body, filename) => ({
-  [ArticleKey.IMAGE]: filename || null,
+const getArticleData = (body, file) => ({
+  [ArticleKey.IMAGE]: file ? file.filename : null,
   [ArticleKey.TITLE]: body.title,
   [ArticleKey.ANNOUNCE]: body.announce,
   [ArticleKey.CREATED_DATE]: new Date(body.createdDate).toISOString(),
