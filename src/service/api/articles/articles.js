@@ -1,9 +1,22 @@
 'use strict';
 
 const {Router} = require(`express`);
-const {ApiPath, HttpCode, ArticlesApiPath} = require(`~/common/enums`);
-const {existArticle, validateSchema} = require(`~/service/middlewares`);
-const {article: articleSchema, comment: commentSchema} = require(`~/schemas`);
+const {
+  ApiPath,
+  HttpCode,
+  ArticlesApiPath,
+  RequestParam,
+} = require(`~/common/enums`);
+const {
+  existArticle,
+  validateSchema,
+  validateParamSchema,
+} = require(`~/service/middlewares`);
+const {
+  article: articleSchema,
+  comment: commentSchema,
+  routeId: routeIdSchema,
+} = require(`~/schemas`);
 
 const initArticlesApi = (app, {articlesService, commentsService}) => {
   const articlesRouter = new Router();
@@ -34,20 +47,29 @@ const initArticlesApi = (app, {articlesService, commentsService}) => {
       }
   );
 
-  articlesRouter.get(ArticlesApiPath.$ARTICLE_ID, async (req, res) => {
-    const {articleId} = req.params;
-    const article = await articlesService.findOne(Number(articleId));
+  articlesRouter.get(
+      ArticlesApiPath.$ARTICLE_ID,
+      validateParamSchema(routeIdSchema, RequestParam.ARTICLE_ID),
+      async (req, res) => {
+        const {articleId} = req.params;
+        const article = await articlesService.findOne(Number(articleId));
 
-    if (!article) {
-      return res.status(HttpCode.NOT_FOUND).send(`Not found with ${articleId}`);
-    }
+        if (!article) {
+          return res
+            .status(HttpCode.NOT_FOUND)
+            .send(`Not found with ${articleId}`);
+        }
 
-    return res.status(HttpCode.OK).json(article);
-  });
+        return res.status(HttpCode.OK).json(article);
+      }
+  );
 
   articlesRouter.put(
       ArticlesApiPath.$ARTICLE_ID,
-      validateSchema(articleSchema),
+      [
+        validateSchema(articleSchema),
+        validateParamSchema(routeIdSchema, RequestParam.ARTICLE_ID),
+      ],
       async (req, res) => {
         const {articleId} = req.params;
         const parsedArticleId = Number(articleId);
@@ -68,20 +90,27 @@ const initArticlesApi = (app, {articlesService, commentsService}) => {
       }
   );
 
-  articlesRouter.delete(ArticlesApiPath.$ARTICLE_ID, async (req, res) => {
-    const {articleId} = req.params;
-    const isArticleDeleted = await articlesService.drop(Number(articleId));
+  articlesRouter.delete(
+      ArticlesApiPath.$ARTICLE_ID,
+      validateParamSchema(routeIdSchema, RequestParam.ARTICLE_ID),
+      async (req, res) => {
+        const {articleId} = req.params;
+        const isArticleDeleted = await articlesService.drop(Number(articleId));
 
-    if (!isArticleDeleted) {
-      return res.status(HttpCode.NOT_FOUND).send(`Not found`);
-    }
+        if (!isArticleDeleted) {
+          return res.status(HttpCode.NOT_FOUND).send(`Not found`);
+        }
 
-    return res.status(HttpCode.OK).json(isArticleDeleted);
-  });
+        return res.status(HttpCode.OK).json(isArticleDeleted);
+      }
+  );
 
   articlesRouter.get(
       ArticlesApiPath.$ARTICLE_ID_COMMENTS,
-      existArticle(articlesService),
+      [
+        validateParamSchema(routeIdSchema, RequestParam.ARTICLE_ID),
+        existArticle(articlesService),
+      ],
       async (req, res) => {
         const {articleId} = req.params;
         const comments = await commentsService.findAll(Number(articleId));
@@ -92,7 +121,11 @@ const initArticlesApi = (app, {articlesService, commentsService}) => {
 
   articlesRouter.post(
       ArticlesApiPath.$ARTICLE_ID_COMMENTS,
-      [existArticle(articlesService), validateSchema(commentSchema)],
+      [
+        validateParamSchema(routeIdSchema, RequestParam.ARTICLE_ID),
+        existArticle(articlesService),
+        validateSchema(commentSchema),
+      ],
       async (req, res) => {
         const {articleId} = req.params;
         const comment = await commentsService.create(Number(articleId), req.body);
@@ -103,7 +136,11 @@ const initArticlesApi = (app, {articlesService, commentsService}) => {
 
   articlesRouter.delete(
       ArticlesApiPath.$ARTICLE_ID_COMMENTS_$COMMENT_ID,
-      existArticle(articlesService),
+      [
+        validateParamSchema(routeIdSchema, RequestParam.ARTICLE_ID),
+        validateParamSchema(routeIdSchema, RequestParam.COMMENT_ID),
+        existArticle(articlesService),
+      ],
       async (req, res) => {
         const {commentId} = req.params;
         const isCommentDeleted = await commentsService.drop(Number(commentId));

@@ -1,9 +1,10 @@
 'use strict';
 
 const {existArticle} = require(`./article`);
-const {validateSchema} = require(`./validation`);
+const {validateSchema, validateParamSchema} = require(`./validation`);
 
 module.exports = {
   existArticle,
   validateSchema,
+  validateParamSchema,
 };
