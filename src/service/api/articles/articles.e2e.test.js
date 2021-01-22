@@ -70,9 +70,11 @@ describe(`API returns an article with given id`, () => {
 
 describe(`API creates an article if data is valid`, () => {
   const newArticle = {
-    [ArticleKey.TITLE]: `Новый заголовoк1`,
-    [ArticleKey.ANNOUNCE]: `Новый анонс`,
+    [ArticleKey.TITLE]: `Новый заголовoк, Новый заголовoк, Новый заголовoк`,
+    [ArticleKey.IMAGE]: null,
+    [ArticleKey.ANNOUNCE]: `Новый анонс, Новый анонс, Новый анонс`,
     [ArticleKey.FULL_TEXT]: `Новый текст`,
+    [ArticleKey.CREATED_DATE]: `2020-10-04T22:47:25.902Z`,
     [ArticleKey.CATEGORIES]: [1],
   };
   let app = null;
@@ -97,8 +99,10 @@ describe(`API creates an article if data is valid`, () => {
 describe(`API refuses to create an article if data is invalid`, () => {
   const newArticle = {
     [ArticleKey.TITLE]: `Новый заголовок`,
+    [ArticleKey.IMAGE]: null,
     [ArticleKey.ANNOUNCE]: `Новый анонс`,
     [ArticleKey.FULL_TEXT]: `Новый текст`,
+    [ArticleKey.CREATED_DATE]: `2020-10-04T22:47:25.902Z`,
     [ArticleKey.CATEGORIES]: [1],
   };
   let app = null;
@@ -121,9 +125,11 @@ describe(`API refuses to create an article if data is invalid`, () => {
 
 describe(`API changes existent article`, () => {
   const newArticle = {
-    [ArticleKey.TITLE]: `Новый заголовок`,
-    [ArticleKey.ANNOUNCE]: `Новый анонс`,
+    [ArticleKey.TITLE]: `Новый заголовок, Новый заголовок`,
+    [ArticleKey.IMAGE]: null,
+    [ArticleKey.ANNOUNCE]: `Новый анонс, Новый анонс, Новый анонс`,
     [ArticleKey.FULL_TEXT]: `Новый текст`,
+    [ArticleKey.CREATED_DATE]: `2020-10-04T22:47:25.902Z`,
     [ArticleKey.CATEGORIES]: [1]
   };
   let app = null;
@@ -143,17 +149,18 @@ describe(`API changes existent article`, () => {
   test(`Article is really changed`, async () => {
     await request(app)
       .get(`${ApiPath.ARTICLES}/2`)
-      .expect((res) => expect(res.body.title).toBe(`Новый заголовок`));
+      .expect((res) => expect(res.body.title).toBe(`Новый заголовок, Новый заголовок`));
   });
 });
 
 test(`API returns status code 404 when trying to change non-existent article`, async () => {
   const app = await createAPI();
   const validArticle = {
-    [ArticleKey.ID]: 1,
-    [ArticleKey.TITLE]: `Новый заголовк`,
-    [ArticleKey.ANNOUNCE]: `Новый анонс`,
+    [ArticleKey.TITLE]: `Новый заголовк, Новый заголовк, Новый заголовк, Новый заголовк`,
+    [ArticleKey.IMAGE]: null,
+    [ArticleKey.ANNOUNCE]: `Новый анонс, Новый анонс, Новый анонс`,
     [ArticleKey.FULL_TEXT]: `Новый текст`,
+    [ArticleKey.CREATED_DATE]: `2020-10-04T22:47:25.902Z`,
     [ArticleKey.CATEGORIES]: [1]
   };
 
