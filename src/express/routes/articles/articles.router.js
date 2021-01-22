@@ -45,8 +45,7 @@ const initArticlesRouter = (app, settings) => {
       storage.upload.single(`avatar`),
       async (req, res) => {
         const {body, file} = req;
-        const fileName = file ? file.filename : null;
-        const articleData = getArticleData(body, fileName);
+        const articleData = getArticleData(body, file);
 
         try {
           await api.createArticle(articleData);
@@ -65,6 +64,38 @@ const initArticlesRouter = (app, settings) => {
           });
         }
       }
+  );
+
+  articlesRouter.post(
+      SsrArticlePath.EDIT_$ARTICLE_ID,
+      storage.upload.single(`avatar`),
+      async (req, res) => {
+        const {body, file, params} = req;
+        const {id} = params;
+        const parsedId = Number(id);
+        const articleData = getArticleData(body, file);
+
+        try {
+          await api.updateArticle(parsedId, articleData);
+
+          return res.redirect(SsrPath.MY);
+        } catch (err) {
+          const article = await api.getArticle(parsedId);
+          const categories = await api.getCategories();
+
+          return res.render(`pages/articles/edit`, {
+            categories,
+            article: {
+              ...article,
+              ...articleData
+            },
+            errorMessages: getHttpErrors(err),
+            account: {
+              type: `admin`,
+            },
+          });
+        }
+      },
   );
 
   articlesRouter.get(SsrArticlePath.$ARTICLE_ID, async (req, res) => {

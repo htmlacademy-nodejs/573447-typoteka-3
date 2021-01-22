@@ -40,7 +40,7 @@ block content
                 div.new-publication__category-wrapper
                   each category in categories
                     div.new-publication__checkbox.new-publication__checkbox--auto
-                      - const isChecked = articleCategories.some((item) => (isEdit ? item.id : item) === category.id)
+                      - const isChecked = articleCategories.some((item) => item === category.id || item.id === category.id)
                       input(id=`category${category.id}` type='checkbox' name="category" value=category.id checked=isChecked)
                       label(for=`category${category.id}`) #{category.name}
                   a.new-publication__form-link.button.button--transparent(href='#') Добавить категорию
