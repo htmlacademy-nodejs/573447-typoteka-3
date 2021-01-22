@@ -1,6 +1,7 @@
 extends ../layout
 
 block content
+  - const hasErrors = Boolean(errorMessages && errorMessages.length);
   main
     section.post
       h1.visually-hidden Пост
@@ -43,10 +44,15 @@ block content
                   | Чтобы присоединиться к переписке нужно зарегистрироваться
           else if account.type === `user`
             div.comments__footer.comments__footer--user
-              form(action='#' method='POST')
+              form(action=`/articles/${item.id}/comments` method="POST")
+                if hasErrors
+                  ul.error-list
+                    each errorMessage in errorMessages
+                      li.error-list__item #{errorMessage}
                 .avatar
                   img(src= account.avatar alt='Аватар пользователя')
                 label
                   textarea(rows='1' placeholder='Присоединиться к обсуждению')
+                    | #{comment}
                 button.comments__button.button.button--colored(type='submit') Опубликовать
                 //- p.comments__error Сообщение не может быть пустым, напишите что-нибудь!
