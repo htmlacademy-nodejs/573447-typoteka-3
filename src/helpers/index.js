@@ -21,6 +21,7 @@ const {
   readPublicationsFileContent,
 } = require(`./mocks`);
 const {getHttpErrors} = require(`./exceptions`);
+const {asyncHandler} = require(`./routes`);
 
 module.exports = {
   getRandomNumber,
@@ -43,4 +44,5 @@ module.exports = {
   getMockedPublicationsData,
   readPublicationsFileContent,
   getHttpErrors,
+  asyncHandler,
 };

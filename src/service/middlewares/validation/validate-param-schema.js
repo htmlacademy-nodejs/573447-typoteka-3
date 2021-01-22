@@ -3,13 +3,12 @@
 const {HttpCode} = require(`~/common/enums`);
 const {ValidationError} = require(`~/common/exceptions`);
 
-const validateSchema = (schema) => async (req, res, next) => {
-  const {body} = req;
+const validateParamSchema = (schema, param) => async (req, res, next) => {
+  const currentParam = req.params[param];
 
   try {
-    await schema.validateAsync(body, {
+    await schema.validateAsync(currentParam, {
       abortEarly: false,
-      convert: false,
     });
   } catch (err) {
     if (err instanceof ValidationError) {
@@ -25,5 +24,5 @@ const validateSchema = (schema) => async (req, res, next) => {
 };
 
 module.exports = {
-  validateSchema,
+  validateParamSchema,
 };

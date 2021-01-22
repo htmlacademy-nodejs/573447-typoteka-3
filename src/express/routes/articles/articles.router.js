@@ -131,6 +131,33 @@ const initArticlesRouter = (app, settings) => {
       hasLastComments: true,
     });
   });
+
+  articlesRouter.post(SsrArticlePath.$ARTICLE_ID_COMMENT, async (req, res) => {
+    const {body, params} = req;
+    const parsedComment = Number(params.id);
+
+    try {
+      await api.createComment(parsedComment, {
+        text: body.comment,
+      });
+
+      return res.redirect(`${SsrPath.ARTICLES}/${parsedComment}`);
+    } catch (err) {
+      const categories = await api.getCategories();
+      const article = await api.getArticle(parsedComment);
+
+      return res.render(`pages/articles/article`, {
+        article,
+        themes: categories,
+        errorMessages: getHttpErrors(err),
+        account: {
+          type: `user`,
+          name: `Алёна Фролова`,
+          avatar: `img/avatar-2.png`,
+        },
+      });
+    }
+  });
 };
 
 module.exports = {
