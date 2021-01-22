@@ -34,7 +34,7 @@ const defineModels = (sequelize) => {
   });
 
   Category.hasMany(ArticleCategory, {
-    as: ModelAlias.ARTICLES_CATEGORIES,
+    as: ModelAlias.ARTICLE_CATEGORIES,
   });
 
   return {

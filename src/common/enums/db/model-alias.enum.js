@@ -4,7 +4,7 @@ const ModelAlias = {
   CATEGORIES: `categories`,
   COMMENTS: `comments`,
   ARTICLES: `articles`,
-  ARTICLES_CATEGORIES: `offerCategories`,
+  ARTICLE_CATEGORIES: `articleCategories`,
 };
 
 module.exports = {
