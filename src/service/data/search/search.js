@@ -17,7 +17,7 @@ class Search {
       include: [ModelAlias.CATEGORIES, ModelAlias.COMMENTS],
     });
 
-    return articles.map((offer) => offer.get());
+    return articles.map((article) => article.get());
   }
 }
 
