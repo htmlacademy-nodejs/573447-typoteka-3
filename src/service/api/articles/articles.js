@@ -59,12 +59,12 @@ const initArticlesApi = (app, {articlesService, commentsService}) => {
             .send(`Not found with ${articleId}`);
         }
 
-        const updatedArticle = await articlesService.update(
+        const isuArticleUpdated = await articlesService.update(
             req.body,
             parsedArticleId
         );
 
-        return res.status(HttpCode.OK).json(updatedArticle);
+        return res.status(HttpCode.OK).json(isuArticleUpdated);
       }
   );
 
