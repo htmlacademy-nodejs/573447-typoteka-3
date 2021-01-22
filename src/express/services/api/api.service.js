@@ -81,6 +81,13 @@ class Api {
       data: payload,
     });
   }
+
+  createComment(offerId, payload) {
+    return this._load(`${ApiPath.ARTICLES}/${offerId}/comments`, {
+      method: HttpMethod.POST,
+      data: payload,
+    });
+  }
 }
 
 module.exports = Api;
