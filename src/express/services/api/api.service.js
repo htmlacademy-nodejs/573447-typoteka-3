@@ -76,7 +76,7 @@ class Api {
   }
 
   updateArticle(articleId, payload) {
-    return this.load(`${ApiPath.ARTICLES}/${articleId}`, {
+    return this._load(`${ApiPath.ARTICLES}/${articleId}`, {
       method: HttpMethod.PUT,
       data: payload,
     });
