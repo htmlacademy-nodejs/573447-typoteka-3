@@ -82,8 +82,8 @@ class Api {
     });
   }
 
-  createComment(offerId, payload) {
-    return this._load(`${ApiPath.ARTICLES}/${offerId}/comments`, {
+  createComment(articleId, payload) {
+    return this._load(`${ApiPath.ARTICLES}/${articleId}/comments`, {
       method: HttpMethod.POST,
       data: payload,
     });
