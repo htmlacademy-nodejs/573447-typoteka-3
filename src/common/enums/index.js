@@ -23,6 +23,8 @@ const {
   ArticleValidationMessage,
   ArticleValidationRule,
   RouteIdValidationMessage,
+  CreatedUserValidationMessage,
+  CreatedUserValidationRule,
 } = require(`./validation`);
 const {UserKey} = require(`./user`);
 const {CategoryKey} = require(`./category`);
@@ -58,6 +60,8 @@ module.exports = {
   ArticleValidationMessage,
   ArticleValidationRule,
   RouteIdValidationMessage,
+  CreatedUserValidationMessage,
+  CreatedUserValidationRule,
   UserKey,
   CategoryKey,
 };
