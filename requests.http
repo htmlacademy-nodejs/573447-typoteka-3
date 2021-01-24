@@ -1,3 +1,18 @@
+# Add user
+POST http://localhost:3000/api/users HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "test@mail.com",
+  "password": "123456",
+  "repeatedPassword": "123456",
+  "firstName": "Саня",
+  "lastName": "Белка",
+  "avatar": "img.jpg"
+}
+
+###
+
 # Search
 GET http://localhost:3000/api/search?query=Учим HTTP/1.1
 
