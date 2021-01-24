@@ -8,6 +8,7 @@ const {
   SearchApiPath,
   CategoryApiPath,
   ArticlesApiPath,
+  UsersApiPath,
   HttpMethod,
   RequestParam,
 } = require(`./api`);
@@ -26,7 +27,7 @@ const {
   CreatedUserValidationMessage,
   CreatedUserValidationRule,
 } = require(`./validation`);
-const {UserKey} = require(`./user`);
+const {UserKey, CreatedUserPayloadKey} = require(`./user`);
 const {CategoryKey} = require(`./category`);
 
 module.exports = {
@@ -37,6 +38,7 @@ module.exports = {
   ApiPath,
   SearchApiPath,
   CategoryApiPath,
+  UsersApiPath,
   SsrPath,
   SsrMainPath,
   SsrArticlePath,
@@ -64,4 +66,5 @@ module.exports = {
   CreatedUserValidationRule,
   UserKey,
   CategoryKey,
+  CreatedUserPayloadKey,
 };
