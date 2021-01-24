@@ -12,9 +12,7 @@ block content
             time.post__date(datetime=article.createdDate)
               +formattedDate(article.createdDate)
             h2.post__title.title.title--main #{article.title}
-
-            include ../../common/themes
-
+            +categoriesList(categories, true)
           div.post__picture
             img(src= `img/${article.image}` alt= article.title)
           div.post__text
@@ -48,4 +46,4 @@ block content
                 textarea(value=comment name="comment" rows='1' placeholder='Присоединиться к обсуждению')
                   | #{comment}
               button.comments__button.button.button--colored(type='submit') Опубликовать
-              +errorMessages(errorMessages)
+              +categoriesList(errorMessages)

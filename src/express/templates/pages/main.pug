@@ -7,9 +7,10 @@ block content
     if Boolean(previews.length)
       section.main-page__theme-list
         h2.visually-hidden Список тем
-        include ../common/themes
+        +categoriesList(categories)
       include ../common/section-flex/section-flex
       include ../common/article-preview-list/article-preview-list
       +pagination(page, totalPages, 2, `?`)
     else
-      include ../common/empty/empty-section
+      div.main-page__empty-wrapper
+        p.main-page__empty-text Здесь пока пусто!

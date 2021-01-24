@@ -103,7 +103,7 @@ const initArticlesRouter = (app, settings) => {
 
         return res.render(`pages/articles/article`, {
           article,
-          themes: categories,
+          categories,
         });
       })
   );
@@ -142,7 +142,7 @@ const initArticlesRouter = (app, settings) => {
           return res.render(`pages/articles/article`, {
             article,
             comment,
-            themes: categories,
+            categories,
             errorMessages: getHttpErrors(err),
           });
         }

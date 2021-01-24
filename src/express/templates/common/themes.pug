@@ -1,7 +1,0 @@
-ul.themes(class=`${Boolean(article) ? `post__themes` : ``}`)
-  each theme in themes
-    li.themes__item
-      a.themes__item-link(href=`category/${theme.id}`)
-        | #{theme.name}
-        sup  1
-        button.themes__remove-btn(type='button') Удалить категорию

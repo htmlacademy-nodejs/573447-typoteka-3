@@ -18,7 +18,7 @@ const initMainRouter = (app, settings) => {
     const parsedPage = Number(page);
     const offset = (parsedPage - ARTICLES_SKIP_PAGE_COUNT) * ARTICLES_PER_PAGE;
 
-    const [{count, articles}, catagories] = await Promise.all([
+    const [{count, articles}, categories] = await Promise.all([
       api.getPageArticles({
         limit: ARTICLES_PER_PAGE,
         offset,
@@ -29,8 +29,8 @@ const initMainRouter = (app, settings) => {
 
     return res.render(`pages/main`, {
       totalPages,
+      categories,
       previews: articles,
-      themes: catagories,
       page: parsedPage,
       title: `Типотека`,
       hiddenTitle: ` Главная страница личного блога Типотека`,
