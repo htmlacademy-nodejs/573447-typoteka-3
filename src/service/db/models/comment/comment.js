@@ -1,19 +1,19 @@
 'use strict';
 
 const {DataTypes} = require(`sequelize`);
-const {ModelName, TableName} = require(`~/common/enums`);
+const {ModelName, TableName, CommentKey} = require(`~/common/enums`);
 
 const define = (sequelize) => {
   return sequelize.define(
       ModelName.COMMENT,
       {
-        id: {
+        [CommentKey.ID]: {
           type: DataTypes.INTEGER,
           autoIncrement: true,
           primaryKey: true,
           allowNull: false,
         },
-        text: {
+        [CommentKey.TEXT]: {
           type: DataTypes.STRING,
           allowNull: false,
         },
