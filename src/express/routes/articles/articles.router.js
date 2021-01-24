@@ -23,9 +23,6 @@ const initArticlesRouter = (app, settings) => {
         return res.render(`pages/articles/edit`, {
           article,
           categories,
-          account: {
-            type: `admin`,
-          },
         });
       })
   );
@@ -38,9 +35,6 @@ const initArticlesRouter = (app, settings) => {
         return res.render(`pages/articles/edit`, {
           categories,
           article: {},
-          account: {
-            type: `admin`,
-          },
         });
       })
   );
@@ -64,9 +58,6 @@ const initArticlesRouter = (app, settings) => {
             categories,
             article: articleData,
             errorMessages: getHttpErrors(err),
-            account: {
-              type: `admin`,
-            },
           });
         }
       })
@@ -96,9 +87,6 @@ const initArticlesRouter = (app, settings) => {
               ...articleData,
             },
             errorMessages: getHttpErrors(err),
-            account: {
-              type: `admin`,
-            },
           });
         }
       })
@@ -116,11 +104,6 @@ const initArticlesRouter = (app, settings) => {
         return res.render(`pages/articles/article`, {
           article,
           themes: categories,
-          account: {
-            type: `user`,
-            name: `Алёна Фролова`,
-            avatar: `img/avatar-2.png`,
-          },
         });
       })
   );
@@ -132,11 +115,6 @@ const initArticlesRouter = (app, settings) => {
           title: `Типотека`,
           displayedTitle: `Бизнес`,
           description: `Это приветственный текст, который владелец блога может выбрать, чтобы описать себя 👏`,
-          account: {
-            type: `user`,
-            name: `Алёна Фролова`,
-            avatar: `img/avatar-2.png`,
-          },
           hasContent: true,
           hasHot: true,
           hasLastComments: true,
@@ -149,10 +127,11 @@ const initArticlesRouter = (app, settings) => {
       asyncHandler(async (req, res) => {
         const {body, params} = req;
         const parsedComment = Number(params.id);
+        const {comment} = body;
 
         try {
           await api.createComment(parsedComment, {
-            text: body.comment,
+            text: comment,
           });
 
           return res.redirect(`${SsrPath.ARTICLES}/${parsedComment}`);
@@ -162,13 +141,9 @@ const initArticlesRouter = (app, settings) => {
 
           return res.render(`pages/articles/article`, {
             article,
+            comment,
             themes: categories,
             errorMessages: getHttpErrors(err),
-            account: {
-              type: `user`,
-              name: `Алёна Фролова`,
-              avatar: `img/avatar-2.png`,
-            },
           });
         }
       })

@@ -35,7 +35,6 @@ const initMainRouter = (app, settings) => {
       title: `Типотека`,
       hiddenTitle: ` Главная страница личного блога Типотека`,
       description: `Это приветственный текст, который владелец блога может выбрать, чтобы описать себя 👏`,
-      account: null,
       hasHot: true,
       hasLastComments: true,
     });
@@ -70,11 +69,6 @@ const initMainRouter = (app, settings) => {
       searchValue: search,
       title: `Типотека`,
       hiddenTitle: ` Страница поиска личного блога Типотека`,
-      account: {
-        type: `admin`,
-        name: `Алёна Фролова`,
-        avatar: `img/avatar-2.png`,
-      },
     });
   });
 };

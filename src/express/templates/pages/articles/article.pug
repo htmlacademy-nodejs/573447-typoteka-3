@@ -35,22 +35,20 @@ block content
                     time.comments__date(datetime=comment.createdAt)
                       +formattedDate(comment.createdAt)
                   p.comments__message= comment.text
-          if !account
-            div.comments__footer.comments__footer--visitor
-              button.comments__button.button.button--colored(type=`submit` ) Войти
-              div.comments__registration
-                p.text.text--signature
-                  b.title.title--small Регистрация
-                  | Чтобы присоединиться к переписке нужно зарегистрироваться
-          else if account.type === `user`
-            div.comments__footer.comments__footer--user
-              form(action=`/articles/${article.id}/comments` method="POST")
-                .avatar
-                  img(src= account.avatar alt='Аватар пользователя')
-                label
-                  textarea(name="comment" rows='1' placeholder='Присоединиться к обсуждению')
-                    | #{comment}
-                button.comments__button.button.button--colored(type='submit') Опубликовать
+          //- div.comments__footer.comments__footer--visitor
+          //-   button.comments__button.button.button--colored(type=`submit` ) Войти
+          //-   div.comments__registration
+          //-     p.text.text--signature
+          //-       b.title.title--small Регистрация
+          //-       | Чтобы присоединиться к переписке нужно зарегистрироваться
+          div.comments__footer.comments__footer--user
+            form(action=`/articles/${article.id}/comments` method="POST")
+              .avatar
+                img(src="img/avatar-2.png" alt='Аватар пользователя')
+              label
+                textarea(value=comment name="comment" rows='1' placeholder='Присоединиться к обсуждению')
+                  | #{comment}
+              button.comments__button.button.button--colored(type='submit') Опубликовать
               if hasErrors
                 ul.error-list
                   each errorMessage in errorMessages
