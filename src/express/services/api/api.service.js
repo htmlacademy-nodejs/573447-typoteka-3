@@ -88,6 +88,13 @@ class Api {
       data: payload,
     });
   }
+
+  registerUser(payload) {
+    return this._load(ApiPath.USERS, {
+      method: HttpMethod.POST,
+      data: payload,
+    });
+  }
 }
 
 module.exports = Api;

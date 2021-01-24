@@ -1,15 +1,17 @@
 'use strict';
 
 const {Router} = require(`express`);
-const {SsrPath, SsrMainPath} = require(`~/common/enums`);
+const {SsrPath, SsrMainPath, UserKey} = require(`~/common/enums`);
+const {getHttpErrors} = require(`~/helpers`);
 const {
   ARTICLES_PER_PAGE,
   ARTICLES_SKIP_PAGE_COUNT,
 } = require(`~/common/constants`);
+const {getRegisterData} = require(`./helpers`);
 
 const initMainRouter = (app, settings) => {
   const mainRouter = new Router();
-  const {api} = settings;
+  const {api, storage} = settings;
 
   app.use(SsrPath.MAIN, mainRouter);
 
@@ -42,21 +44,33 @@ const initMainRouter = (app, settings) => {
 
   mainRouter.get(SsrMainPath.REGISTER, (_req, res) => {
     return res.render(`pages/register`, {
-      title: `Типотека`,
-      error: {
-        email: false,
-        password: false,
-      },
+      registerPayload: {},
     });
   });
+
+  mainRouter.post(
+      SsrMainPath.REGISTER,
+      storage.upload.single(UserKey.AVATAR),
+      async (req, res) => {
+        const {body, file} = req;
+        const registerPayload = getRegisterData(body, file);
+
+        try {
+          await api.registerUser(registerPayload);
+
+          return res.redirect(SsrMainPath.LOGIN);
+        } catch (err) {
+          return res.render(`pages/register`, {
+            registerPayload,
+            errorMessages: getHttpErrors(err),
+          });
+        }
+      },
+  );
 
   mainRouter.get(SsrMainPath.LOGIN, (_req, res) => {
     return res.render(`pages/login`, {
       title: `Типотека`,
-      error: {
-        email: false,
-        password: false,
-      },
     });
   });
 
