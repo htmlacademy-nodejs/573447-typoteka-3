@@ -1,7 +1,6 @@
 extends ../layout
 
 block content
-  - const hasErrors = Boolean(errorMessages && errorMessages.length);
   main
     section.post
       h1.visually-hidden Пост
@@ -49,8 +48,4 @@ block content
                 textarea(value=comment name="comment" rows='1' placeholder='Присоединиться к обсуждению')
                   | #{comment}
               button.comments__button.button.button--colored(type='submit') Опубликовать
-              if hasErrors
-                ul.error-list
-                  each errorMessage in errorMessages
-                    li.error-list__item #{errorMessage}
-                //- p.comments__error Сообщение не может быть пустым, напишите что-нибудь!
+              +errorMessages(errorMessages)

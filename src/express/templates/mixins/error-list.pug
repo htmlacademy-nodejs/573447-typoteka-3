@@ -1,0 +1,6 @@
+mixin errorList(errorMessages = [])
+  - const hasErrors = Boolean(errorMessages.length);
+  if hasErrors
+    ul.error-list
+      each errorMessage in errorMessages
+        li.error-list__item #{errorMessage}
