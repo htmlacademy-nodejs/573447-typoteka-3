@@ -1,5 +1,6 @@
 'use strict';
 
+const bcrypt = require(`bcrypt`);
 const {getRandomNumber} = require(`./number`);
 const {
   getRandomItem,
@@ -24,6 +25,8 @@ const {getHttpErrors} = require(`./exceptions`);
 const {asyncHandler} = require(`./routes`);
 
 module.exports = {
+  bcrypt,
+  logger,
   getRandomNumber,
   getRandomItem,
   getRandomItems,
@@ -36,7 +39,6 @@ module.exports = {
   getRandomId,
   getLogger,
   getFileExtension,
-  logger,
   generateMockedComment,
   generateMockedComments,
   generatePublication,
