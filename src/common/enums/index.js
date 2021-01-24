@@ -25,6 +25,7 @@ const {
   RouteIdValidationMessage,
 } = require(`./validation`);
 const {UserKey} = require(`./user`);
+const {CategoryKey} = require(`./category`);
 
 module.exports = {
   CliCommandName,
@@ -58,4 +59,5 @@ module.exports = {
   ArticleValidationRule,
   RouteIdValidationMessage,
   UserKey,
+  CategoryKey,
 };
