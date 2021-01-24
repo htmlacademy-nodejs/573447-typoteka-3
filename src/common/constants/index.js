@@ -11,6 +11,7 @@ const {
   ARTICLES_PER_PAGE,
   ARTICLES_SKIP_PAGE_COUNT,
 } = require(`./articles.constants`);
+const {USER_PASSWORD_SALT_ROUNDS} = require(`./user.constants`);
 
 module.exports = {
   USER_ARGV_IDX,
@@ -21,4 +22,5 @@ module.exports = {
   INCREASE_COUNT_FOR_IDX,
   ARTICLES_PER_PAGE,
   ARTICLES_SKIP_PAGE_COUNT,
+  USER_PASSWORD_SALT_ROUNDS,
 };
