@@ -2,6 +2,7 @@
 
 const UsersApiPath = {
   ROOT: `/`,
+  LOGIN: `/login`,
 };
 
 module.exports = {
