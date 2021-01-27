@@ -7,7 +7,7 @@ const {
   ARTICLES_PER_PAGE,
   ARTICLES_SKIP_PAGE_COUNT,
 } = require(`~/common/constants`);
-const {getRegisterData} = require(`./helpers`);
+const {getRegisterData, getLoginData} = require(`./helpers`);
 
 const initMainRouter = (app, settings) => {
   const mainRouter = new Router();
@@ -16,7 +16,8 @@ const initMainRouter = (app, settings) => {
   app.use(SsrPath.MAIN, mainRouter);
 
   mainRouter.get(SsrMainPath.ROOT, async (req, res) => {
-    const {page = 1} = req.query;
+    const {query, session} = req;
+    const {page = 1} = query;
     const parsedPage = Number(page);
     const offset = (parsedPage - ARTICLES_SKIP_PAGE_COUNT) * ARTICLES_PER_PAGE;
 
@@ -34,9 +35,8 @@ const initMainRouter = (app, settings) => {
       categories,
       previews: articles,
       page: parsedPage,
+      user: session.user,
       title: `Типотека`,
-      hiddenTitle: ` Главная страница личного блога Типотека`,
-      description: `Это приветственный текст, который владелец блога может выбрать, чтобы описать себя 👏`,
       hasHot: true,
       hasLastComments: true,
     });
@@ -70,7 +70,29 @@ const initMainRouter = (app, settings) => {
 
   mainRouter.get(SsrMainPath.LOGIN, (_req, res) => {
     return res.render(`pages/login`, {
-      title: `Типотека`,
+      loginPayload: {},
+    });
+  });
+
+  mainRouter.post(SsrMainPath.LOGIN, async (req, res) => {
+    const {body, session} = req;
+    const loginPayload = getLoginData(body);
+
+    try {
+      session.user = await api.loginUser(loginPayload);
+
+      return res.redirect(SsrPath.MAIN);
+    } catch (err) {
+      return res.render(`pages/login`, {
+        loginPayload,
+        errorMessages: getHttpErrors(err),
+      });
+    }
+  });
+
+  mainRouter.get(SsrMainPath.LOGOUT, (req, res) => {
+    req.session.destroy(() => {
+      res.redirect(SsrMainPath.LOGIN);
     });
   });
 
@@ -81,8 +103,6 @@ const initMainRouter = (app, settings) => {
     return res.render(`pages/search`, {
       results,
       searchValue: search,
-      title: `Типотека`,
-      hiddenTitle: ` Страница поиска личного блога Типотека`,
     });
   });
 };
