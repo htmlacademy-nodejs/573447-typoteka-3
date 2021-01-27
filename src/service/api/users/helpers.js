@@ -19,6 +19,11 @@ const mapCreatedUser = async (userRegisterPayload) => {
   return copiedUserPayload;
 };
 
+const checkIsPasswordSame = (user, password) => {
+  return bcrypt.compare(password, user.password);
+};
+
 module.exports = {
   mapCreatedUser,
+  checkIsPasswordSame,
 };

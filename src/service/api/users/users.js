@@ -2,9 +2,17 @@
 
 const {Router} = require(`express`);
 const {checkAlreadyRegister, validateSchema} = require(`~/service/middlewares`);
-const {createdUserPayload: createdUserPayloadSchema} = require(`~/schemas`);
-const {ApiPath, HttpCode, UsersApiPath} = require(`~/common/enums`);
-const {mapCreatedUser} = require(`./helpers`);
+const {
+  createdUserPayload: createdUserPayloadSchema,
+  userLoginPayload: userLoginPayloadSchema,
+} = require(`~/schemas`);
+const {
+  ApiPath,
+  HttpCode,
+  UsersApiPath,
+  UserLoginValidationMessage,
+} = require(`~/common/enums`);
+const {mapCreatedUser, checkIsPasswordSame} = require(`./helpers`);
 
 const initUsersApi = (app, {usersService}) => {
   const usersRouter = new Router();
@@ -22,6 +30,32 @@ const initUsersApi = (app, {usersService}) => {
         const user = await usersService.create(mappedCreatedUser);
 
         return res.status(HttpCode.CREATED).json(user);
+      }
+  );
+
+  usersRouter.post(
+      UsersApiPath.LOGIN,
+      validateSchema(userLoginPayloadSchema),
+      async (req, res) => {
+        const {email, password} = req.body;
+
+        const user = await usersService.findByEmail(email);
+
+        if (!user) {
+          return res.status(HttpCode.UNAUTHORIZE).send({
+            messages: [UserLoginValidationMessage.EMAIL_WRONG],
+          });
+        }
+
+        const isPasswordSame = await checkIsPasswordSame(user, password);
+
+        if (!isPasswordSame) {
+          return res.status(HttpCode.UNAUTHORIZE).send({
+            messages: [UserLoginValidationMessage.PASSWORD_WRONG],
+          });
+        }
+
+        return res.status(HttpCode.OK).json(user);
       }
   );
 };
