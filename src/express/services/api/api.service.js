@@ -1,7 +1,7 @@
 'use strict';
 
 const axios = require(`axios`);
-const {ApiPath, HttpMethod, HttpCode} = require(`~/common/enums`);
+const {ApiPath, HttpMethod, HttpCode, UsersApiPath} = require(`~/common/enums`);
 const {HttpError} = require(`~/common/exceptions`);
 
 class Api {
@@ -91,6 +91,13 @@ class Api {
 
   registerUser(payload) {
     return this._load(ApiPath.USERS, {
+      method: HttpMethod.POST,
+      data: payload,
+    });
+  }
+
+  loginUser(payload) {
+    return this._load(`${ApiPath.USERS}${UsersApiPath.LOGIN}`, {
       method: HttpMethod.POST,
       data: payload,
     });
