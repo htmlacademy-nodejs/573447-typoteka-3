@@ -7,12 +7,16 @@ const {Api, DiskStorage} = require(`~/express/services`);
 const {HttpCode} = require(`~/common/enums`);
 const {initMainRouter} = require(`~/express/routes/main/main.router`);
 const {initMyRouter} = require(`~/express/routes/my/my.router`);
-const {initArticlesRouter} = require(`~/express/routes/articles/articles.router`);
+const {
+  initArticlesRouter,
+} = require(`~/express/routes/articles/articles.router`);
+const {sessionMiddleware} = require(`./session`);
 const {AppConfig} = require(`./common`);
 
 const app = express();
 
 app.use(express.urlencoded({extended: false}));
+app.use(sessionMiddleware);
 
 const uploadImgPath = path.resolve(__dirname, `./${AppConfig.UPLOAD_DIR}/img/`);
 const routerInits = [initMainRouter, initMyRouter, initArticlesRouter];
@@ -41,9 +45,7 @@ app.use((_, res) =>
 app.use((_err, _req, res, _next) => {
   console.log(_err);
 
-  return (
-    res.status(HttpCode.INTERNAL_SERVER_ERROR).render(`pages/errors/500`)
-  );
+  return res.status(HttpCode.INTERNAL_SERVER_ERROR).render(`pages/errors/500`);
 });
 
 app.set(`views`, path.resolve(__dirname, `templates`));
