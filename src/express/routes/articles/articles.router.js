@@ -2,6 +2,7 @@
 
 const {Router} = require(`express`);
 const {getHttpErrors, asyncHandler} = require(`~/helpers`);
+const {checkUserAuthenticate} = require(`~/middlewares`);
 const {SsrPath, SsrArticlePath, ArticleKey} = require(`~/common/enums`);
 const {getArticleData} = require(`./helpers`);
 
@@ -13,6 +14,7 @@ const initArticlesRouter = (app, settings) => {
 
   articlesRouter.get(
       SsrArticlePath.EDIT_$ARTICLE_ID,
+      checkUserAuthenticate,
       asyncHandler(async (req, res) => {
         const {id} = req.params;
         const [article, categories] = await Promise.all([
@@ -29,6 +31,7 @@ const initArticlesRouter = (app, settings) => {
 
   articlesRouter.get(
       SsrArticlePath.ADD,
+      checkUserAuthenticate,
       asyncHandler(async (_req, res) => {
         const categories = await api.getCategories();
 
@@ -42,7 +45,7 @@ const initArticlesRouter = (app, settings) => {
 
   articlesRouter.post(
       SsrArticlePath.ADD,
-      storage.upload.single(ArticleKey.IMAGE),
+      [checkUserAuthenticate, storage.upload.single(ArticleKey.IMAGE)],
       asyncHandler(async (req, res) => {
         const {body, file} = req;
         const articleData = getArticleData(body, file);
@@ -65,7 +68,7 @@ const initArticlesRouter = (app, settings) => {
 
   articlesRouter.post(
       SsrArticlePath.EDIT_$ARTICLE_ID,
-      storage.upload.single(ArticleKey.IMAGE),
+      [checkUserAuthenticate, storage.upload.single(ArticleKey.IMAGE)],
       asyncHandler(async (req, res) => {
         const {body, file, params} = req;
         const {id} = params;
@@ -123,7 +126,7 @@ const initArticlesRouter = (app, settings) => {
   );
 
   articlesRouter.post(
-      SsrArticlePath.$ARTICLE_ID_COMMENT,
+      [checkUserAuthenticate, SsrArticlePath.$ARTICLE_ID_COMMENT],
       asyncHandler(async (req, res) => {
         const {body, params} = req;
         const parsedComment = Number(params.id);
