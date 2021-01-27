@@ -1,9 +1,9 @@
 'use strict';
 
-const path = require(`path`);
+const FILE_EXTENSION_SEPARATOR = `.`;
 
 const getFileExtension = (fileName) => {
-  const fileExtension = path.parse(fileName).name;
+  const fileExtension = fileName.split(FILE_EXTENSION_SEPARATOR).pop();
 
   return fileExtension;
 };
