@@ -16,7 +16,8 @@ const initArticlesRouter = (app, settings) => {
       SsrArticlePath.EDIT_$ARTICLE_ID,
       checkUserAuthenticate,
       asyncHandler(async (req, res) => {
-        const {id} = req.params;
+        const {params, session} = req;
+        const {id} = params;
         const [article, categories] = await Promise.all([
           api.getArticle(id),
           api.getCategories(),
@@ -25,6 +26,7 @@ const initArticlesRouter = (app, settings) => {
         return res.render(`pages/articles/edit`, {
           article,
           categories,
+          user: session.user,
         });
       })
   );
@@ -32,12 +34,13 @@ const initArticlesRouter = (app, settings) => {
   articlesRouter.get(
       SsrArticlePath.ADD,
       checkUserAuthenticate,
-      asyncHandler(async (_req, res) => {
+      asyncHandler(async (req, res) => {
         const categories = await api.getCategories();
 
         return res.render(`pages/articles/edit`, {
           categories,
           article: {},
+          user: req.session.user,
         });
       })
   );
@@ -47,7 +50,7 @@ const initArticlesRouter = (app, settings) => {
       SsrArticlePath.ADD,
       [checkUserAuthenticate, storage.upload.single(ArticleKey.IMAGE)],
       asyncHandler(async (req, res) => {
-        const {body, file} = req;
+        const {body, file, session} = req;
         const articleData = getArticleData(body, file);
 
         try {
@@ -61,6 +64,7 @@ const initArticlesRouter = (app, settings) => {
             categories,
             article: articleData,
             errorMessages: getHttpErrors(err),
+            user: session.user,
           });
         }
       })
@@ -70,7 +74,7 @@ const initArticlesRouter = (app, settings) => {
       SsrArticlePath.EDIT_$ARTICLE_ID,
       [checkUserAuthenticate, storage.upload.single(ArticleKey.IMAGE)],
       asyncHandler(async (req, res) => {
-        const {body, file, params} = req;
+        const {body, file, params, session} = req;
         const {id} = params;
         const parsedId = Number(id);
         const articleData = getArticleData(body, file);
@@ -90,6 +94,7 @@ const initArticlesRouter = (app, settings) => {
               ...articleData,
             },
             errorMessages: getHttpErrors(err),
+            user: session.user,
           });
         }
       })
@@ -98,7 +103,8 @@ const initArticlesRouter = (app, settings) => {
   articlesRouter.get(
       SsrArticlePath.$ARTICLE_ID,
       asyncHandler(async (req, res) => {
-        const {id} = req.params;
+        const {params, session} = req;
+        const {id} = params;
         const [article, categories] = await Promise.all([
           api.getArticle(id),
           api.getCategories(),
@@ -107,13 +113,14 @@ const initArticlesRouter = (app, settings) => {
         return res.render(`pages/articles/article`, {
           article,
           categories,
+          user: session.user,
         });
       })
   );
 
   articlesRouter.get(
       SsrArticlePath.CATEGORY_$ARTICLE_ID,
-      asyncHandler((_req, res) => {
+      asyncHandler((req, res) => {
         return res.render(`pages/articles/categories`, {
           title: `Типотека`,
           displayedTitle: `Бизнес`,
@@ -121,6 +128,7 @@ const initArticlesRouter = (app, settings) => {
           hasContent: true,
           hasHot: true,
           hasLastComments: true,
+          user: req.session.user,
         });
       })
   );
@@ -128,7 +136,7 @@ const initArticlesRouter = (app, settings) => {
   articlesRouter.post(
       [checkUserAuthenticate, SsrArticlePath.$ARTICLE_ID_COMMENT],
       asyncHandler(async (req, res) => {
-        const {body, params} = req;
+        const {body, params, session} = req;
         const parsedComment = Number(params.id);
         const {comment} = body;
 
@@ -147,6 +155,7 @@ const initArticlesRouter = (app, settings) => {
             comment,
             categories,
             errorMessages: getHttpErrors(err),
+            user: session.user,
           });
         }
       })

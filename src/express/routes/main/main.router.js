@@ -97,12 +97,14 @@ const initMainRouter = (app, settings) => {
   });
 
   mainRouter.get(SsrMainPath.SEARCH, async (req, res) => {
-    const {search} = req.query;
+    const {query, session} = req;
+    const {search} = query;
     const results = await api.search(search);
 
     return res.render(`pages/search`, {
       results,
       searchValue: search,
+      user: session.user,
     });
   });
 };

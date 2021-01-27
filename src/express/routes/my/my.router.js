@@ -10,19 +10,21 @@ const initMyRouter = (app, settings) => {
 
   app.use(SsrPath.MY, myRouter);
 
-  myRouter.get(SsrMyPath.ROOT, checkUserAuthenticate, async (_req, res) => {
+  myRouter.get(SsrMyPath.ROOT, checkUserAuthenticate, async (req, res) => {
     const articles = await api.getArticles();
 
     return res.render(`pages/my/my`, {
       articles,
+      user: req.session.user,
     });
   });
 
-  myRouter.get(SsrMyPath.COMMENTS, checkUserAuthenticate, async (_req, res) => {
+  myRouter.get(SsrMyPath.COMMENTS, checkUserAuthenticate, async (req, res) => {
     const articles = await api.getArticles();
 
     return res.render(`pages/my/comments`, {
       articles,
+      user: req.session.user,
     });
   });
 };
