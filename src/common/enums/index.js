@@ -26,6 +26,7 @@ const {
   RouteIdValidationMessage,
   CreatedUserValidationMessage,
   CreatedUserValidationRule,
+  SessionValidationRule,
 } = require(`./validation`);
 const {
   UserKey,
@@ -34,6 +35,7 @@ const {
   UserLoginPayloadKey,
 } = require(`./user`);
 const {CategoryKey} = require(`./category`);
+const {SessionKey} = require(`./session`);
 
 module.exports = {
   CliCommandName,
@@ -69,9 +71,11 @@ module.exports = {
   RouteIdValidationMessage,
   CreatedUserValidationMessage,
   CreatedUserValidationRule,
+  SessionValidationRule,
   UserKey,
   UserLoginValidationMessage,
   UserLoginPayloadKey,
   CategoryKey,
   CreatedUserPayloadKey,
+  SessionKey,
 };

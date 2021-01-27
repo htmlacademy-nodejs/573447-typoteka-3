@@ -6,6 +6,7 @@ const TableName = {
   USERS: `users`,
   ARTICLES: `articles`,
   ARTICLES_CATEGORIES: `articles_categories`,
+  SESSIONS: `sessions`,
 };
 
 module.exports = {
