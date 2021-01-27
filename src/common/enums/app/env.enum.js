@@ -10,6 +10,8 @@ const {
   DB_NAME,
   DB_USER,
   DB_PASSWORD,
+  DB_DIALECT,
+  SECRET,
 } = process.env;
 
 const ENV = {
@@ -22,6 +24,8 @@ const ENV = {
   DB_NAME,
   DB_USER,
   DB_PASSWORD,
+  DB_DIALECT,
+  SECRET,
 };
 
 module.exports = {
