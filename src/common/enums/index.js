@@ -27,7 +27,12 @@ const {
   CreatedUserValidationMessage,
   CreatedUserValidationRule,
 } = require(`./validation`);
-const {UserKey, CreatedUserPayloadKey} = require(`./user`);
+const {
+  UserKey,
+  CreatedUserPayloadKey,
+  UserLoginValidationMessage,
+  UserLoginPayloadKey,
+} = require(`./user`);
 const {CategoryKey} = require(`./category`);
 
 module.exports = {
@@ -65,6 +70,8 @@ module.exports = {
   CreatedUserValidationMessage,
   CreatedUserValidationRule,
   UserKey,
+  UserLoginValidationMessage,
+  UserLoginPayloadKey,
   CategoryKey,
   CreatedUserPayloadKey,
 };
