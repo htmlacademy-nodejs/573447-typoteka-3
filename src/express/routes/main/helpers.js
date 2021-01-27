@@ -9,6 +9,12 @@ const getRegisterData = (body, file) => ({
   avatar: file ? file.filename : null,
 });
 
+const getLoginData = (body) => ({
+  email: body.email,
+  password: body.password,
+});
+
 module.exports = {
   getRegisterData,
+  getLoginData,
 };
