@@ -2,7 +2,7 @@
 
 const express = require(`express`);
 const apiRouter = require(`~/service/api/api`);
-const sequelize = require(`~/service/db/db`);
+const sequelize = require(`~/db/db`);
 const {getLogger, paintMessage} = require(`~/helpers`);
 const {CliCommandName, HttpCode, LoggerName, MessageColor} = require(`~/common/enums`);
 const {API_PREFIX} = require(`~/common/constants`);

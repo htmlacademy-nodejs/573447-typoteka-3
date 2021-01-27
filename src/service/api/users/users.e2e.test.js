@@ -4,7 +4,7 @@ const express = require(`express`);
 const {Sequelize} = require(`sequelize`);
 const request = require(`supertest`);
 const {Users} = require(`~/service/data`);
-const {initDb} = require(`~/service/db/init-db`);
+const {initDb} = require(`~/db/init-db`);
 const {
   ApiPath,
   HttpCode,

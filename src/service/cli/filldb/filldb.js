@@ -1,7 +1,7 @@
 'use strict';
 
-const sequelize = require(`~/service/db/db`);
-const {initDb} = require(`~/service/db/init-db`);
+const sequelize = require(`~/db/db`);
+const {initDb} = require(`~/db/init-db`);
 const {
   paintMessage,
   generatePublications,

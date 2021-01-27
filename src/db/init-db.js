@@ -1,6 +1,6 @@
 'use strict';
 
-const {defineModels} = require(`~/service/db/define-models`);
+const {defineModels} = require(`~/db/define-models`);
 const {ModelAlias} = require(`~/common/enums`);
 
 const initDb = async (sequelize, {categories, articles}) => {
