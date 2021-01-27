@@ -9,6 +9,7 @@ const dbConfig = {
     port: ENV.DB_PORT,
     username: ENV.DB_USER,
     password: ENV.DB_PASSWORD,
+    dialect: ENV.DB_DIALECT,
   },
 };
 
