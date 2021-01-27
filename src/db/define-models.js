@@ -7,6 +7,7 @@ const {
   defineCategoryModel,
   defineCommentModel,
   defineUserModel,
+  defineSessionModel,
 } = require(`./models`);
 
 const defineModels = (sequelize) => {
@@ -15,6 +16,7 @@ const defineModels = (sequelize) => {
   const Article = defineArticleModel(sequelize);
   const ArticleCategory = defineArticleCategoryModel(sequelize);
   const User = defineUserModel(sequelize);
+  const Session = defineSessionModel(sequelize);
 
   Article.hasMany(Comment, {
     foreignKey: `articleId`,
@@ -45,6 +47,7 @@ const defineModels = (sequelize) => {
     Article,
     ArticleCategory,
     User,
+    Session,
   };
 };
 

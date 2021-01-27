@@ -5,6 +5,7 @@ const {define: defineArticleCategoryModel} = require(`./article-category/article
 const {define: defineCategoryModel} = require(`./category/category`);
 const {define: defineCommentModel} = require(`./comment/comment`);
 const {define: defineUserModel} = require(`./user/user`);
+const {define: defineSessionModel} = require(`./session/session`);
 
 module.exports = {
   defineArticleModel,
@@ -12,4 +13,5 @@ module.exports = {
   defineCategoryModel,
   defineCommentModel,
   defineUserModel,
+  defineSessionModel,
 };
