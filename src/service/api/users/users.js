@@ -1,7 +1,7 @@
 'use strict';
 
 const {Router} = require(`express`);
-const {checkAlreadyRegister, validateSchema} = require(`~/service/middlewares`);
+const {checkAlreadyRegister, validateSchema} = require(`~/middlewares`);
 const {
   createdUserPayload: createdUserPayloadSchema,
   userLoginPayload: userLoginPayloadSchema,

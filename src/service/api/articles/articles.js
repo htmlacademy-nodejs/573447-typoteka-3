@@ -11,7 +11,7 @@ const {
   existArticle,
   validateSchema,
   validateParamSchema,
-} = require(`~/service/middlewares`);
+} = require(`~/middlewares`);
 const {
   article: articleSchema,
   comment: commentSchema,
