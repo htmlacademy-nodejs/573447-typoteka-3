@@ -21,6 +21,9 @@ const sessionMiddleware = session({
   proxy: true,
   saveUninitialized: false,
   name: `session_id`,
+  cookie: {
+    sameSite: `strict`,
+  },
 });
 
 module.exports = {
