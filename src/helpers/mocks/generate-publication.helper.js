@@ -29,7 +29,7 @@ const generatePublication = ({titles, descriptions, categories, comments}) => ({
       descriptions,
       getRandomNumber(
           MocksConfig.TEXT.MIN_FULL_TEXT_COUNT,
-          descriptions.length
+          MocksConfig.TEXT.MAX_FULL_TEXT_COUNT
       )
   ).join(` `),
   [ArticleKey.IMAGE]: `${getRandomItem(MocksConfig.IMAGES)}.jpg`,
