@@ -11,6 +11,7 @@ const {
   UsersApiPath,
   HttpMethod,
   RequestParam,
+  RequestQuery
 } = require(`./api`);
 const {SsrPath, SsrMainPath, SsrArticlePath, SsrMyPath} = require(`./ssr`);
 const {ArticleKey} = require(`./article`);
@@ -27,6 +28,7 @@ const {
   CreatedUserValidationMessage,
   CreatedUserValidationRule,
   SessionValidationRule,
+  QueryValidationMessage,
 } = require(`./validation`);
 const {
   UserKey,
@@ -56,6 +58,7 @@ module.exports = {
   ArticlesApiPath,
   HttpMethod,
   RequestParam,
+  RequestQuery,
   AppEnvironment,
   ENV,
   LogLevel,
@@ -72,6 +75,7 @@ module.exports = {
   RouteIdValidationMessage,
   CreatedUserValidationMessage,
   CreatedUserValidationRule,
+  QueryValidationMessage,
   SessionValidationRule,
   UserKey,
   UserLoginValidationMessage,

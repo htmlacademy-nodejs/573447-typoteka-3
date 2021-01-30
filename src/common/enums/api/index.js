@@ -8,6 +8,7 @@ const {ArticlesApiPath} = require(`./articles-api-path.enum`);
 const {HttpMethod} = require(`./http-method.enum`);
 const {RequestParam} = require(`./request-param.enum`);
 const {UsersApiPath} = require(`./users-api-path.enum`);
+const {RequestQuery} = require(`./request-query.enum`);
 
 module.exports = {
   HttpCode,
@@ -18,4 +19,5 @@ module.exports = {
   HttpMethod,
   RequestParam,
   UsersApiPath,
+  RequestQuery,
 };
