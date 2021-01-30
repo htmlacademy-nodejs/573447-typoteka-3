@@ -20,9 +20,9 @@ block content
             ul.hot__list
               each hotArticle of hotArticles
                 li.hot__list-item
-                  a.hot__list-link(href=`/article/${hotArticle.id}`)
-                    | #{hotArticle.title}
-                    sup.hot__link-sup #{hotArticle.comments.length}
+                  a.hot__list-link(href=`/articles/${hotArticle.id}`)
+                    | #{hotArticle.announce}
+                    sup.hot__link-sup #{hotArticle.count}
           else
             p.hot__empty Здесь пока ничего нет...
         section.main-page__last.last
@@ -36,7 +36,7 @@ block content
                 li.last__list-item
                   img.last__list-image(src='img/avatar-small-1.png' width='20' height='20' alt='Аватар пользователя')
                   b.last__list-name Анна Артамонова
-                  a.last__list-link(href='#') #{lastComment.test}
+                  a.last__list-link(href='#') #{lastComment.text}
           else
             p.hot__empty Здесь пока ничего нет...
       +articlesList(articles)
