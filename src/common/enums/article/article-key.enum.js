@@ -9,6 +9,8 @@ const ArticleKey = {
   FULL_TEXT: `fullText`,
   CATEGORIES: `categories`,
   COMMENTS: `comments`,
+  CREATED_AT: `createdAt`,
+  UPDATED_AT: `updatedAt`,
 };
 
 module.exports = {

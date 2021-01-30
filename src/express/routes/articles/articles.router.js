@@ -26,7 +26,6 @@ const initArticlesRouter = (app, settings) => {
       })
   );
 
-
   articlesRouter.post(
       SsrArticlePath.ADD,
       [checkUserAuthenticate, checkIsAdmin, storage.upload.single(ArticleKey.IMAGE)],
