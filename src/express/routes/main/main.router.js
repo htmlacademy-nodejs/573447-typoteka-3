@@ -1,7 +1,7 @@
 'use strict';
 
 const {Router} = require(`express`);
-const {SsrPath, SsrMainPath, UserKey} = require(`~/common/enums`);
+const {SsrPath, SsrMainPath, UserKey, SortType} = require(`~/common/enums`);
 const {checkUserAuthenticate, checkIsAdmin} = require(`~/middlewares`);
 const {getHttpErrors} = require(`~/helpers`);
 const {
@@ -9,6 +9,7 @@ const {
   ARTICLES_SKIP_PAGE_COUNT,
 } = require(`~/common/constants`);
 const {getRegisterData, getLoginData} = require(`./helpers`);
+const {HOT_ARTICLES_COUNT, LAST_COMMENTS_COUNT} = require(`./common`);
 
 const initMainRouter = (app, settings) => {
   const mainRouter = new Router();
@@ -22,10 +23,22 @@ const initMainRouter = (app, settings) => {
     const parsedPage = Number(page);
     const offset = (parsedPage - ARTICLES_SKIP_PAGE_COUNT) * ARTICLES_PER_PAGE;
 
-    const [{count, articles}, categories] = await Promise.all([
+    const [
+      {count, articles},
+      hotArticles,
+      lastComments,
+      categories,
+    ] = await Promise.all([
       api.getPageArticles({
         limit: ARTICLES_PER_PAGE,
         offset,
+      }),
+      api.getHotArticles({
+        limit: HOT_ARTICLES_COUNT,
+      }),
+      api.getComments({
+        limit: LAST_COMMENTS_COUNT,
+        order: SortType.DESC,
       }),
       api.getCategories(),
     ]);
@@ -35,8 +48,8 @@ const initMainRouter = (app, settings) => {
       articles,
       totalPages,
       categories,
-      lastComments: [],
-      hotArticles: [],
+      hotArticles,
+      lastComments,
       page: parsedPage,
       user: session.user
     });
