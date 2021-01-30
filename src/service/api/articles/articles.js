@@ -37,6 +37,13 @@ const initArticlesApi = (app, {articlesService, commentsService}) => {
     return res.status(HttpCode.OK).json(articles);
   });
 
+  articlesRouter.get(ArticlesApiPath.POPULAR, async (req, res) => {
+    const {limit} = req.query;
+    const articles = await articlesService.findMostCommented(limit);
+
+    return res.status(HttpCode.OK).json(articles);
+  });
+
   articlesRouter.post(
       ArticlesApiPath.ROOT,
       validateSchema(articleSchema),
