@@ -1,11 +1,20 @@
 'use strict';
 
+const {CommentKey} = require(`~/common/enums`);
+
 class Comments {
   constructor({commentModel}) {
     this._Comment = commentModel;
   }
 
-  findAll(articleId) {
+  findAll(limit, order) {
+    return this._Comment.findAll({
+      order: [[CommentKey.CREATED_AT, order]],
+      limit,
+    });
+  }
+
+  findAllByArticleId(articleId) {
     return this._Comment.findAll({
       where: {
         articleId,

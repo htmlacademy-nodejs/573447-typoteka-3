@@ -44,6 +44,13 @@ const initArticlesApi = (app, {articlesService, commentsService}) => {
     return res.status(HttpCode.OK).json(articles);
   });
 
+  articlesRouter.get(ArticlesApiPath.COMMENTS, async (req, res) => {
+    const {limit, order} = req.query;
+    const comments = await commentsService.findAll(limit, order);
+
+    return res.status(HttpCode.OK).json(comments);
+  });
+
   articlesRouter.post(
       ArticlesApiPath.ROOT,
       validateSchema(articleSchema),
@@ -120,7 +127,7 @@ const initArticlesApi = (app, {articlesService, commentsService}) => {
       ],
       async (req, res) => {
         const {articleId} = req.params;
-        const comments = await commentsService.findAll(Number(articleId));
+        const comments = await commentsService.findAllByArticleId(Number(articleId));
 
         return res.status(HttpCode.OK).json(comments);
       }
