@@ -7,9 +7,9 @@ block content
   - const hasAuthHeight = !hasLastComments || !hasHotArticles;
   main.main-page
     h1.visually-hidden Главная страница личного блога Типотека
-    p Это приветственный текст, который владелец блога может выбрать, чтобы описать себя 👏
+    p Дороу 👏
+    +categoriesList(categories)
     if hasArticles
-      +categoriesList(categories)
       div.main-page__section-flex(class=`${hasAuthHeight ? 'main-page__section-flex--short' : ''}`)
         section.main-page__hot.hot
           h2.hot__name
