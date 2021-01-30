@@ -123,12 +123,7 @@ const initArticlesRouter = (app, settings) => {
       SsrArticlePath.CATEGORY_$CATEGORY_ID,
       asyncHandler((req, res) => {
         return res.render(`pages/articles/categories`, {
-          title: `Типотека`,
-          displayedTitle: `Бизнес`,
-          description: `Это приветственный текст, который владелец блога может выбрать, чтобы описать себя 👏`,
-          hasContent: true,
-          hasHot: true,
-          hasLastComments: true,
+          title: `Бизнес`,
           user: req.session.user,
         });
       })

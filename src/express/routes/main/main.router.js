@@ -31,14 +31,13 @@ const initMainRouter = (app, settings) => {
     const totalPages = Math.ceil(count / ARTICLES_PER_PAGE);
 
     return res.render(`pages/main`, {
+      articles,
       totalPages,
       categories,
-      previews: articles,
+      lastComments: [],
+      hotArticles: [],
       page: parsedPage,
-      user: session.user,
-      title: `Типотека`,
-      hasHot: true,
-      hasLastComments: true,
+      user: session.user
     });
   });
 
