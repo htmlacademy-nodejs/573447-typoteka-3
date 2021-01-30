@@ -14,6 +14,7 @@ const {
   CreatedUserValidationMessage,
 } = require(`./created-user-validation-message.enum`);
 const {SessionValidationRule} = require(`./session-validation-rule.enum`);
+const {QueryValidationMessage} = require(`./query-validation-message.enum`);
 
 module.exports = {
   CommentValidationRule,
@@ -24,4 +25,5 @@ module.exports = {
   CreatedUserValidationRule,
   CreatedUserValidationMessage,
   SessionValidationRule,
+  QueryValidationMessage,
 };
