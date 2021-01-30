@@ -1,7 +1,11 @@
 'use strict';
 
 const {existArticle} = require(`./article`);
-const {validateSchema, validateParamSchema} = require(`./validation`);
+const {
+  validateSchema,
+  validateParamSchema,
+  validateQuerySchema,
+} = require(`./validation`);
 const {
   checkAlreadyRegister,
   checkUserAuthenticate,
@@ -15,4 +19,5 @@ module.exports = {
   checkAlreadyRegister,
   checkUserAuthenticate,
   checkIsAdmin,
+  validateQuerySchema,
 };
