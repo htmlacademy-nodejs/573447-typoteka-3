@@ -2,7 +2,7 @@
 
 const {Router} = require(`express`);
 const {getHttpErrors, asyncHandler} = require(`~/helpers`);
-const {checkUserAuthenticate} = require(`~/middlewares`);
+const {checkUserAuthenticate, checkIsAdmin} = require(`~/middlewares`);
 const {SsrPath, SsrArticlePath, ArticleKey} = require(`~/common/enums`);
 const {getArticleData} = require(`./helpers`);
 
@@ -13,8 +13,7 @@ const initArticlesRouter = (app, settings) => {
   app.use(SsrPath.ARTICLES, articlesRouter);
 
   articlesRouter.get(
-      SsrArticlePath.EDIT_$ARTICLE_ID,
-      checkUserAuthenticate,
+      SsrArticlePath.$ARTICLE_ID,
       asyncHandler(async (req, res) => {
         const {params, session} = req;
         const {id} = params;
@@ -23,7 +22,7 @@ const initArticlesRouter = (app, settings) => {
           api.getCategories(),
         ]);
 
-        return res.render(`pages/articles/edit`, {
+        return res.render(`pages/articles/article`, {
           article,
           categories,
           user: session.user,
@@ -31,9 +30,10 @@ const initArticlesRouter = (app, settings) => {
       })
   );
 
+
   articlesRouter.get(
       SsrArticlePath.ADD,
-      checkUserAuthenticate,
+      checkIsAdmin,
       asyncHandler(async (req, res) => {
         const categories = await api.getCategories();
 
@@ -48,7 +48,7 @@ const initArticlesRouter = (app, settings) => {
 
   articlesRouter.post(
       SsrArticlePath.ADD,
-      [checkUserAuthenticate, storage.upload.single(ArticleKey.IMAGE)],
+      [checkIsAdmin, storage.upload.single(ArticleKey.IMAGE)],
       asyncHandler(async (req, res) => {
         const {body, file, session} = req;
         const articleData = getArticleData(body, file);
@@ -70,9 +70,29 @@ const initArticlesRouter = (app, settings) => {
       })
   );
 
+  articlesRouter.get(
+      SsrArticlePath.EDIT_$ARTICLE_ID,
+      checkIsAdmin,
+      asyncHandler(async (req, res) => {
+        const {params, session} = req;
+        const {id} = params;
+        const [article, categories] = await Promise.all([
+          api.getArticle(id),
+          api.getCategories(),
+        ]);
+
+        return res.render(`pages/articles/edit`, {
+          article,
+          categories,
+          user: session.user,
+        });
+      })
+  );
+
+
   articlesRouter.post(
       SsrArticlePath.EDIT_$ARTICLE_ID,
-      [checkUserAuthenticate, storage.upload.single(ArticleKey.IMAGE)],
+      [checkIsAdmin, storage.upload.single(ArticleKey.IMAGE)],
       asyncHandler(async (req, res) => {
         const {body, file, params, session} = req;
         const {id} = params;
@@ -97,24 +117,6 @@ const initArticlesRouter = (app, settings) => {
             user: session.user,
           });
         }
-      })
-  );
-
-  articlesRouter.get(
-      SsrArticlePath.$ARTICLE_ID,
-      asyncHandler(async (req, res) => {
-        const {params, session} = req;
-        const {id} = params;
-        const [article, categories] = await Promise.all([
-          api.getArticle(id),
-          api.getCategories(),
-        ]);
-
-        return res.render(`pages/articles/article`, {
-          article,
-          categories,
-          user: session.user,
-        });
       })
   );
 

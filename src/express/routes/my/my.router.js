@@ -2,7 +2,7 @@
 
 const {Router} = require(`express`);
 const {SsrPath, SsrMyPath} = require(`~/common/enums`);
-const {checkUserAuthenticate} = require(`~/middlewares`);
+const {checkIsAdmin} = require(`~/middlewares`);
 
 const initMyRouter = (app, settings) => {
   const myRouter = new Router();
@@ -10,7 +10,7 @@ const initMyRouter = (app, settings) => {
 
   app.use(SsrPath.MY, myRouter);
 
-  myRouter.get(SsrMyPath.ROOT, checkUserAuthenticate, async (req, res) => {
+  myRouter.get(SsrMyPath.ROOT, checkIsAdmin, async (req, res) => {
     const articles = await api.getArticles();
 
     return res.render(`pages/my/my`, {
@@ -19,7 +19,7 @@ const initMyRouter = (app, settings) => {
     });
   });
 
-  myRouter.get(SsrMyPath.COMMENTS, checkUserAuthenticate, async (req, res) => {
+  myRouter.get(SsrMyPath.COMMENTS, checkIsAdmin, async (req, res) => {
     const articles = await api.getArticles();
 
     return res.render(`pages/my/comments`, {
