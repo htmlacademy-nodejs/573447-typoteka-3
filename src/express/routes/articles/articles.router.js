@@ -13,25 +13,6 @@ const initArticlesRouter = (app, settings) => {
   app.use(SsrPath.ARTICLES, articlesRouter);
 
   articlesRouter.get(
-      SsrArticlePath.$ARTICLE_ID,
-      asyncHandler(async (req, res) => {
-        const {params, session} = req;
-        const {id} = params;
-        const [article, categories] = await Promise.all([
-          api.getArticle(id),
-          api.getCategories(),
-        ]);
-
-        return res.render(`pages/articles/article`, {
-          article,
-          categories,
-          user: session.user,
-        });
-      })
-  );
-
-
-  articlesRouter.get(
       SsrArticlePath.ADD,
       checkIsAdmin,
       asyncHandler(async (req, res) => {
@@ -117,6 +98,24 @@ const initArticlesRouter = (app, settings) => {
             user: session.user,
           });
         }
+      })
+  );
+
+  articlesRouter.get(
+      SsrArticlePath.$ARTICLE_ID,
+      asyncHandler(async (req, res) => {
+        const {params, session} = req;
+        const {id} = params;
+        const [article, categories] = await Promise.all([
+          api.getArticle(id),
+          api.getCategories(),
+        ]);
+
+        return res.render(`pages/articles/article`, {
+          article,
+          categories,
+          user: session.user,
+        });
       })
   );
 

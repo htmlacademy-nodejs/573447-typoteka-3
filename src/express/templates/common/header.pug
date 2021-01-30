@@ -1,10 +1,24 @@
 - const hasUser = Boolean(user);
+- const isAdmin = hasUser && user.isAdmin;
 - const hasStatusCode = Boolean(errorCode);
 header(class=`header ${hasStatusCode ? 'header--error' : ''}`)
   a(class=`header__logo logo ${hasStatusCode ? `header__logo--${errorCode}` : ''}` href='/')
     img(src='img/icons/logo.svg' alt='логотип Тайпотеки')
 
-  if hasUser
+  if isAdmin
+    a.button.button--colored.header__button-new(href='/articles/add') Новая запись
+    .header__dropdown
+      button.button.button--burger.header__burger(href='#') Открыть меню
+      ul.navigation.header__navigation
+        li.navigation__item
+          a(href='#') Пункт меню
+        li.navigation__item
+          a(href='#') Пункт меню
+        li.navigation__item
+          a(href='#') Пункт меню
+        li.navigation__item
+          a(href='#') Пункт меню
+  else if hasUser
     nav.header__nav
       ul.header__nav-list
         li.header__list-item
@@ -20,12 +34,5 @@ header(class=`header ${hasStatusCode ? 'header--error' : ''}`)
           a.header__registration(href='/register') Регистрация
         li.header__list-item
           a.header__enter(href='/login') Вход с паролем
-
-    //- button.button.button--colored.header__button-new Новая запись
-    //- .header__dropdown
-    //-   a.button.button--burger.header__burger(href='#') Открыть меню
-    //-   ul.navigation.header__navigation
-    //-     li.navigation__item
-    //-       a(href='#') Пункт меню
 
   a.header__search.button.button--search(href='/search' aria-label='поиск по сайту')
