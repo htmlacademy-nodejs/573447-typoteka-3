@@ -37,6 +37,7 @@ const define = (sequelize) => {
         [UserKey.IS_ADMIN]: {
           type: DataTypes.BOOLEAN,
           allowNull: false,
+          defaultValue: false,
         }
       },
       {
