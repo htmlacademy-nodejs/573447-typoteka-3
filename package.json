@@ -17,8 +17,8 @@
     "~": "src"
   },
   "scripts": {
-    "api": "cross-env nodemon -r dotenv/config ./src/service/service.js --server",
-    "ssr": "cross-env nodemon -r dotenv/config ./src/express/express.js",
+    "api": "nodemon -r dotenv/config ./src/service/service.js --server",
+    "ssr": "nodemon -r dotenv/config ./src/express/express.js",
     "start": "concurrently --kill-others-on-fail --prefix \"{name}: {time}\" --names \"API,SSR\" --prefix-colors \"green,blue\" \"npm:api\" \"npm:ssr\"",
     "api:debug": "cross-env LOG_LEVEL=debug nodemon -r dotenv/config ./src/service/service.js --server | pino-pretty",
     "ssr:debug": "cross-env LOG_LEVEL=debug nodemon -r dotenv/config ./src/express/express.js | pino-pretty",
