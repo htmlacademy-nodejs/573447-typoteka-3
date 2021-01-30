@@ -1,6 +1,6 @@
 'use strict';
 
-const {ModelAlias} = require(`~/common/enums`);
+const {ModelAlias, SortType, ArticleKey} = require(`~/common/enums`);
 
 class Articles {
   constructor({articleModel}) {
@@ -10,6 +10,7 @@ class Articles {
   async findAll() {
     const articles = await this._Article.findAll({
       include: [ModelAlias.CATEGORIES, ModelAlias.COMMENTS],
+      order: [[ArticleKey.CREATED_DATE, SortType.DESC]],
     });
 
     return articles.map((item) => item.get());
@@ -20,6 +21,7 @@ class Articles {
       limit,
       offset,
       include: [ModelAlias.CATEGORIES, ModelAlias.COMMENTS],
+      order: [[ArticleKey.CREATED_DATE, SortType.DESC]],
       distinct: true,
     });
 
