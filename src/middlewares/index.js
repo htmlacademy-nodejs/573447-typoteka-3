@@ -2,7 +2,11 @@
 
 const {existArticle} = require(`./article`);
 const {validateSchema, validateParamSchema} = require(`./validation`);
-const {checkAlreadyRegister, checkUserAuthenticate} = require(`./user`);
+const {
+  checkAlreadyRegister,
+  checkUserAuthenticate,
+  checkIsAdmin,
+} = require(`./user`);
 
 module.exports = {
   existArticle,
@@ -10,4 +14,5 @@ module.exports = {
   validateParamSchema,
   checkAlreadyRegister,
   checkUserAuthenticate,
+  checkIsAdmin,
 };
