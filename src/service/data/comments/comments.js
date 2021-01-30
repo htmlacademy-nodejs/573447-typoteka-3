@@ -1,13 +1,13 @@
 'use strict';
 
-const {CommentKey} = require(`~/common/enums`);
+const {CommentKey, SortType} = require(`~/common/enums`);
 
 class Comments {
   constructor({commentModel}) {
     this._Comment = commentModel;
   }
 
-  findAll(limit, order) {
+  findAll(limit, order = SortType.DESC) {
     return this._Comment.findAll({
       order: [[CommentKey.CREATED_AT, order]],
       limit,
