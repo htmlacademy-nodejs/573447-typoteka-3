@@ -36,6 +36,7 @@ const {
 } = require(`./user`);
 const {CategoryKey} = require(`./category`);
 const {SessionKey, SessionExpiration} = require(`./session`);
+const {SortType} = require(`./sort`);
 
 module.exports = {
   CliCommandName,
@@ -79,4 +80,5 @@ module.exports = {
   CreatedUserPayloadKey,
   SessionKey,
   SessionExpiration,
+  SortType,
 };
