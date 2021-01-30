@@ -121,8 +121,12 @@ const initArticlesRouter = (app, settings) => {
 
   articlesRouter.get(
       SsrArticlePath.CATEGORY_$CATEGORY_ID,
-      asyncHandler((req, res) => {
+      asyncHandler(async (req, res) => {
+        const categories = await api.getCategories();
+
         return res.render(`pages/articles/categories`, {
+          categories,
+          articles: [],
           title: `Бизнес`,
           user: req.session.user,
         });

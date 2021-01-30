@@ -1,12 +1,12 @@
 extends ../layout
 
 block content
+  - const hasArticles = Boolean(articles.lenght);
   main.articles-category
     h1 #{title}
-    if hasContent
-      section.articles-category__theme-list
-        h2.visually-hidden Список тем
-        +categoriesList(categories)
+    +categoriesList(categories)
+    if hasArticles
+      +articlesList(articles)
     else
       div.main-page__empty-wrapper
         p.main-page__empty-text Здесь пока пусто!

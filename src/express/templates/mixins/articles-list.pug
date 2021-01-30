@@ -7,7 +7,7 @@ mixin articlesList(articles = [])
           ul.preview__breadcrumbs
             each category in article.categories
               li.preview__breadcrumbs-item
-                a.preview__breadcrumbs-link(href=`/category/${category.id}`) #{category.name}
+                a.preview__breadcrumbs-link(href=`articles/category/${category.id}`) #{category.name}
           div.preview__background
             img.preview__background-image(src=`/img/${article.image}` width='460' height='240' alt='Фотография небоскреба')
           time.preview__time(datetime=article.createdDate)
