@@ -14,7 +14,7 @@ const initArticlesRouter = (app, settings) => {
 
   articlesRouter.get(
       SsrArticlePath.ADD,
-      checkIsAdmin,
+      [checkUserAuthenticate, checkIsAdmin],
       asyncHandler(async (req, res) => {
         const categories = await api.getCategories();
 
@@ -29,7 +29,7 @@ const initArticlesRouter = (app, settings) => {
 
   articlesRouter.post(
       SsrArticlePath.ADD,
-      [checkIsAdmin, storage.upload.single(ArticleKey.IMAGE)],
+      [checkUserAuthenticate, checkIsAdmin, storage.upload.single(ArticleKey.IMAGE)],
       asyncHandler(async (req, res) => {
         const {body, file, session} = req;
         const articleData = getArticleData(body, file);
@@ -53,7 +53,7 @@ const initArticlesRouter = (app, settings) => {
 
   articlesRouter.get(
       SsrArticlePath.EDIT_$ARTICLE_ID,
-      checkIsAdmin,
+      [checkUserAuthenticate, checkIsAdmin],
       asyncHandler(async (req, res) => {
         const {params, session} = req;
         const {id} = params;
@@ -73,7 +73,7 @@ const initArticlesRouter = (app, settings) => {
 
   articlesRouter.post(
       SsrArticlePath.EDIT_$ARTICLE_ID,
-      [checkIsAdmin, storage.upload.single(ArticleKey.IMAGE)],
+      [checkUserAuthenticate, checkIsAdmin, storage.upload.single(ArticleKey.IMAGE)],
       asyncHandler(async (req, res) => {
         const {body, file, params, session} = req;
         const {id} = params;

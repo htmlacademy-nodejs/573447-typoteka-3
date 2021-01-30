@@ -2,6 +2,7 @@
 
 const {Router} = require(`express`);
 const {SsrPath, SsrMainPath, UserKey} = require(`~/common/enums`);
+const {checkUserAuthenticate, checkIsAdmin} = require(`~/middlewares`);
 const {getHttpErrors} = require(`~/helpers`);
 const {
   ARTICLES_PER_PAGE,
@@ -106,6 +107,18 @@ const initMainRouter = (app, settings) => {
       user: session.user,
     });
   });
+
+  mainRouter.get(
+      SsrMainPath.CATEGORIES,
+      [checkUserAuthenticate, checkIsAdmin],
+      async (_req, res) => {
+        const categories = await api.getCategories();
+
+        return res.render(`pages/categories`, {
+          categories,
+        });
+      }
+  );
 };
 
 module.exports = {
