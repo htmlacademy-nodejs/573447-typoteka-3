@@ -119,7 +119,7 @@ const initArticlesRouter = (app, settings) => {
   );
 
   articlesRouter.get(
-      SsrArticlePath.CATEGORY_$ARTICLE_ID,
+      SsrArticlePath.CATEGORY_$CATEGORY_ID,
       asyncHandler((req, res) => {
         return res.render(`pages/articles/categories`, {
           title: `Типотека`,
