@@ -37,6 +37,16 @@ GET http://localhost:3000/api/articles HTTP/1.1
 
 ###
 
+# Popular articles
+GET http://localhost:3000/api/articles/popular HTTP/1.1
+
+###
+
+# Comments
+GET http://localhost:3000/api/articles/comments?limit=1&order=desc HTTP/1.1
+
+###
+
 # Article by id
 GET http://localhost:3000/api/articles/1 HTTP/1.1
 
