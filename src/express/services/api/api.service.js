@@ -1,7 +1,13 @@
 'use strict';
 
 const axios = require(`axios`);
-const {ApiPath, HttpMethod, HttpCode, UsersApiPath} = require(`~/common/enums`);
+const {
+  ApiPath,
+  HttpMethod,
+  HttpCode,
+  UsersApiPath,
+  ArticlesApiPath,
+} = require(`~/common/enums`);
 const {HttpError} = require(`~/common/exceptions`);
 
 class Api {
@@ -52,6 +58,14 @@ class Api {
     });
   }
 
+  getHotArticles({limit}) {
+    return this._load(`${ApiPath.ARTICLES}${ArticlesApiPath.POPULAR}`, {
+      params: {
+        limit,
+      },
+    });
+  }
+
   getArticle(id) {
     return this._load(`${ApiPath.ARTICLES}/${id}`);
   }
@@ -66,6 +80,15 @@ class Api {
 
   getCategories() {
     return this._load(ApiPath.CATEGORIES);
+  }
+
+  getComments({limit, order}) {
+    return this._load(`${ApiPath.ARTICLES}${ArticlesApiPath.COMMENTS}`, {
+      params: {
+        limit,
+        order,
+      },
+    });
   }
 
   createArticle(payload) {
