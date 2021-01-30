@@ -6,6 +6,7 @@ const SsrMainPath = {
   LOGIN: `/login`,
   LOGOUT: `/logout`,
   SEARCH: `/search`,
+  CATEGORIES: `/categories`,
 };
 
 module.exports = {

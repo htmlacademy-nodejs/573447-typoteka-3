@@ -11,7 +11,7 @@ block content
             span.visually-hidden Добавить категорию
           button.category__button.button.button--category(type='submit') Добавить
       ul.category__list
-        each category in categoryList
+        each category in categories
           li.category__list-item
             form(action='#' method='POST')
               input(id=category.id type='text' name='category' value=category.name)
