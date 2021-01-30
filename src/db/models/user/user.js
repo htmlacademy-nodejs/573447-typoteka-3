@@ -34,6 +34,10 @@ const define = (sequelize) => {
           type: DataTypes.STRING,
           allowNull: false,
         },
+        [UserKey.IS_ADMIN]: {
+          type: DataTypes.BOOLEAN,
+          allowNull: false,
+        }
       },
       {
         tableName: TableName.USERS,
