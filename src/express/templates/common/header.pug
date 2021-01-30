@@ -11,13 +11,13 @@ header(class=`header ${hasStatusCode ? 'header--error' : ''}`)
       button.button.button--burger.header__burger(href='#') Открыть меню
       ul.navigation.header__navigation
         li.navigation__item
-          a(href='#') Пункт меню
+          a(href="/my") Публикации
         li.navigation__item
-          a(href='#') Пункт меню
+          a(href="/my/comments") Комментарии
         li.navigation__item
-          a(href='#') Пункт меню
+          a(href="/categories") Категории
         li.navigation__item
-          a(href='#') Пункт меню
+          a(href="/logout") Выход
   else if hasUser
     nav.header__nav
       ul.header__nav-list
