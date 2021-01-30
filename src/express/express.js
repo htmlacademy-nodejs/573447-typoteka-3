@@ -39,13 +39,15 @@ routerInits.forEach((initRouter) => {
 app.use(express.static(path.resolve(__dirname, AppConfig.PUBLIC_DIR)));
 app.use(express.static(path.resolve(__dirname, AppConfig.UPLOAD_DIR)));
 
-app.use((_, res) =>
-  res.status(HttpCode.BAD_REQUEST).render(`pages/errors/404`)
-);
+app.use((_req, res) => {
+  return res.status(HttpCode.BAD_REQUEST).render(`pages/errors/404`, {
+    errorCode: HttpCode.NOT_FOUND,
+  });
+});
 app.use((_err, _req, res, _next) => {
-  console.log(_err);
-
-  return res.status(HttpCode.INTERNAL_SERVER_ERROR).render(`pages/errors/500`);
+  return res.status(HttpCode.INTERNAL_SERVER_ERROR).render(`pages/errors/500`, {
+    errorCode: HttpCode.INTERNAL_SERVER_ERROR,
+  });
 });
 
 app.set(`views`, path.resolve(__dirname, `templates`));

@@ -26,7 +26,8 @@ html(lang='ru')
   body
     include ../mixins/mixins.pug
 
-    .wrapper
+    - const isErrorPage = Boolean(errorCode);
+    div(class=`${isErrorPage ? 'wrapper-color' : 'wrapper'}`)
       include ../common/header
       block content
       include ../common/footer
