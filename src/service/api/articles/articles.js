@@ -35,9 +35,9 @@ const initArticlesApi = (app, {articlesService, commentsService}) => {
       ],
       async (req, res) => {
         const {offset, limit} = req.query;
-        const isUsePagination = Boolean(offset || limit);
+        const hasPagination = Boolean(offset || limit);
 
-        const articles = isUsePagination
+        const articles = hasPagination
           ? await articlesService.findPage({
             offset: Number(offset),
             limit: Number(limit),
@@ -61,10 +61,24 @@ const initArticlesApi = (app, {articlesService, commentsService}) => {
 
   articlesRouter.get(
       ArticlesApiPath.CATEGORIES_$ID,
-      validateParamSchema(routeIdSchema, RequestParam.ID),
+      [
+        validateParamSchema(routeIdSchema, RequestParam.ID),
+        validateQuerySchema(queryLimitSchema, RequestQuery.OFFSET),
+        validateQuerySchema(queryLimitSchema, RequestQuery.LIMIT),
+      ],
       async (req, res) => {
-        const {id} = req.params;
-        const articles = await articlesService.findByCategoryId(id);
+        const {params, query} = req;
+        const {id} = params;
+        const {offset, limit} = query;
+        const hasPagination = Boolean(offset || limit);
+
+        const articles = hasPagination
+          ? await articlesService.findPageByCategoryId({
+            id,
+            offset,
+            limit,
+          })
+          : await articlesService.findByCategoryId(id);
 
         return res.status(HttpCode.OK).json(articles);
       }
