@@ -15,6 +15,9 @@ const comment = Joi.object({
       'any.require': CommentValidationMessage.TEXT_REQUIRE,
       'string.min': CommentValidationMessage.TEXT_MIN_LENGTH,
     }),
+  [CommentKey.USER_ID]: Joi.number().required().messages({
+    'any.require': CommentValidationMessage.USER_ID_REQUIRE,
+  }),
 });
 
 module.exports = {
