@@ -4,8 +4,10 @@ mixin categoriesList(categories = [], selectedCategory = null, isArticleCategori
     h2.visually-hidden Список тем
     ul.themes(class=`${isArticleCategories ? `post__themes` : ``}`)
       each category in categories
+        - const hasCount = Boolean(category.count);
         - const isSelected = hasSelectedCategory && selectedCategory.id === category.id;
         li.themes__item
           a(class=`themes__item-link ${isSelected ? 'themes__item-link--active' : ''}` href=`${isSelected ? '' : `articles/category/${category.id}`}`)
             | #{category.name}
-            sup  1
+            if hasCount
+              sup  #{category.count}

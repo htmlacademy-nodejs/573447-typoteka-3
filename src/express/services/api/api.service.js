@@ -78,8 +78,16 @@ class Api {
     });
   }
 
-  getCategories() {
-    return this._load(ApiPath.CATEGORIES);
+  getCategories(hasCount) {
+    const params = {};
+
+    if (hasCount) {
+      params.hasCount = true;
+    }
+
+    return this._load(ApiPath.CATEGORIES, {
+      params,
+    });
   }
 
   getComments({limit, order}) {

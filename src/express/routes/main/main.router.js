@@ -40,7 +40,7 @@ const initMainRouter = (app, settings) => {
         limit: LAST_COMMENTS_COUNT,
         order: SortType.DESC,
       }),
-      api.getCategories(),
+      api.getCategories(true),
     ]);
     const totalPages = Math.ceil(count / ARTICLES_PER_PAGE);
 
