@@ -40,12 +40,12 @@ block content
           if isUserAuth
             div.comments__footer.comments__footer--user
               form(action=`/articles/${article.id}/comments` method="POST")
-                input(type="hidden" value=user.id)
+                input(type='hidden' name='userId' value=user.id)
                 div.avatar
                   img(src=`img/${user.avatar}` alt='Аватар пользователя')
                 label
-                  textarea(value=comment name="comment" rows='1' placeholder='Присоединиться к обсуждению')
-                    | #{comment}
+                  textarea(value=commentData.text name='text' rows='1' placeholder='Присоединиться к обсуждению')
+                    | #{commentData.text}
                 button.comments__button.button.button--colored(type='submit') Опубликовать
               if hasErrorMessages
                 each errorMessage in errorMessages

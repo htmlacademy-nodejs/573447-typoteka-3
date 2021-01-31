@@ -1,6 +1,6 @@
 'use strict';
 
-const {ArticleKey} = require(`~/common/enums`);
+const {ArticleKey, CommentKey} = require(`~/common/enums`);
 
 const getParsedCategories = (categories) => {
   if (!categories) {
@@ -21,7 +21,13 @@ const getArticleData = (body, file) => ({
   [ArticleKey.CATEGORIES]: getParsedCategories(body.category),
 });
 
+const getCommentsData = (body) => ({
+  [CommentKey.TEXT]: body.text,
+  [CommentKey.USER_ID]: Number(body.userId),
+});
+
 module.exports = {
   getParsedCategories,
   getArticleData,
+  getCommentsData,
 };

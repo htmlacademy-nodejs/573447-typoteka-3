@@ -4,7 +4,7 @@ const {Router} = require(`express`);
 const {getHttpErrors, asyncHandler} = require(`~/helpers`);
 const {checkUserAuthenticate, checkIsAdmin} = require(`~/middlewares`);
 const {SsrPath, SsrArticlePath, ArticleKey} = require(`~/common/enums`);
-const {getArticleData} = require(`./helpers`);
+const {getArticleData, getCommentsData} = require(`./helpers`);
 
 const initArticlesRouter = (app, settings) => {
   const articlesRouter = new Router();
@@ -109,6 +109,7 @@ const initArticlesRouter = (app, settings) => {
 
         return res.render(`pages/articles/article`, {
           article,
+          commentData: {},
           user: session.user,
         });
       })
@@ -133,12 +134,10 @@ const initArticlesRouter = (app, settings) => {
       asyncHandler(async (req, res) => {
         const {body, params, session} = req;
         const parsedComment = Number(params.id);
-        const {comment} = body;
+        const commentData = getCommentsData(body);
 
         try {
-          await api.createComment(parsedComment, {
-            text: comment,
-          });
+          await api.createComment(parsedComment, commentData);
 
           return res.redirect(`${SsrPath.ARTICLES}/${parsedComment}`);
         } catch (err) {
@@ -147,7 +146,7 @@ const initArticlesRouter = (app, settings) => {
 
           return res.render(`pages/articles/article`, {
             article,
-            comment,
+            commentData,
             categories,
             errorMessages: getHttpErrors(err),
             user: session.user,
