@@ -1,11 +1,8 @@
 extends layout
 
 block content
-  - const MIN_PAGES_FOR_PAGINATION = 1;
-  - const PAGINATION_WIDTH = 2;
   - const ARTICLE_ANNOUNCE_LENGTH = 100;
   - const MAX_COMMENT_LENGTH = 100;
-  - const hasPagination = totalPages > MIN_PAGES_FOR_PAGINATION
   - const hasArticles = Boolean(articles.length);
   - const hasHotArticles = Boolean(hotArticles.length);
   - const hasLastComments = Boolean(lastComments.length);
@@ -45,9 +42,7 @@ block content
                     +cutString(lastComment.text, MAX_COMMENT_LENGTH)
           else
             p.hot__empty Здесь пока ничего нет...
-      +articlesList(articles)
-      if hasPagination
-        +pagination(page, totalPages, PAGINATION_WIDTH)
+      +articlesList(articles, currentPage, totalPagesCount)
     else
       div.main-page__empty-wrapper
         p.main-page__empty-text Здесь пока пусто!

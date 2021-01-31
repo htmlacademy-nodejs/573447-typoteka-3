@@ -1,4 +1,7 @@
-mixin articlesList(articles = [])
+mixin articlesList(articles = [], currentPage, totalPagesCount)
+  - const MIN_PAGES_FOR_PAGINATION = 1;
+  - const PAGINATION_WIDTH = 2;
+  - const hasPagination = totalPagesCount > MIN_PAGES_FOR_PAGINATION
   section.main-page__list.preview
     h2.visually-hidden Список превью статей
     ul.preview__list
@@ -20,3 +23,5 @@ mixin articlesList(articles = [])
             | Комментарии
             span.preview__cloud
             b.preview__comment-count  #{article.comments.length}
+  if hasPagination
+    +pagination(currentPage, totalPagesCount, PAGINATION_WIDTH)
