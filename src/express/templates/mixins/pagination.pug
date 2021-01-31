@@ -1,28 +1,30 @@
 mixin pagination(page, totalPages, width)
   -
+    const PREFIX = '?';
     let start = page - width;
+    console.log({page, start}, `__START__`);
     let end = page + width;
-    if(start < 1){
+    if (start < 1) {
       end += 1 - start;
       start = 1;
     }
-    if(end > totalPages){
+    if (end > totalPages) {
       start -= end - totalPages;
       end = totalPages;
     }
-    if(start < 1){
+    if (start < 1) {
       start = 1;
     }
+
     let i = start - 1
   div.preview__toggle-wrapper
     ul.preview__pagination.pagination
       if start > 1
         li
-          a(class='pagination__button button button--backwards' aria-label='Страница назад' href=`${prefix}page=${page - 1}`) Назад
+          a(class='pagination__button button button--backwards' aria-label='Страница назад' href=`/${PREFIX}page=${page - 1}`) Назад
       while i++ < end
         li(class=`pagination__item ${i === page ? 'pagination__item--active' : ''}`)
-          a(href=`?page=${i}`)= i
+          a(href=`/${PREFIX}page=${i}`) #{i}
       if end < totalPages
         li
-          a(class='pagination__button button button--forward' aria-label='Страница вперед' href=`${prefix}page=${page + 1}`) Вперёд
-
+          a(class='pagination__button button button--forward' aria-label='Страница вперед' href=`/${PREFIX}page=${page + 1}`) Вперёд

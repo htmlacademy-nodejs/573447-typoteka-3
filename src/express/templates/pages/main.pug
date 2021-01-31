@@ -1,19 +1,21 @@
 extends layout
 
 block content
+  - const MIN_PAGES_FOR_PAGINATION = 1;
+  - const PAGINATION_WIDTH = 2;
   - const ARTICLE_ANNOUNCE_LENGTH = 100;
   - const MAX_COMMENT_LENGTH = 100;
-  - const PAGINATION_WIDTH = 2;
+  - const hasPagination = totalPages > MIN_PAGES_FOR_PAGINATION
   - const hasArticles = Boolean(articles.length);
   - const hasHotArticles = Boolean(hotArticles.length);
   - const hasLastComments = Boolean(lastComments.length);
-  - const hasAuthHeight = !hasLastComments || !hasHotArticles;
+  - const hasAutoHeight = !hasLastComments || !hasHotArticles;
   main.main-page
     h1.visually-hidden Главная страница личного блога Типотека
     p Дороу 👏
     +categoriesList(categories)
     if hasArticles
-      div.main-page__section-flex(class=`${hasAuthHeight ? 'main-page__section-flex--short' : ''}`)
+      div.main-page__section-flex(class=`${hasAutoHeight ? 'main-page__section-flex--short' : ''}`)
         section.main-page__hot.hot
           h2.hot__name
             | Самое обсуждаемое
@@ -44,7 +46,8 @@ block content
           else
             p.hot__empty Здесь пока ничего нет...
       +articlesList(articles)
-      +pagination(page, totalPages, PAGINATION_WIDTH)
+      if hasPagination
+        +pagination(page, totalPages, PAGINATION_WIDTH)
     else
       div.main-page__empty-wrapper
         p.main-page__empty-text Здесь пока пусто!

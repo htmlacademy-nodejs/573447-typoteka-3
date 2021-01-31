@@ -46,10 +46,10 @@ const initMainRouter = (app, settings) => {
 
     return res.render(`pages/main`, {
       articles,
-      totalPages,
       categories,
       hotArticles,
       lastComments,
+      totalPages,
       page: parsedPage,
       user: session.user
     });
