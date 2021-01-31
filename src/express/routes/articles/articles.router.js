@@ -105,14 +105,10 @@ const initArticlesRouter = (app, settings) => {
       asyncHandler(async (req, res) => {
         const {params, session} = req;
         const {id} = params;
-        const [article, categories] = await Promise.all([
-          api.getArticle(id),
-          api.getCategories(),
-        ]);
+        const article = await api.getArticle(id);
 
         return res.render(`pages/articles/article`, {
           article,
-          categories,
           user: session.user,
         });
       })

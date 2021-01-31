@@ -12,7 +12,7 @@ block content
             time.post__date(datetime=article.createdDate)
               +formattedDate(article.createdDate)
             h2.post__title.title.title--main #{article.title}
-            +categoriesList(categories, null, true)
+            +categoriesList(article.categories, null, true)
           div.post__picture
             img(src= `img/${article.image}` alt= article.title)
           div.post__text
