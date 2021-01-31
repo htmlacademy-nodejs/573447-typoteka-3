@@ -1,7 +1,13 @@
 'use strict';
 
 const {Sequelize} = require(`sequelize`);
-const {ModelAlias, SortType, ArticleKey} = require(`~/common/enums`);
+const {
+  ModelAlias,
+  SortType,
+  ArticleKey,
+  DbOperator,
+  TableName,
+} = require(`~/common/enums`);
 
 class Articles {
   constructor({articleModel, commentModel}) {
@@ -33,24 +39,28 @@ class Articles {
     };
   }
 
-  findMostCommented(limit) {
-    return this._Article.findAll({
-      attributes: {
-        include: [Sequelize.fn(`count`, Sequelize.col(`comments.id`)), `count`],
-      },
-      include: [
-        {
-          model: this._Comment,
-          as: ModelAlias.COMMENTS,
-          attributes: [],
-          duplicating: false,
-          required: false,
-        },
-      ],
-      group: [`Article.id`],
-      order: [[`count`, SortType.DESC]],
+  async findMostCommented(limit) {
+    const articles = await this._Article.findAll({
       limit,
+      attributes: {
+        include: [Sequelize.fn(`COUNT`, Sequelize.col(`comments.id`)), `count`],
+      },
+      include: {
+        model: this._Comment,
+        as: TableName.COMMENTS,
+        attributes: [],
+      },
+      group: [Sequelize.col(`Article.id`)],
+      having: Sequelize.where(
+          Sequelize.fn(`COUNT`, Sequelize.col(`comments.id`)),
+          {
+            [DbOperator.gte]: 1,
+          }
+      ),
+      order: [[`count`, SortType.DESC]],
     });
+
+    return articles.map((it) => it.get());
   }
 
   findOne(id) {
