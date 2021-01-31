@@ -1,0 +1,4 @@
+mixin cutString(str, maxLength = 50, endWith = '...')
+  - const hasMore = str.length > maxLength;
+  - const cutStr = hasMore ? `${str.slice(0, maxLength)}${endWith}` : str;
+  | #{cutStr}

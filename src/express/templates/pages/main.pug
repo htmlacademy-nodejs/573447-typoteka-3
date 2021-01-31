@@ -1,6 +1,8 @@
 extends layout
 
 block content
+  - const ARTICLE_ANNOUNCE_LENGTH = 100;
+  - const MAX_COMMENT_LENGTH = 100;
   - const hasArticles = Boolean(articles.length);
   - const hasHotArticles = Boolean(hotArticles.length);
   - const hasLastComments = Boolean(lastComments.length);
@@ -21,7 +23,7 @@ block content
               each hotArticle of hotArticles
                 li.hot__list-item
                   a.hot__list-link(href=`/articles/${hotArticle.id}`)
-                    | #{hotArticle.announce}
+                    +cutString(hotArticle.announce, ARTICLE_ANNOUNCE_LENGTH)
                     sup.hot__link-sup #{hotArticle.count}
           else
             p.hot__empty Здесь пока ничего нет...
@@ -36,7 +38,8 @@ block content
                 li.last__list-item
                   img.last__list-image(src='img/avatar-small-1.png' width='20' height='20' alt='Аватар пользователя')
                   b.last__list-name Анна Артамонова
-                  a.last__list-link(href='#') #{lastComment.text}
+                  a.last__list-link(href='#')
+                    +cutString(lastComment.text, MAX_COMMENT_LENGTH)
           else
             p.hot__empty Здесь пока ничего нет...
       +articlesList(articles)
