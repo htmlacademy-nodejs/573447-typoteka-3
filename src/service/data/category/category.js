@@ -15,6 +15,12 @@ class Category {
     });
   }
 
+  findOne(id) {
+    return this._Category.findByPk(id, {
+      raw: true
+    });
+  }
+
   async findAllWithCount() {
     const categories = await this._Category.findAll({
       attributes: {
