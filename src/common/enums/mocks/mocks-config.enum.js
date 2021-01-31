@@ -34,6 +34,7 @@ const MocksConfig = {
     MAX_COUNT: 4,
     MIN_SENTENCES_COUNT: 1,
     MAX_SENTENCES_COUNT: 3,
+    MIN_USERS_COUNT: 1,
   },
   USER_PICTURE: {
     NUMBER: {

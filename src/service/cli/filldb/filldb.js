@@ -57,6 +57,7 @@ module.exports = {
       descriptions,
       categories,
       comments,
+      users,
     });
 
     initDb(sequelize, {

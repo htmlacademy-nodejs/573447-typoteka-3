@@ -13,7 +13,7 @@ const generateMockedUser = async (userPayload, idx) => {
   const avatar = `avatar-${getRandomNumber(
       MocksConfig.USER_PICTURE.NUMBER.MIN,
       MocksConfig.USER_PICTURE.NUMBER.MAX
-  )}.jpg`;
+  )}.png`;
   const isAdmin = idx === ADMIN_IDX;
   const password = await bcrypt.hash(DEFAULT_USER_PASSWORD, USER_PASSWORD_SALT_ROUNDS);
 

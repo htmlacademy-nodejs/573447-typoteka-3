@@ -10,6 +10,7 @@ const generatePublications = ({
   descriptions,
   categories,
   comments,
+  users,
 }) => {
   const generatedPublications = Array.from(new Array(count), () => {
     return generatePublication({
@@ -17,6 +18,7 @@ const generatePublications = ({
       descriptions,
       categories,
       comments,
+      users,
     });
   });
 

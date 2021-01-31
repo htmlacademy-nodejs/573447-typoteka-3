@@ -25,6 +25,10 @@ const initDb = async (sequelize, mockedPayload) => {
       {}
   );
 
+  for await (const user of users) {
+    await User.create(user);
+  }
+
   await Promise.all(
       articles.map(async (article) => {
         const articleModel = await Article.create(article, {
@@ -36,10 +40,6 @@ const initDb = async (sequelize, mockedPayload) => {
         );
       })
   );
-
-  for await (const user of users) {
-    await User.create(user);
-  }
 };
 
 module.exports = {

@@ -9,7 +9,7 @@ const {MocksConfig, ArticleKey} = require(`~/common/enums`);
 
 const MONTH_MILLISECONDS = 2592000000;
 
-const generatePublication = ({titles, descriptions, categories, comments}) => ({
+const generatePublication = ({titles, descriptions, categories, comments, users}) => ({
   [ArticleKey.TITLE]: getRandomItem(titles),
   [ArticleKey.CREATED_DATE]: new Date(
       Date.now() -
@@ -45,7 +45,8 @@ const generatePublication = ({titles, descriptions, categories, comments}) => ({
         MocksConfig.COMMENTS.MIN_COUNT,
         MocksConfig.COMMENTS.MAX_COUNT
     ),
-    comments
+    comments,
+    users,
   }),
 });
 

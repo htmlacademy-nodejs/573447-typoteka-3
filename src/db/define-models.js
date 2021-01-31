@@ -18,6 +18,15 @@ const defineModels = (sequelize) => {
   const User = defineUserModel(sequelize);
   const Session = defineSessionModel(sequelize);
 
+  User.hasMany(Comment, {
+    foreignKey: CommentKey.USER_ID,
+  });
+
+  Comment.belongsTo(User, {
+    foreignKey: CommentKey.USER_ID,
+    as: ModelAlias.USER,
+  });
+
   Article.hasMany(Comment, {
     foreignKey: CommentKey.ARTICLE_ID,
     as: ModelAlias.COMMENTS,
