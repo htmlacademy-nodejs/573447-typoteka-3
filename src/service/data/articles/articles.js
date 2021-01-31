@@ -6,7 +6,6 @@ const {
   SortType,
   ArticleKey,
   DbOperator,
-  TableName,
 } = require(`~/common/enums`);
 
 class Articles {
@@ -47,7 +46,7 @@ class Articles {
       },
       include: {
         model: this._Comment,
-        as: TableName.COMMENTS,
+        as: ModelAlias.COMMENTS,
         attributes: [],
         duplicating: false
       },
@@ -61,7 +60,7 @@ class Articles {
       order: [[`count`, SortType.DESC]],
     });
 
-    return articles.map((it) => it.get());
+    return articles.map((article) => article.get());
   }
 
   findOne(id) {

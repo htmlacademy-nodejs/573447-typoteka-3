@@ -29,6 +29,7 @@ initSearchApi(apiRouter, {
 initCategoryApi(apiRouter, {
   categoryService: new Category({
     categoryModel: models.Category,
+    articleCategoryModel: models.ArticleCategory,
   }),
 });
 
