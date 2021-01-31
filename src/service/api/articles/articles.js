@@ -60,6 +60,17 @@ const initArticlesApi = (app, {articlesService, commentsService}) => {
   );
 
   articlesRouter.get(
+      ArticlesApiPath.CATEGORIES_$ID,
+      validateParamSchema(routeIdSchema, RequestParam.ID),
+      async (req, res) => {
+        const {id} = req.params;
+        const articles = await articlesService.findByCategoryId(id);
+
+        return res.status(HttpCode.OK).json(articles);
+      }
+  );
+
+  articlesRouter.get(
       ArticlesApiPath.COMMENTS,
       [
         validateQuerySchema(queryLimitSchema, RequestQuery.LIMIT),
