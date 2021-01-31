@@ -90,6 +90,10 @@ class Api {
     });
   }
 
+  getCategory(id) {
+    return this._load(`${ApiPath.CATEGORIES}/${id}`);
+  }
+
   getComments({limit, order}) {
     return this._load(`${ApiPath.ARTICLES}${ArticlesApiPath.COMMENTS}`, {
       params: {
