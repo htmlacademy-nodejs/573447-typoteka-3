@@ -5,6 +5,7 @@ const {
   ModelAlias,
   SortType,
   ArticleKey,
+  CommentKey,
   DbOperator,
 } = require(`~/common/enums`);
 
@@ -65,7 +66,15 @@ class Articles {
 
   findOne(id) {
     return this._Article.findByPk(id, {
-      include: [ModelAlias.CATEGORIES, ModelAlias.COMMENTS],
+      include: [
+        ModelAlias.CATEGORIES,
+        {
+          model: this._Comment,
+          as: ModelAlias.COMMENTS,
+          include: [ModelAlias.USER]
+        },
+      ],
+      order: [[ModelAlias.COMMENTS, CommentKey.CREATED_AT, SortType.DESC]],
     });
   }
 
