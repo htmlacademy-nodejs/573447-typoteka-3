@@ -1,6 +1,6 @@
 'use strict';
 
-const {bcrypt} = require(`./packages`);
+const bcrypt = require(`bcrypt`);
 const {getRandomNumber} = require(`./number`);
 const {
   getRandomItem,
@@ -25,6 +25,7 @@ const {
 } = require(`./mocks`);
 const {getHttpErrors} = require(`./exceptions`);
 const {asyncHandler} = require(`./routes`);
+const {calculatePagination, getTotalPagesCount} = require(`./pagination`);
 
 module.exports = {
   bcrypt,
@@ -51,4 +52,6 @@ module.exports = {
   readPublicationsFileContent,
   getHttpErrors,
   asyncHandler,
+  calculatePagination,
+  getTotalPagesCount,
 };
