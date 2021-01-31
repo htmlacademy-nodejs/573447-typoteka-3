@@ -1,10 +1,10 @@
 extends ../layout
 
 block content
-  - const hasArticles = Boolean(articles.lenght);
+  - const hasArticles = Boolean(articles.length);
   main.articles-category
-    h1 #{title}
-    +categoriesList(categories)
+    h1 #{currentCategory.name}
+    +categoriesList(categories, currentCategory)
     if hasArticles
       +articlesList(articles)
     else

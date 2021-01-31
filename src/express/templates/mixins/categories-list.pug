@@ -7,7 +7,7 @@ mixin categoriesList(categories = [], selectedCategory = null, isArticleCategori
         - const hasCount = Boolean(category.count);
         - const isSelected = hasSelectedCategory && selectedCategory.id === category.id;
         li.themes__item
-          a(class=`themes__item-link ${isSelected ? 'themes__item-link--active' : ''}` href=`${isSelected ? '' : `articles/category/${category.id}`}`)
+          a(class=`themes__item-link ${isSelected ? 'themes__item-link--active' : ''}` href=`articles/category/${category.id}`)
             | #{category.name}
             if hasCount
               sup  #{category.count}
