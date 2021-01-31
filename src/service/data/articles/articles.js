@@ -6,13 +6,15 @@ const {
   SortType,
   ArticleKey,
   CommentKey,
+  CategoryKey,
   DbOperator,
 } = require(`~/common/enums`);
 
 class Articles {
-  constructor({articleModel, commentModel}) {
+  constructor({articleModel, commentModel, categoryModel}) {
     this._Article = articleModel;
     this._Comment = commentModel;
+    this._Category = categoryModel;
   }
 
   async findAll() {
@@ -75,6 +77,22 @@ class Articles {
         },
       ],
       order: [[ModelAlias.COMMENTS, CommentKey.CREATED_AT, SortType.DESC]],
+    });
+  }
+
+  findByCategoryId(categoryId) {
+    return this._Article.findAll({
+      include: [
+        ModelAlias.COMMENTS,
+        {
+          model: this._Category,
+          as: ModelAlias.CATEGORIES,
+          where: {
+            [CategoryKey.ID]: categoryId,
+          },
+        },
+      ],
+      order: [[ArticleKey.CREATED_DATE, SortType.DESC]],
     });
   }
 
