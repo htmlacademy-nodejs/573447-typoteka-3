@@ -3,8 +3,9 @@
 const {defineModels} = require(`~/db/define-models`);
 const {ModelAlias} = require(`~/common/enums`);
 
-const initDb = async (sequelize, {categories, articles}) => {
-  const {Category, Article} = defineModels(sequelize);
+const initDb = async (sequelize, mockedPayload) => {
+  const {categories, articles, users} = mockedPayload;
+  const {Category, Article, User} = defineModels(sequelize);
 
   await sequelize.sync({
     force: true,
@@ -35,6 +36,10 @@ const initDb = async (sequelize, {categories, articles}) => {
         );
       })
   );
+
+  for await (const user of users) {
+    await User.create(user);
+  }
 };
 
 module.exports = {

@@ -5,6 +5,7 @@ const {initDb} = require(`~/db/init-db`);
 const {
   paintMessage,
   generatePublications,
+  generateMockedUsers,
   getMockedPublicationsData,
   logger
 } = require(`~/helpers`);
@@ -47,7 +48,9 @@ module.exports = {
       descriptions,
       categories,
       comments,
+      users
     } = await getMockedPublicationsData();
+    const mockedUsers = await generateMockedUsers(users);
     const mockedPublications = generatePublications({
       count: publicationsCount,
       titles,
@@ -58,6 +61,7 @@ module.exports = {
 
     initDb(sequelize, {
       articles: mockedPublications,
+      users: mockedUsers,
       categories,
     });
   },
