@@ -30,13 +30,13 @@ block content
               each comment in article.comments
                 li.comments__comment
                   div.comments__avatar.avatar
-                    img(src='img/avatar-1.png' alt='Аватар пользователя')
+                    img(src=`img/${comment.user.avatar}` alt='Аватар пользователя')
                   div.comments__text
                     div.comments__head
-                      p Евгений Петров •
+                      p #{comment.user.firstName} #{comment.user.lastName} •
                       time.comments__date(datetime=comment.createdAt)
                         +formattedDate(comment.createdAt)
-                    p.comments__message= comment.text
+                    p.comments__message #{comment.text}
           if isUserAuth
             div.comments__footer.comments__footer--user
               form(action=`/articles/${article.id}/comments` method="POST")
