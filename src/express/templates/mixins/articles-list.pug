@@ -3,13 +3,14 @@ mixin articlesList(articles = [])
     h2.visually-hidden Список превью статей
     ul.preview__list
       each article in articles
+        - const hasImg = Boolean(article.image);
         li.preview__item
           ul.preview__breadcrumbs
             each category in article.categories
               li.preview__breadcrumbs-item
                 a.preview__breadcrumbs-link(href=`articles/category/${category.id}`) #{category.name}
           div.preview__background
-            img.preview__background-image(src=`/img/${article.image}` width='460' height='240' alt='Фотография небоскреба')
+            img.preview__background-image(src=`${hasImg ? `/img/${article.image}` : ''}` width='460' height='240' alt='Фотография статьи')
           time.preview__time(datetime=article.createdDate)
             +formattedDate(article.createdDate)
           h3.preview__name

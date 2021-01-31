@@ -3,6 +3,7 @@ extends layout
 block content
   - const ARTICLE_ANNOUNCE_LENGTH = 100;
   - const MAX_COMMENT_LENGTH = 100;
+  - const PAGINATION_WIDTH = 2;
   - const hasArticles = Boolean(articles.length);
   - const hasHotArticles = Boolean(hotArticles.length);
   - const hasLastComments = Boolean(lastComments.length);
@@ -43,7 +44,7 @@ block content
           else
             p.hot__empty Здесь пока ничего нет...
       +articlesList(articles)
-      +pagination(page, totalPages, 2, `?`)
+      +pagination(page, totalPages, PAGINATION_WIDTH)
     else
       div.main-page__empty-wrapper
         p.main-page__empty-text Здесь пока пусто!
