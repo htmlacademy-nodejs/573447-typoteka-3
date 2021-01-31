@@ -1,6 +1,10 @@
 extends ../layout
 
 block content
+  - const hasPicture = Boolean(article.image);
+  - const isUserAuth = Boolean(user);
+  - const hasComments = Boolean(article.comments.length);
+  - const hasErrorMessages = Boolean(errorMessages && errorMessages.length);
   main
     section.post
       h1.visually-hidden Пост
@@ -14,36 +18,42 @@ block content
             h2.post__title.title.title--main #{article.title}
             +categoriesList(article.categories, null, true)
           div.post__picture
-            img(src= `img/${article.image}` alt= article.title)
+            img(src=`${hasPicture ? `img/${article.image}` : ''}` alt=article.title)
           div.post__text
             h3 #{article.announce}
             p #{article.fullText}
       div.post__wrapper.post__wrapper--comments
         section.post__comments.comments
-          h2.comments__title.title.title--middle #{article.comments.length ? `Комментарии` : `Комментарии отсутствуют`}
-          ul.comments__list
-            each comment in article.comments
-              li.comments__comment
-                div.comments__avatar.avatar
-                  img(src='img/avatar-1.png' alt='Аватар пользователя')
-                div.comments__text
-                  div.comments__head
-                    p Евгений Петров •
-                    time.comments__date(datetime=comment.createdAt)
-                      +formattedDate(comment.createdAt)
-                  p.comments__message= comment.text
-          //- div.comments__footer.comments__footer--visitor
-          //-   button.comments__button.button.button--colored(type=`submit` ) Войти
-          //-   div.comments__registration
-          //-     p.text.text--signature
-          //-       b.title.title--small Регистрация
-          //-       | Чтобы присоединиться к переписке нужно зарегистрироваться
-          div.comments__footer.comments__footer--user
-            form(action=`/articles/${article.id}/comments` method="POST")
-              .avatar
-                img(src="img/avatar-2.png" alt='Аватар пользователя')
-              label
-                textarea(value=comment name="comment" rows='1' placeholder='Присоединиться к обсуждению')
-                  | #{comment}
-              button.comments__button.button.button--colored(type='submit') Опубликовать
-              +errorList(errorMessages)
+          h2.comments__title.title.title--middle #{hasComments ? `Комментарии` : `Комментарии отсутствуют`}
+          if hasComments
+            ul.comments__list
+              each comment in article.comments
+                li.comments__comment
+                  div.comments__avatar.avatar
+                    img(src='img/avatar-1.png' alt='Аватар пользователя')
+                  div.comments__text
+                    div.comments__head
+                      p Евгений Петров •
+                      time.comments__date(datetime=comment.createdAt)
+                        +formattedDate(comment.createdAt)
+                    p.comments__message= comment.text
+          if isUserAuth
+            div.comments__footer.comments__footer--user
+              form(action=`/articles/${article.id}/comments` method="POST")
+                input(type="hidden" value=user.id)
+                div.avatar
+                  img(src=`img/${user.avatar}` alt='Аватар пользователя')
+                label
+                  textarea(value=comment name="comment" rows='1' placeholder='Присоединиться к обсуждению')
+                    | #{comment}
+                button.comments__button.button.button--colored(type='submit') Опубликовать
+              if hasErrorMessages
+                each errorMessage in errorMessages
+                  p.comments__error #{errorMessage}
+          else
+            div.comments__footer.comments__footer--visitor
+              a.comments__button.button.button--colored(href='/login') Войти
+              div.comments__registration
+                p.text.text--signature
+                  b.title.title--small Регистрация
+                  | Чтобы присоединиться к переписке нужно зарегистрироваться
