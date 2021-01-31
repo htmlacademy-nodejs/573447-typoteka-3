@@ -49,6 +49,7 @@ class Articles {
         model: this._Comment,
         as: TableName.COMMENTS,
         attributes: [],
+        duplicating: false
       },
       group: [Sequelize.col(`Article.id`)],
       having: Sequelize.where(
