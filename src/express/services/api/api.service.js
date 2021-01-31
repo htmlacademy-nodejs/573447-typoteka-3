@@ -70,8 +70,13 @@ class Api {
     return this._load(`${ApiPath.ARTICLES}/${id}`);
   }
 
-  getArticleByCategoryId(id) {
-    return this._load(`${ApiPath.ARTICLES}${ArticlesApiPath.CATEGORIES}/${id}`);
+  getArticleByCategoryId({id, limit, offset}) {
+    return this._load(`${ApiPath.ARTICLES}${ArticlesApiPath.CATEGORIES}/${id}`, {
+      params: {
+        limit,
+        offset
+      }
+    });
   }
 
   search(query) {
