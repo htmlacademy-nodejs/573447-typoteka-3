@@ -1,6 +1,5 @@
-mixin pagination(page, totalPages, width)
+mixin pagination(page, totalPages, width, paginationPath)
   -
-    const PREFIX = '?';
     let start = page - width;
     console.log({page, start}, `__START__`);
     let end = page + width;
@@ -21,10 +20,10 @@ mixin pagination(page, totalPages, width)
     ul.preview__pagination.pagination
       if start > 1
         li
-          a(class='pagination__button button button--backwards' aria-label='Страница назад' href=`/${PREFIX}page=${page - 1}`) Назад
+          a(class='pagination__button button button--backwards' aria-label='Страница назад' href=`/${paginationPath}page=${page - 1}`) Назад
       while i++ < end
         li(class=`pagination__item ${i === page ? 'pagination__item--active' : ''}`)
-          a(href=`/${PREFIX}page=${i}`) #{i}
+          a(href=`/${paginationPath}page=${i}`) #{i}
       if end < totalPages
         li
-          a(class='pagination__button button button--forward' aria-label='Страница вперед' href=`/${PREFIX}page=${page + 1}`) Вперёд
+          a(class='pagination__button button button--forward' aria-label='Страница вперед' href=`/${paginationPath}page=${page + 1}`) Вперёд

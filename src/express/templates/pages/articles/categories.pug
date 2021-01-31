@@ -1,12 +1,13 @@
 extends ../layout
 
 block content
+  - const paginationPath = `articles/category/${currentCategory.id}?`;
   - const hasArticles = Boolean(articles.length);
   main.articles-category
     h1 #{currentCategory.name}
     +categoriesList(categories, currentCategory)
     if hasArticles
-      +articlesList(articles)
+      +articlesList(articles, currentPage, totalPagesCount, paginationPath)
     else
       div.main-page__empty-wrapper
         p.main-page__empty-text Здесь пока пусто!

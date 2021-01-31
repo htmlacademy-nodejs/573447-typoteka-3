@@ -1,4 +1,4 @@
-mixin articlesList(articles = [], currentPage, totalPagesCount)
+mixin articlesList(articles = [], currentPage, totalPagesCount, paginationPath)
   - const MIN_PAGES_FOR_PAGINATION = 1;
   - const PAGINATION_WIDTH = 2;
   - const hasPagination = totalPagesCount > MIN_PAGES_FOR_PAGINATION
@@ -24,4 +24,4 @@ mixin articlesList(articles = [], currentPage, totalPagesCount)
             span.preview__cloud
             b.preview__comment-count  #{article.comments.length}
   if hasPagination
-    +pagination(currentPage, totalPagesCount, PAGINATION_WIDTH)
+    +pagination(currentPage, totalPagesCount, PAGINATION_WIDTH, paginationPath)

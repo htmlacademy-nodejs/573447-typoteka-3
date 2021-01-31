@@ -1,6 +1,7 @@
 extends layout
 
 block content
+  - const PAGINATION_PATH = '?';
   - const ARTICLE_ANNOUNCE_LENGTH = 100;
   - const MAX_COMMENT_LENGTH = 100;
   - const hasArticles = Boolean(articles.length);
@@ -42,7 +43,7 @@ block content
                     +cutString(lastComment.text, MAX_COMMENT_LENGTH)
           else
             p.hot__empty Здесь пока ничего нет...
-      +articlesList(articles, currentPage, totalPagesCount)
+      +articlesList(articles, currentPage, totalPagesCount, PAGINATION_PATH)
     else
       div.main-page__empty-wrapper
         p.main-page__empty-text Здесь пока пусто!
