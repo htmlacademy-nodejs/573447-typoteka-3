@@ -1,9 +1,10 @@
 'use strict';
 
 const {Router} = require(`express`);
-const {getHttpErrors, asyncHandler} = require(`~/helpers`);
+const {getHttpErrors, asyncHandler, calculatePagination, getTotalPagesCount} = require(`~/helpers`);
 const {checkUserAuthenticate, checkIsAdmin} = require(`~/middlewares`);
 const {SsrPath, SsrArticlePath, ArticleKey} = require(`~/common/enums`);
+const {ARTICLES_PER_PAGE} = require(`~/common/constants`);
 const {getArticleData, getCommentsData} = require(`./helpers`);
 
 const initArticlesRouter = (app, settings) => {
@@ -118,18 +119,34 @@ const initArticlesRouter = (app, settings) => {
   articlesRouter.get(
       SsrArticlePath.CATEGORY_$CATEGORY_ID,
       asyncHandler(async (req, res) => {
-        const {session, params} = req;
+        const {session, params, query} = req;
         const {id} = params;
-        const [currentCategory, categories, articles] = await Promise.all([
+        const {currentPage, limit, offset} = calculatePagination(
+            query.page,
+            ARTICLES_PER_PAGE
+        );
+
+        const [
+          {count, articles},
+          currentCategory,
+          categories,
+        ] = await Promise.all([
+          api.getArticleByCategoryId({
+            id,
+            limit,
+            offset,
+          }),
           api.getCategory(id),
           api.getCategories(true),
-          api.getArticleByCategoryId(id),
         ]);
+        const totalPagesCount = getTotalPagesCount(count, ARTICLES_PER_PAGE);
 
         return res.render(`pages/articles/categories`, {
           currentCategory,
           categories,
           articles,
+          currentPage,
+          totalPagesCount,
           user: session.user,
         });
       })
