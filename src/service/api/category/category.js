@@ -1,7 +1,14 @@
 'use strict';
 
 const {Router} = require(`express`);
-const {ApiPath, CategoryApiPath, HttpCode} = require(`~/common/enums`);
+const {validateParamSchema} = require(`~/middlewares`);
+const {routeId: routeIdSchema} = require(`~/schemas`);
+const {
+  ApiPath,
+  CategoryApiPath,
+  HttpCode,
+  RequestParam,
+} = require(`~/common/enums`);
 
 const initCategoryApi = (app, {categoryService}) => {
   const categoryRouter = new Router();
@@ -16,6 +23,17 @@ const initCategoryApi = (app, {categoryService}) => {
 
     return res.status(HttpCode.OK).json(categories);
   });
+
+  categoryRouter.get(
+      CategoryApiPath.$ID,
+      validateParamSchema(routeIdSchema, RequestParam.ID),
+      async (req, res) => {
+        const {id} = req.params;
+        const category = await categoryService.findOne(Number(id));
+
+        return res.status(HttpCode.OK).json(category);
+      }
+  );
 };
 
 module.exports = {

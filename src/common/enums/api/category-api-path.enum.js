@@ -2,6 +2,7 @@
 
 const CategoryApiPath = {
   ROOT: `/`,
+  $ID: `/:id`,
 };
 
 module.exports = {
