@@ -51,7 +51,7 @@ class Articles {
         model: this._Comment,
         as: ModelAlias.COMMENTS,
         attributes: [],
-        duplicating: false
+        duplicating: false,
       },
       group: [Sequelize.col(`Article.id`)],
       having: Sequelize.where(
@@ -73,7 +73,7 @@ class Articles {
         {
           model: this._Comment,
           as: ModelAlias.COMMENTS,
-          include: [ModelAlias.USER]
+          include: [ModelAlias.USER],
         },
       ],
       order: [[ModelAlias.COMMENTS, CommentKey.CREATED_AT, SortType.DESC]],
@@ -94,6 +94,30 @@ class Articles {
       ],
       order: [[ArticleKey.CREATED_DATE, SortType.DESC]],
     });
+  }
+
+  async findPageByCategoryId({id, limit, offset}) {
+    const {count, rows} = await this._Article.findAndCountAll({
+      limit,
+      offset,
+      include: [
+        ModelAlias.COMMENTS,
+        {
+          model: this._Category,
+          as: ModelAlias.CATEGORIES,
+          where: {
+            [CategoryKey.ID]: id,
+          },
+        },
+      ],
+      order: [[ArticleKey.CREATED_DATE, SortType.DESC]],
+      distinct: true,
+    });
+
+    return {
+      count,
+      articles: rows.map((item) => item.get()),
+    };
   }
 
   async create(createdArticle) {
