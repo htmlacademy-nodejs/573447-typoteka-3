@@ -1,6 +1,6 @@
 'use strict';
 
-const bcrypt = require(`bcrypt`);
+const {bcrypt} = require(`./packages`);
 const {getRandomNumber} = require(`./number`);
 const {
   getRandomItem,
@@ -18,6 +18,8 @@ const {
   generateMockedComments,
   generatePublication,
   generatePublications,
+  generateMockedUser,
+  generateMockedUsers,
   getMockedPublicationsData,
   readPublicationsFileContent,
 } = require(`./mocks`);
@@ -43,6 +45,8 @@ module.exports = {
   generateMockedComments,
   generatePublication,
   generatePublications,
+  generateMockedUser,
+  generateMockedUsers,
   getMockedPublicationsData,
   readPublicationsFileContent,
   getHttpErrors,

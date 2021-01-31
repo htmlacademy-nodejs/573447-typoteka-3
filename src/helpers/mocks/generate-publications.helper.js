@@ -11,14 +11,14 @@ const generatePublications = ({
   categories,
   comments,
 }) => {
-  const generatedPublications = Array.from(new Array(count), () =>
-    generatePublication({
+  const generatedPublications = Array.from(new Array(count), () => {
+    return generatePublication({
       titles,
       descriptions,
       categories,
       comments,
-    })
-  );
+    });
+  });
 
   return generatedPublications;
 };
