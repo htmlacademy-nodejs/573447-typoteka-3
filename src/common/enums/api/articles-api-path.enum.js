@@ -4,6 +4,7 @@ const ArticlesApiPath = {
   ROOT: `/`,
   POPULAR: `/popular`,
   COMMENTS: `/comments`,
+  CATEGORIES: `/categories`,
   CATEGORIES_$ID: `/categories/:id`,
   $ARTICLE_ID: `/:articleId`,
   $ARTICLE_ID_COMMENTS: `/:articleId/comments`,

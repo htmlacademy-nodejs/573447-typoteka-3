@@ -70,6 +70,10 @@ class Api {
     return this._load(`${ApiPath.ARTICLES}/${id}`);
   }
 
+  getArticleByCategoryId(id) {
+    return this._load(`${ApiPath.ARTICLES}${ArticlesApiPath.CATEGORIES}/${id}`);
+  }
+
   search(query) {
     return this._load(ApiPath.SEARCH, {
       params: {
