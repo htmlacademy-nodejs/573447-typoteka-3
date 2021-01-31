@@ -7,10 +7,7 @@ const {
   INITIAL_ARRAY_IDX,
   INCREASE_COUNT_FOR_IDX,
 } = require(`./array.constants`);
-const {
-  ARTICLES_PER_PAGE,
-  ARTICLES_SKIP_PAGE_COUNT,
-} = require(`./articles.constants`);
+const {ARTICLES_PER_PAGE} = require(`./articles.constants`);
 const {USER_PASSWORD_SALT_ROUNDS} = require(`./user.constants`);
 
 module.exports = {
@@ -21,6 +18,5 @@ module.exports = {
   INITIAL_ARRAY_IDX,
   INCREASE_COUNT_FOR_IDX,
   ARTICLES_PER_PAGE,
-  ARTICLES_SKIP_PAGE_COUNT,
   USER_PASSWORD_SALT_ROUNDS,
 };

@@ -3,11 +3,8 @@
 const {Router} = require(`express`);
 const {SsrPath, SsrMainPath, UserKey, SortType} = require(`~/common/enums`);
 const {checkUserAuthenticate, checkIsAdmin} = require(`~/middlewares`);
-const {getHttpErrors} = require(`~/helpers`);
-const {
-  ARTICLES_PER_PAGE,
-  ARTICLES_SKIP_PAGE_COUNT,
-} = require(`~/common/constants`);
+const {getHttpErrors, calculatePagination, getTotalPagesCount} = require(`~/helpers`);
+const {ARTICLES_PER_PAGE} = require(`~/common/constants`);
 const {getRegisterData, getLoginData} = require(`./helpers`);
 const {HOT_ARTICLES_COUNT, LAST_COMMENTS_COUNT} = require(`./common`);
 
@@ -19,9 +16,10 @@ const initMainRouter = (app, settings) => {
 
   mainRouter.get(SsrMainPath.ROOT, async (req, res) => {
     const {query, session} = req;
-    const {page = 1} = query;
-    const parsedPage = Number(page);
-    const offset = (parsedPage - ARTICLES_SKIP_PAGE_COUNT) * ARTICLES_PER_PAGE;
+    const {currentPage, limit, offset} = calculatePagination(
+        query.page,
+        ARTICLES_PER_PAGE
+    );
 
     const [
       {count, articles},
@@ -30,7 +28,7 @@ const initMainRouter = (app, settings) => {
       categories,
     ] = await Promise.all([
       api.getPageArticles({
-        limit: ARTICLES_PER_PAGE,
+        limit,
         offset,
       }),
       api.getHotArticles({
@@ -42,15 +40,15 @@ const initMainRouter = (app, settings) => {
       }),
       api.getCategories(true),
     ]);
-    const totalPages = Math.ceil(count / ARTICLES_PER_PAGE);
+    const totalPagesCount = getTotalPagesCount(count, ARTICLES_PER_PAGE);
 
     return res.render(`pages/main`, {
       articles,
       categories,
       hotArticles,
       lastComments,
-      totalPages,
-      page: parsedPage,
+      currentPage,
+      totalPagesCount,
       user: session.user
     });
   });
