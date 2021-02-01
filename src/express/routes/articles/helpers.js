@@ -1,6 +1,19 @@
 'use strict';
 
 const {ArticleKey, CommentKey} = require(`~/common/enums`);
+const {fieldToErrorMessages} = require(`./common`);
+
+const getMessageByField = (messages) => {
+  return Object.keys(fieldToErrorMessages).reduce((acc, key) => {
+    const currentMessages = fieldToErrorMessages[key].filter((message) => {
+      return messages.includes(message);
+    });
+
+    acc[key] = currentMessages;
+
+    return acc;
+  }, {});
+};
 
 const getParsedCategories = (categories) => {
   if (!categories) {
@@ -27,6 +40,7 @@ const getCommentsData = (body) => ({
 });
 
 module.exports = {
+  getMessageByField,
   getParsedCategories,
   getArticleData,
   getCommentsData,

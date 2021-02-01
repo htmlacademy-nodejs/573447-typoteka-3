@@ -5,7 +5,7 @@ const {getHttpErrors, asyncHandler, calculatePagination, getTotalPagesCount} = r
 const {checkUserAuthenticate, checkIsAdmin} = require(`~/middlewares`);
 const {SsrPath, SsrArticlePath, ArticleKey} = require(`~/common/enums`);
 const {ARTICLES_PER_PAGE} = require(`~/common/constants`);
-const {getArticleData, getCommentsData} = require(`./helpers`);
+const {getArticleData, getCommentsData, getMessageByField} = require(`./helpers`);
 
 const initArticlesRouter = (app, settings) => {
   const articlesRouter = new Router();
@@ -22,6 +22,7 @@ const initArticlesRouter = (app, settings) => {
         return res.render(`pages/articles/edit`, {
           categories,
           article: {},
+          messagesByField: {},
           user: req.session.user,
         });
       })
@@ -40,11 +41,13 @@ const initArticlesRouter = (app, settings) => {
           return res.redirect(SsrPath.MY);
         } catch (err) {
           const categories = await api.getCategories();
+          const httpErrors = getHttpErrors(err);
 
           return res.render(`pages/articles/edit`, {
             categories,
             article: articleData,
-            errorMessages: getHttpErrors(err),
+            errorMessages: httpErrors,
+            messagesByField: getMessageByField(httpErrors),
             user: session.user,
           });
         }
@@ -65,6 +68,7 @@ const initArticlesRouter = (app, settings) => {
         return res.render(`pages/articles/edit`, {
           article,
           categories,
+          messagesByField: {},
           user: session.user,
         });
       })
@@ -87,6 +91,7 @@ const initArticlesRouter = (app, settings) => {
         } catch (err) {
           const article = await api.getArticle(parsedId);
           const categories = await api.getCategories();
+          const httpErrors = getHttpErrors(err);
 
           return res.render(`pages/articles/edit`, {
             categories,
@@ -94,7 +99,8 @@ const initArticlesRouter = (app, settings) => {
               ...article,
               ...articleData,
             },
-            errorMessages: getHttpErrors(err),
+            messagesByField: getMessageByField(httpErrors),
+            errorMessages: httpErrors,
             user: session.user,
           });
         }
