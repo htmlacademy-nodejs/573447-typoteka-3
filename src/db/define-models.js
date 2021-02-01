@@ -1,6 +1,6 @@
 'use strict';
 
-const {ModelAlias, CommentKey} = require(`~/common/enums`);
+const {ModelAlias, CommentKey, ArticleCategoryKey} = require(`~/common/enums`);
 const {
   defineArticleCategoryModel,
   defineArticleModel,
@@ -36,13 +36,20 @@ const defineModels = (sequelize) => {
     foreignKey: CommentKey.ARTICLE_ID,
   });
 
+  Article.hasMany(ArticleCategory, {
+    as: ModelAlias.ARTICLE_CATEGORIES,
+    foreignKey: ArticleCategoryKey.ARTICLE_ID,
+  });
+
   Article.belongsToMany(Category, {
     through: ArticleCategory,
+    foreignKey: ArticleCategoryKey.ARTICLE_ID,
     as: ModelAlias.CATEGORIES,
   });
 
   Category.belongsToMany(Article, {
     through: ArticleCategory,
+    foreignKey: ArticleCategoryKey.CATEGORY_ID,
     as: ModelAlias.ARTICLES,
   });
 
