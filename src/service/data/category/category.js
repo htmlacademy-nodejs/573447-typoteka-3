@@ -24,7 +24,7 @@ class Category {
   async findAllWithCount() {
     const categories = await this._Category.findAll({
       attributes: {
-        include: [Sequelize.fn(`COUNT`, Sequelize.col(`articleCategories.CategoryId`)), `count`],
+        include: [Sequelize.fn(`COUNT`, Sequelize.col(`articleCategories.categoryId`)), `count`],
       },
       include: {
         model: this._ArticleCategory,
@@ -34,7 +34,7 @@ class Category {
       },
       group: [Sequelize.col(`Category.id`)],
       having: Sequelize.where(
-          Sequelize.fn(`COUNT`, Sequelize.col(`articleCategories.CategoryId`)),
+          Sequelize.fn(`COUNT`, Sequelize.col(`articleCategories.categoryId`)),
           {
             [DbOperator.gte]: 1,
           }
