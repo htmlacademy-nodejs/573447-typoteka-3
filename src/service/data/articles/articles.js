@@ -177,13 +177,16 @@ class Articles {
   }
 
   async update(article, articleId) {
-    const [affectedRows] = await this._Article.update(article, {
+    const [, updatedArticle] = await this._Article.update(article, {
       where: {
         id: articleId,
       },
+      returning: true,
+      plain: true
     });
+    updatedArticle.setCategories(article.categories);
 
-    return Boolean(affectedRows);
+    return Boolean(updatedArticle);
   }
 
   async drop(articleId) {
