@@ -32,6 +32,10 @@ GET http://localhost:3000/api/categories HTTP/1.1
 
 ###
 
+GET http://localhost:3000/api/categories?hasCount=true HTTP/1.1
+
+###
+
 # Category by id
 GET http://localhost:3000/api/categories/1 HTTP/1.1
 
@@ -56,7 +60,6 @@ GET http://localhost:3000/api/articles/comments?limit=1&order=desc HTTP/1.1
 GET http://localhost:3000/api/articles/categories/1 HTTP/1.1
 
 ###
-
 
 # Article by id
 GET http://localhost:3000/api/articles/1 HTTP/1.1
