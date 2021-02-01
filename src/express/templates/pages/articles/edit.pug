@@ -40,7 +40,7 @@ block content
                       - const isChecked = articleCategories.some((item) => item === category.id || item.id === category.id)
                       input(id=`category${category.id}` type='checkbox' name="category" value=category.id checked=isChecked)
                       label(for=`category${category.id}`) #{category.name}
-                  a.new-publication__form-link.button.button--transparent(href='#') Добавить категорию
+                  a.new-publication__form-link.button.button--transparent(href='/categories') Добавить категорию
                   +errorList(messagesByField.categories)
               div.form__wrapper.form__wrapper--text
                 div.form__field.form__field--publication-text
