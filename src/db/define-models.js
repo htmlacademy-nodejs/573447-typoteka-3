@@ -55,6 +55,7 @@ const defineModels = (sequelize) => {
 
   Category.hasMany(ArticleCategory, {
     as: ModelAlias.ARTICLE_CATEGORIES,
+    foreignKey: ArticleCategoryKey.CATEGORY_ID,
   });
 
   return {
