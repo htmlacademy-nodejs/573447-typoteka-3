@@ -11,7 +11,7 @@ const {
   UsersApiPath,
   HttpMethod,
   RequestParam,
-  RequestQuery
+  RequestQuery,
 } = require(`./api`);
 const {SsrPath, SsrMainPath, SsrArticlePath, SsrMyPath} = require(`./ssr`);
 const {ArticleKey} = require(`./article`);
@@ -39,6 +39,9 @@ const {
 const {CategoryKey} = require(`./category`);
 const {SessionKey, SessionExpiration} = require(`./session`);
 const {SortType} = require(`./sort`);
+const {
+  ArticleCategoryKey,
+} = require(`./article-category/article-category-key.enum`);
 
 module.exports = {
   CliCommandName,
@@ -85,4 +88,5 @@ module.exports = {
   SessionKey,
   SessionExpiration,
   SortType,
+  ArticleCategoryKey,
 };
