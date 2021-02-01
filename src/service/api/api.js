@@ -23,6 +23,7 @@ initUsersApi(apiRouter, {
 initSearchApi(apiRouter, {
   searchService: new Search({
     articleModel: models.Article,
+    categoryModel: models.Category,
   }),
 });
 
