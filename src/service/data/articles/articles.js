@@ -6,20 +6,35 @@ const {
   SortType,
   ArticleKey,
   CommentKey,
-  CategoryKey,
   DbOperator,
+  ArticleCategoryKey,
 } = require(`~/common/enums`);
 
 class Articles {
-  constructor({articleModel, commentModel, categoryModel}) {
+  constructor({
+    articleModel,
+    commentModel,
+    categoryModel,
+    articleCategoryModel,
+  }) {
     this._Article = articleModel;
     this._Comment = commentModel;
     this._Category = categoryModel;
+    this._ArticleCategory = articleCategoryModel;
   }
 
   async findAll() {
     const articles = await this._Article.findAll({
-      include: [ModelAlias.CATEGORIES, ModelAlias.COMMENTS],
+      include: [
+        ModelAlias.COMMENTS,
+        {
+          model: this._Category,
+          as: ModelAlias.CATEGORIES,
+          through: {
+            attributes: [],
+          },
+        },
+      ],
       order: [[ArticleKey.CREATED_DATE, SortType.DESC]],
     });
 
@@ -30,7 +45,16 @@ class Articles {
     const {count, rows} = await this._Article.findAndCountAll({
       limit,
       offset,
-      include: [ModelAlias.CATEGORIES, ModelAlias.COMMENTS],
+      include: [
+        ModelAlias.COMMENTS,
+        {
+          model: this._Category,
+          as: ModelAlias.CATEGORIES,
+          through: {
+            attributes: [],
+          },
+        },
+      ],
       order: [[ArticleKey.CREATED_DATE, SortType.DESC]],
       distinct: true,
     });
@@ -69,7 +93,13 @@ class Articles {
   findOne(id) {
     return this._Article.findByPk(id, {
       include: [
-        ModelAlias.CATEGORIES,
+        {
+          model: this._Category,
+          as: ModelAlias.CATEGORIES,
+          through: {
+            attributes: [],
+          },
+        },
         {
           model: this._Comment,
           as: ModelAlias.COMMENTS,
@@ -80,15 +110,24 @@ class Articles {
     });
   }
 
-  findByCategoryId(categoryId) {
+  findByCategoryId(id) {
     return this._Article.findAll({
       include: [
         ModelAlias.COMMENTS,
         {
           model: this._Category,
           as: ModelAlias.CATEGORIES,
+          through: {
+            attributes: [],
+          },
+        },
+        {
+          model: this._ArticleCategory,
+          as: ModelAlias.ARTICLE_CATEGORIES,
+          attributes: [],
+          require: true,
           where: {
-            [CategoryKey.ID]: categoryId,
+            [ArticleCategoryKey.CATEGORY_ID]: id,
           },
         },
       ],
@@ -105,8 +144,17 @@ class Articles {
         {
           model: this._Category,
           as: ModelAlias.CATEGORIES,
+          through: {
+            attributes: [],
+          },
+        },
+        {
+          model: this._ArticleCategory,
+          as: ModelAlias.ARTICLE_CATEGORIES,
+          attributes: [],
+          require: true,
           where: {
-            [CategoryKey.ID]: id,
+            [ArticleCategoryKey.CATEGORY_ID]: id,
           },
         },
       ],

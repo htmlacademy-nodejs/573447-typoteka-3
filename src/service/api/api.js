@@ -38,6 +38,7 @@ initArticlesApi(apiRouter, {
     articleModel: models.Article,
     commentModel: models.Comment,
     categoryModel: models.Category,
+    articleCategoryModel: models.ArticleCategory,
   }),
   commentsService: new Comments({
     commentModel: models.Comment,
