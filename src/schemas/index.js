@@ -1,9 +1,10 @@
 'use strict';
 
-const {comment} = require(`./comment/comment.schema`);
-const {article} = require(`./article/article.schema`);
+const {comment} = require(`./comment`);
+const {article} = require(`./article`);
 const {routeId, queryOrder, queryLimit} = require(`./route`);
 const {createdUserPayload, userLoginPayload} = require(`./user`);
+const {category} = require(`./category`);
 
 module.exports = {
   comment,
@@ -13,4 +14,5 @@ module.exports = {
   queryLimit,
   createdUserPayload,
   userLoginPayload,
+  category,
 };
