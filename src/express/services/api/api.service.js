@@ -126,6 +126,12 @@ class Api {
     });
   }
 
+  deleteArticle(articleId) {
+    return this._load(`${ApiPath.ARTICLES}/${articleId}`, {
+      method: HttpMethod.DELETE,
+    });
+  }
+
   createComment(articleId, payload) {
     return this._load(`${ApiPath.ARTICLES}/${articleId}/comments`, {
       method: HttpMethod.POST,
