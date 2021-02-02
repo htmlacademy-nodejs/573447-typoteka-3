@@ -29,6 +29,8 @@ const {
   CreatedUserValidationRule,
   SessionValidationRule,
   QueryValidationMessage,
+  CategoryValidationRule,
+  CategoryValidationMessage,
 } = require(`./validation`);
 const {
   UserKey,
@@ -80,6 +82,8 @@ module.exports = {
   CreatedUserValidationMessage,
   CreatedUserValidationRule,
   QueryValidationMessage,
+  CategoryValidationRule,
+  CategoryValidationMessage,
   SessionValidationRule,
   UserKey,
   UserLoginValidationMessage,
