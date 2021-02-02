@@ -2,6 +2,7 @@
 
 const SsrMyPath = {
   ROOT: `/`,
+  $ARTICLE_ID: `/:id`,
   COMMENTS: `/comments`,
 };
 
