@@ -30,6 +30,7 @@ const defineModels = (sequelize) => {
   Article.hasMany(Comment, {
     foreignKey: CommentKey.ARTICLE_ID,
     as: ModelAlias.COMMENTS,
+    onDelete: `cascade`,
   });
 
   Comment.belongsTo(Article, {
@@ -39,6 +40,7 @@ const defineModels = (sequelize) => {
   Article.hasMany(ArticleCategory, {
     as: ModelAlias.ARTICLE_CATEGORIES,
     foreignKey: ArticleCategoryKey.ARTICLE_ID,
+    onDelete: `cascade`,
   });
 
   Article.belongsToMany(Category, {
