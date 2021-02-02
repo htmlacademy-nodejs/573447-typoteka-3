@@ -41,6 +41,31 @@ GET http://localhost:3000/api/categories/1 HTTP/1.1
 
 ###
 
+# Create category
+POST http://localhost:3000/api/categories HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "Новая"
+}
+
+###
+
+# Update category by
+PUT http://localhost:3000/api/categories/10 HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "Самая новая"
+}
+
+###
+
+# Delete category
+DELETE http://localhost:3000/api/categories/10 HTTP/1.1
+
+###
+
 # All articles
 GET http://localhost:3000/api/articles HTTP/1.1
 
