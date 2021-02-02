@@ -43,6 +43,30 @@ class Category {
 
     return categories.map((category) => category.get());
   }
+
+  create(categoryPayload) {
+    return this._Category.create(categoryPayload);
+  }
+
+  async update(categoryId, categoryPayload) {
+    const [rows] = await this._Category.update(categoryPayload, {
+      where: {
+        id: categoryId,
+      },
+    });
+
+    return Boolean(rows);
+  }
+
+  async drop(categoryId) {
+    const deletedRows = await this._Category.destroy({
+      where: {
+        id: categoryId,
+      },
+    });
+
+    return Boolean(deletedRows);
+  }
 }
 
 module.exports = Category;
