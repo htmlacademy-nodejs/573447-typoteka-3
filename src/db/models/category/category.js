@@ -1,7 +1,12 @@
 'use strict';
 
 const {DataTypes} = require(`sequelize`);
-const {ModelName, TableName, CategoryKey} = require(`~/common/enums`);
+const {
+  ModelName,
+  TableName,
+  CategoryKey,
+  CategoryValidationRule,
+} = require(`~/common/enums`);
 
 const define = (sequelize) => {
   return sequelize.define(
@@ -14,7 +19,7 @@ const define = (sequelize) => {
           allowNull: false,
         },
         [CategoryKey.NAME]: {
-          type: DataTypes.STRING,
+          type: new DataTypes.STRING(CategoryValidationRule.NAME_MAX_LENGTH),
           allowNull: false,
         },
       },
