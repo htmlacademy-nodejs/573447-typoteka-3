@@ -42,6 +42,7 @@ const {SortType} = require(`./sort`);
 const {
   ArticleCategoryKey,
 } = require(`./article-category/article-category-key.enum`);
+const {AdminAction} = require(`./action`);
 
 module.exports = {
   CliCommandName,
@@ -89,4 +90,5 @@ module.exports = {
   SessionExpiration,
   SortType,
   ArticleCategoryKey,
+  AdminAction,
 };
