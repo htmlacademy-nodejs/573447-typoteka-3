@@ -1,9 +1,19 @@
 'use strict';
 
 const {Router} = require(`express`);
-const {SsrPath, SsrMainPath, UserKey, SortType, AdminAction} = require(`~/common/enums`);
+const {
+  SsrPath,
+  SsrMainPath,
+  UserKey,
+  SortType,
+  AdminAction,
+} = require(`~/common/enums`);
 const {checkUserAuthenticate, checkIsAdmin} = require(`~/middlewares`);
-const {getHttpErrors, calculatePagination, getTotalPagesCount} = require(`~/helpers`);
+const {
+  getHttpErrors,
+  calculatePagination,
+  getTotalPagesCount,
+} = require(`~/helpers`);
 const {ARTICLES_PER_PAGE} = require(`~/common/constants`);
 const {getRegisterData, getLoginData, getCategoryData} = require(`./helpers`);
 const {HOT_ARTICLES_COUNT, LAST_COMMENTS_COUNT} = require(`./common`);
