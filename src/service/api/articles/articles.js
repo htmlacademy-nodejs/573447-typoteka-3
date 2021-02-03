@@ -91,8 +91,10 @@ const initArticlesApi = (app, {articlesService, commentsService}) => {
         validateQuerySchema(queryOrderSchema, RequestQuery.ORDER),
       ],
       async (req, res) => {
-        const {limit, order} = req.query;
-        const comments = await commentsService.findAll(limit, order);
+        const {limit, order, hasArticle} = req.query;
+        const comments = hasArticle
+          ? await commentsService.findAllWithArticle(limit, order)
+          : await commentsService.findAll(limit, order);
 
         return res.status(HttpCode.OK).json(comments);
       }
