@@ -7,12 +7,13 @@ block content
       ul.publication__list
         each comment in comments
           li.publication__list-item
-            .publication__header
-              img.publication__list-image(src=`img/${comment.user.avatar}` width='20' height='20' alt='Аватар пользователя')
-              b.publication__list-name #{comment.user.firstName} #{comment.user.lastName}
-              time.publication__item-time(datetime=comment.createdAt)
-                +formattedDate(comment.createdAt)
-            a.publication__item-text(href=`/articles/${comment.article.id}`) #{comment.text}
-            p.publication__text-strong #{comment.article.title}
-            button.publication__button.button.button--close-item(type='button')
-              span.visually-hidden Закрыть строку списка
+            form(action=`/my/articles/${comment.article.id}/comments/${comment.id}` method='POST')
+              div.publication__header
+                img.publication__list-image(src=`img/${comment.user.avatar}` width='20' height='20' alt='Аватар пользователя')
+                b.publication__list-name #{comment.user.firstName} #{comment.user.lastName}
+                time.publication__item-time(datetime=comment.createdAt)
+                  +formattedDate(comment.createdAt)
+              a.publication__item-text(href=`/articles/${comment.article.id}`) #{comment.text}
+              p.publication__text-strong #{comment.article.title}
+              button.publication__button.button.button--close-item(type='submit' name='action' value='deleteComment')
+                span.visually-hidden Закрыть строку списка
