@@ -1,7 +1,7 @@
 'use strict';
 
 const {Router} = require(`express`);
-const {SsrPath, SsrMainPath, UserKey, SortType} = require(`~/common/enums`);
+const {SsrPath, SsrMainPath, UserKey, SortType, AdminAction} = require(`~/common/enums`);
 const {checkUserAuthenticate, checkIsAdmin} = require(`~/middlewares`);
 const {getHttpErrors, calculatePagination, getTotalPagesCount} = require(`~/helpers`);
 const {ARTICLES_PER_PAGE} = require(`~/common/constants`);
@@ -131,7 +131,6 @@ const initMainRouter = (app, settings) => {
         return res.render(`pages/categories`, {
           categories,
           categoriesWithCount,
-          categoryPayload: {},
           user: req.session.user,
         });
       }
@@ -142,9 +141,10 @@ const initMainRouter = (app, settings) => {
       [checkUserAuthenticate, checkIsAdmin],
       async (req, res) => {
         const {body} = req;
-        const categoryPayload = getCategoryData(body);
 
         try {
+          const categoryPayload = getCategoryData(body);
+
           await api.saveCategory(categoryPayload);
 
           return res.redirect(SsrMainPath.CATEGORIES);
@@ -155,13 +155,51 @@ const initMainRouter = (app, settings) => {
           ]);
 
           return res.render(`pages/categories`, {
-            categoryPayload,
             categories,
             categoriesWithCount,
             errorMessages: getHttpErrors(err),
             user: req.session.user,
           });
         }
+      }
+  );
+
+  mainRouter.post(
+      SsrMainPath.CATEGORIES_$CATEGORY_ID,
+      [checkUserAuthenticate, checkIsAdmin],
+      async (req, res) => {
+        const {body, params} = req;
+        const {action} = body;
+        const {id: categoryId} = params;
+
+        switch (action) {
+          case AdminAction.EDIT_CATEGORY: {
+            try {
+              const categoryPayload = getCategoryData(body);
+
+              await api.updateCategory(categoryId, categoryPayload);
+            } catch (err) {
+              const [categories, categoriesWithCount] = await Promise.all([
+                api.getCategories(),
+                api.getCategories(true),
+              ]);
+
+              return res.render(`pages/categories`, {
+                categories,
+                categoriesWithCount,
+                errorMessages: getHttpErrors(err),
+                user: req.session.user,
+              });
+            }
+            break;
+          }
+          case AdminAction.DELETE_CATEGORY: {
+            await api.deleteCategory(categoryId);
+            break;
+          }
+        }
+
+        return res.redirect(SsrMainPath.CATEGORIES);
       }
   );
 };

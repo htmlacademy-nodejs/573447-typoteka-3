@@ -7,6 +7,7 @@ const SsrMainPath = {
   LOGOUT: `/logout`,
   SEARCH: `/search`,
   CATEGORIES: `/categories`,
+  CATEGORIES_$CATEGORY_ID: `/categories/:id`,
 };
 
 module.exports = {

@@ -110,6 +110,19 @@ class Api {
     });
   }
 
+  updateCategory(id, payload) {
+    return this._load(`${ApiPath.CATEGORIES}/${id}`, {
+      method: HttpMethod.PUT,
+      data: payload,
+    });
+  }
+
+  deleteCategory(id) {
+    return this._load(`${ApiPath.CATEGORIES}/${id}`, {
+      method: HttpMethod.DELETE,
+    });
+  }
+
   getComments({limit, order}) {
     return this._load(`${ApiPath.ARTICLES}${ArticlesApiPath.COMMENTS}`, {
       params: {
