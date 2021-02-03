@@ -1,20 +1,31 @@
 'use strict';
 
+const {
+  CreatedUserPayloadKey,
+  UserLoginPayloadKey,
+  CategoryKey,
+} = require(`~/common/enums`);
+
 const getRegisterData = (body, file) => ({
-  email: body.email,
-  password: body.password,
-  repeatedPassword: body.repeatedPassword,
-  firstName: body.firstName,
-  lastName: body.lastName,
-  avatar: file ? file.filename : null,
+  [CreatedUserPayloadKey.EMAIL]: body.email,
+  [CreatedUserPayloadKey.PASSWORD]: body.password,
+  [CreatedUserPayloadKey.REPEATED_PASSWORD]: body.repeatedPassword,
+  [CreatedUserPayloadKey.FIRST_NAME]: body.firstName,
+  [CreatedUserPayloadKey.LAST_NAME]: body.lastName,
+  [CreatedUserPayloadKey.AVATAR]: file ? file.filename : null,
 });
 
 const getLoginData = (body) => ({
-  email: body.email,
-  password: body.password,
+  [UserLoginPayloadKey.EMAIL]: body.email,
+  [UserLoginPayloadKey.PASSWORD]: body.password,
+});
+
+const getCategoryData = (body) => ({
+  [CategoryKey.NAME]: body.name,
 });
 
 module.exports = {
   getRegisterData,
   getLoginData,
+  getCategoryData,
 };

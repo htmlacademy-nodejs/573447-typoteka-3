@@ -5,7 +5,7 @@ const {SsrPath, SsrMainPath, UserKey, SortType} = require(`~/common/enums`);
 const {checkUserAuthenticate, checkIsAdmin} = require(`~/middlewares`);
 const {getHttpErrors, calculatePagination, getTotalPagesCount} = require(`~/helpers`);
 const {ARTICLES_PER_PAGE} = require(`~/common/constants`);
-const {getRegisterData, getLoginData} = require(`./helpers`);
+const {getRegisterData, getLoginData, getCategoryData} = require(`./helpers`);
 const {HOT_ARTICLES_COUNT, LAST_COMMENTS_COUNT} = require(`./common`);
 
 const initMainRouter = (app, settings) => {
@@ -122,12 +122,46 @@ const initMainRouter = (app, settings) => {
   mainRouter.get(
       SsrMainPath.CATEGORIES,
       [checkUserAuthenticate, checkIsAdmin],
-      async (_req, res) => {
-        const categories = await api.getCategories();
+      async (req, res) => {
+        const [categories, categoriesWithCount] = await Promise.all([
+          api.getCategories(),
+          api.getCategories(true),
+        ]);
 
         return res.render(`pages/categories`, {
           categories,
+          categoriesWithCount,
+          categoryPayload: {},
+          user: req.session.user,
         });
+      }
+  );
+
+  mainRouter.post(
+      SsrMainPath.CATEGORIES,
+      [checkUserAuthenticate, checkIsAdmin],
+      async (req, res) => {
+        const {body} = req;
+        const categoryPayload = getCategoryData(body);
+
+        try {
+          await api.saveCategory(categoryPayload);
+
+          return res.redirect(SsrMainPath.CATEGORIES);
+        } catch (err) {
+          const [categories, categoriesWithCount] = await Promise.all([
+            api.getCategories(),
+            api.getCategories(true),
+          ]);
+
+          return res.render(`pages/categories`, {
+            categoryPayload,
+            categories,
+            categoriesWithCount,
+            errorMessages: getHttpErrors(err),
+            user: req.session.user,
+          });
+        }
       }
   );
 };

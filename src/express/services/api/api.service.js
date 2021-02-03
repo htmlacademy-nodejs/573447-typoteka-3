@@ -103,6 +103,13 @@ class Api {
     return this._load(`${ApiPath.CATEGORIES}/${id}`);
   }
 
+  saveCategory(payload) {
+    return this._load(ApiPath.CATEGORIES, {
+      method: HttpMethod.POST,
+      data: payload,
+    });
+  }
+
   getComments({limit, order}) {
     return this._load(`${ApiPath.ARTICLES}${ArticlesApiPath.COMMENTS}`, {
       params: {
