@@ -35,6 +35,7 @@ const defineModels = (sequelize) => {
 
   Comment.belongsTo(Article, {
     foreignKey: CommentKey.ARTICLE_ID,
+    as: ModelAlias.ARTICLE,
   });
 
   Article.hasMany(ArticleCategory, {

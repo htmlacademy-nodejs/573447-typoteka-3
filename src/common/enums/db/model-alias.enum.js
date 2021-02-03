@@ -5,6 +5,7 @@ const ModelAlias = {
   CATEGORIES: `categories`,
   COMMENTS: `comments`,
   ARTICLES: `articles`,
+  ARTICLE: `article`,
   ARTICLE_CATEGORIES: `articleCategories`,
 };
 
