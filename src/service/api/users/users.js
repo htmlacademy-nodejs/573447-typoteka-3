@@ -22,8 +22,8 @@ const initUsersApi = (app, {usersService}) => {
   usersRouter.post(
       UsersApiPath.ROOT,
       [
-        validateSchema(createdUserPayloadSchema),
         checkAlreadyRegister(usersService),
+        validateSchema(createdUserPayloadSchema),
       ],
       async (req, res) => {
         const mappedCreatedUser = await mapCreatedUser(req.body);
