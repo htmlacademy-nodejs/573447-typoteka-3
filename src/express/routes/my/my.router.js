@@ -1,7 +1,7 @@
 'use strict';
 
 const {Router} = require(`express`);
-const {SsrPath, SsrMyPath, AdminAction} = require(`~/common/enums`);
+const {SsrPath, SsrMyPath, AdminAction, SortType} = require(`~/common/enums`);
 const {asyncHandler} = require(`~/helpers`);
 const {checkUserAuthenticate, checkIsAdmin} = require(`~/middlewares`);
 
@@ -45,10 +45,13 @@ const initMyRouter = (app, settings) => {
       SsrMyPath.COMMENTS,
       [checkUserAuthenticate, checkIsAdmin],
       async (req, res) => {
-        const articles = await api.getArticles();
+        const comments = await api.getComments({
+          order: SortType.DESC,
+          hasArticle: true,
+        });
 
         return res.render(`pages/my/comments`, {
-          articles,
+          comments,
           user: req.session.user,
         });
       }

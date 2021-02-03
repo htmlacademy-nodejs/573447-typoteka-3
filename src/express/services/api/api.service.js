@@ -123,12 +123,18 @@ class Api {
     });
   }
 
-  getComments({limit, order}) {
+  getComments({limit, order, hasArticle}) {
+    const params = {
+      limit,
+      order
+    };
+
+    if (hasArticle) {
+      params.hasArticle = true;
+    }
+
     return this._load(`${ApiPath.ARTICLES}${ArticlesApiPath.COMMENTS}`, {
-      params: {
-        limit,
-        order,
-      },
+      params,
     });
   }
 
