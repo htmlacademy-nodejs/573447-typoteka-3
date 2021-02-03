@@ -56,6 +56,24 @@ const initMyRouter = (app, settings) => {
         });
       }
   );
+
+  myRouter.post(
+      SsrMyPath.ARTICLES_$ARTICLE_ID_COMMENTS_$COMMENT_ID,
+      [checkUserAuthenticate, checkIsAdmin],
+      asyncHandler(async (req, res) => {
+        const {body, params} = req;
+        const {action} = body;
+        const {articleId, commentId} = params;
+
+        switch (action) {
+          case AdminAction.DELETE_COMMENT: {
+            await api.deleteComment(articleId, commentId);
+          }
+        }
+
+        return res.redirect(`${SsrPath.MY}${SsrMyPath.COMMENTS}`);
+      })
+  );
 };
 
 module.exports = {

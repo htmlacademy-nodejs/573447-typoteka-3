@@ -165,6 +165,15 @@ class Api {
     });
   }
 
+  deleteComment(articleId, commentId) {
+    return this._load(
+        `${ApiPath.ARTICLES}/${articleId}/comments/${commentId}`,
+        {
+          method: HttpMethod.DELETE,
+        }
+    );
+  }
+
   registerUser(payload) {
     return this._load(ApiPath.USERS, {
       method: HttpMethod.POST,
