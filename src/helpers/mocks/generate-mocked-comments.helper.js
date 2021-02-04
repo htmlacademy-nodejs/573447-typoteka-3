@@ -4,12 +4,10 @@ const {
   generateMockedComment,
 } = require(`~/helpers/mocks/generate-mocked-comment.helper`);
 
-const generateMockedComments = ({count, comments, users}) => {
-  const mockedComments = Array.from(new Array(count), () =>
-    generateMockedComment({comments, users})
-  );
-
-  return mockedComments;
+const generateMockedComments = ({count, comments, users, articleId}) => {
+  return Array.from(new Array(count), () => {
+    return generateMockedComment({comments, users, articleId});
+  });
 };
 
 module.exports = {

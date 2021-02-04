@@ -4,7 +4,7 @@ const {getRandomNumber} = require(`~/helpers/number`);
 const {getRandomItems} = require(`~/helpers/array`);
 const {CommentKey, MocksConfig} = require(`~/common/enums`);
 
-const generateMockedComment = ({comments, users}) => ({
+const generateMockedComment = ({comments, users, articleId}) => ({
   [CommentKey.TEXT]: getRandomItems(
       comments,
       getRandomNumber(
@@ -16,6 +16,7 @@ const generateMockedComment = ({comments, users}) => ({
       MocksConfig.COMMENTS.MIN_USERS_COUNT,
       users.length
   ),
+  [CommentKey.ARTICLE_ID]: articleId
 });
 
 module.exports = {
