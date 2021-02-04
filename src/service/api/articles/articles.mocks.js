@@ -1,5 +1,16 @@
 'use strict';
 
+const mockedUsers = [
+  {
+    firstName: `Леха`,
+    lastName: `Мяшкур`,
+    email: `test@mail.com`,
+    avatar: `avatar.jpg`,
+    password: `Pa552word`,
+    isAdmin: true,
+  },
+];
+
 const mockedCategories = [`Железо`, `IT`, `Без рамки`, `Разное`];
 
 const mockedArticles = [
@@ -84,6 +95,7 @@ const mockedArticles = [
 ];
 
 module.exports = {
+  mockedUsers,
   mockedArticles,
   mockedCategories,
 };

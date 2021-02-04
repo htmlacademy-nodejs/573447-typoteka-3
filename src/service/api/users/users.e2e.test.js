@@ -25,6 +25,7 @@ const createAPI = async () => {
   await initDb(mockedDB, {
     categories: [],
     articles: [],
+    users: [],
   });
 
   initUsersApi(app, {

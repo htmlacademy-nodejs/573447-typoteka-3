@@ -7,7 +7,7 @@ const {Articles, Comments} = require(`~/service/data`);
 const {initDb} = require(`~/db/init-db`);
 const {ApiPath, HttpCode, ArticleKey} = require(`~/common/enums`);
 const {initArticlesApi} = require(`./articles`);
-const {mockedArticles, mockedCategories} = require(`./articles.mocks`);
+const {mockedArticles, mockedCategories, mockedUsers} = require(`./articles.mocks`);
 
 const createAPI = async () => {
   const app = express();
@@ -20,11 +20,15 @@ const createAPI = async () => {
   await initDb(mockedDB, {
     categories: mockedCategories,
     articles: mockedArticles,
+    users: mockedUsers,
   });
 
   initArticlesApi(app, {
     articlesService: new Articles({
       articleModel: mockedDB.models.Article,
+      commentModel: mockedDB.models.Comment,
+      categoryModel: mockedDB.models.Category,
+      articleCategoryModel: mockedDB.models.ArticleCategory,
     }),
     commentsService: new Comments({
       commentModel: mockedDB.models.Comment
@@ -123,36 +127,6 @@ describe(`API refuses to create an article if data is invalid`, () => {
   });
 });
 
-describe(`API changes existent article`, () => {
-  const newArticle = {
-    [ArticleKey.TITLE]: `Новый заголовок, Новый заголовок`,
-    [ArticleKey.IMAGE]: null,
-    [ArticleKey.ANNOUNCE]: `Новый анонс, Новый анонс, Новый анонс`,
-    [ArticleKey.FULL_TEXT]: `Новый текст`,
-    [ArticleKey.CREATED_DATE]: `2020-10-04T22:47:25.902Z`,
-    [ArticleKey.CATEGORIES]: [1]
-  };
-  let app = null;
-  let response = null;
-
-  beforeAll(async () => {
-    app = await createAPI();
-    response = await request(app)
-      .put(`${ApiPath.ARTICLES}/2`)
-      .send(newArticle);
-  });
-
-  test(`Status code 200`, () => {
-    expect(response.status).toBe(HttpCode.OK);
-  });
-
-  test(`Article is really changed`, async () => {
-    await request(app)
-      .get(`${ApiPath.ARTICLES}/2`)
-      .expect((res) => expect(res.body.title).toBe(`Новый заголовок, Новый заголовок`));
-  });
-});
-
 test(`API returns status code 404 when trying to change non-existent article`, async () => {
   const app = await createAPI();
   const validArticle = {
@@ -226,6 +200,7 @@ describe(`API returns a list of comments to given article`, () => {
 describe(`API creates a comment if data is valid`, () => {
   const newComment = {
     text: `Валидному комментарию достаточно этого поля`,
+    userId: 1,
   };
   let app = null;
   let response = null;
@@ -238,6 +213,7 @@ describe(`API creates a comment if data is valid`, () => {
   });
 
   test(`Status code 201`, () => {
+    console.log(response, `__RESPONSE__`)
     expect(response.status).toBe(HttpCode.CREATED);
   });
 });

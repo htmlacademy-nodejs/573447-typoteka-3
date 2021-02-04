@@ -20,11 +20,13 @@ const createAPI = async () => {
   await initDb(mockedDB, {
     categories: mockedCategories,
     articles: mockedArticles,
+    users: [],
   });
 
   initCategoryApi(app, {
     categoryService: new Category({
       categoryModel: mockedDB.models.Category,
+      articleCategoryModel: mockedDB.models.ArticleCategory,
     }),
   });
 
