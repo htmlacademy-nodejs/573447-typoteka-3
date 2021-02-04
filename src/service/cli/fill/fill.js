@@ -1,34 +1,17 @@
 'use strict';
 
-const {
-  writeToFile,
-  paintMessage,
-  generatePublications,
-  getMockedPublicationsData,
-} = require(`~/helpers`);
-const {
-  CliCommandName,
-  MocksConfig,
-  MessageColor,
-  TableName,
-} = require(`~/common/enums`);
-const {
-  generateInsertSql,
-  joinSqlCommands,
-  generateCategoriesSqlRows,
-  generateUsersSqlRows,
-  generateCommentsSqlRows,
-  generateArticlesSqlRows,
-  generateArticlesCategoriesRows,
-} = require(`./helpers`);
-const {FILL_FILE_PATH} = require(`./common`);
+const {writeToFile, paintMessage, generateMocks} = require(`~/helpers`);
+const {CliCommandName, MocksConfig, MessageColor} = require(`~/common/enums`);
+const {generateInsertSql, joinSqlCommands} = require(`./helpers`);
+const {FILL_FILE_PATH, tableNameToSqlRowsGeneratorMap} = require(`./common`);
 
-const tableNameToSqlRowsGenerator = {
-  [TableName.USERS]: generateUsersSqlRows,
-  [TableName.CATEGORIES]: generateCategoriesSqlRows,
-  [TableName.ARTICLES]: generateArticlesSqlRows,
-  [TableName.COMMENTS]: generateCommentsSqlRows,
-  [TableName.ARTICLES_CATEGORIES]: generateArticlesCategoriesRows,
+
+const generateMockedSql = (generateMocksArgs) => {
+  return Object.entries(tableNameToSqlRowsGeneratorMap).map(
+      ([tableName, generator]) => {
+        return generateInsertSql(tableName, generator(generateMocksArgs));
+      }
+  );
 };
 
 module.exports = {
@@ -37,24 +20,14 @@ module.exports = {
     const [publicationsCount] = args;
     const count = Number(publicationsCount) || MocksConfig.DEFAULT_COUNT;
 
-    const mockedPublicationsData = await getMockedPublicationsData();
-    const generateArgs = {
-      count,
-      ...mockedPublicationsData,
-    };
-    const mockedPublications = generatePublications(generateArgs);
-    const generatedSqls = Object.entries(tableNameToSqlRowsGenerator).map(
-        ([tableName, generator]) => {
-          return generateInsertSql(
-              tableName,
-              generator(generateArgs, mockedPublications),
-          );
-        },
-    );
-    const sql = joinSqlCommands(...generatedSqls);
+    const mocks = await generateMocks({
+      articlesCount: count,
+    });
+    const mockedSql = generateMockedSql(mocks);
+    const fullMockedSql = joinSqlCommands(...mockedSql);
 
     try {
-      await writeToFile(FILL_FILE_PATH, sql);
+      await writeToFile(FILL_FILE_PATH, fullMockedSql);
 
       console.info(
           paintMessage(

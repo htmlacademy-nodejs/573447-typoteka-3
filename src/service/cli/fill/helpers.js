@@ -1,9 +1,5 @@
 'use strict';
 
-const {getRandomId, getRandomNumber} = require(`~/helpers`);
-const {MocksConfig} = require(`~/common/enums`);
-const {INCREASE_COUNT_FOR_IDX} = require(`~/common/constants`);
-
 const generateInsertSql = (tableName, rows) => {
   const comment = `/* ${tableName} */ `;
   const insert = `INSERT INTO ${tableName} VALUES`;
@@ -20,64 +16,48 @@ const joinSqlCommands = (...sqlCommands) => {
   return sqlCommands.join(`\n\n`).trim();
 };
 
-const generateCategoriesSqlRows = ({categories}) => {
-  return categories.map((category) => generateInsertSqlRow(`'${category}'`));
-};
-
 const generateUsersSqlRows = ({users}) => {
   return users.map((user) => {
-    const [firstName, lastName, email] = user.split(` `);
-    const password = getRandomId();
-    const image = `avatar-${getRandomNumber(
-        MocksConfig.USER_PICTURE.NUMBER.MIN,
-        MocksConfig.USER_PICTURE.NUMBER.MAX
-    )}.jpg`;
+    const {email, password, firstName, lastName, avatar, isAdmin} = user;
 
     return generateInsertSqlRow(
-        `'${firstName}', '${lastName}', '${email}', '${password}', '${image}'`
+        `'${email}', '${password}', '${firstName}', '${lastName}', '${avatar}', ${isAdmin}`
     );
   });
 };
 
-const generateCommentsSqlRows = ({users}, mockedPublications) => {
-  return mockedPublications.reduce((acc, publication, idx) => {
-    const commentsSqls = publication.comments.map((comment) => {
-      const createdDate = new Date().toISOString();
-      const userId = getRandomNumber(INCREASE_COUNT_FOR_IDX, users.length);
-      const publicationIdx = idx + INCREASE_COUNT_FOR_IDX;
+const generateCategoriesSqlRows = ({categories}) => {
+  return categories.map((category) => {
+    const {name} = category;
 
-      return generateInsertSqlRow(
-          `'${createdDate}', '${comment.text}', ${userId}, ${publicationIdx}`
-      );
-    });
-
-    return [...acc, ...commentsSqls];
-  }, []);
+    return generateInsertSqlRow(`'${name}'`);
+  });
 };
 
-const generateArticlesSqlRows = ({users}, mockedPublications) => {
-  return mockedPublications.map((article) => {
-    const createdDate = article.createdDate.toISOString();
-    const userId = getRandomNumber(INCREASE_COUNT_FOR_IDX, users.length);
+const generateArticlesSqlRows = ({articles}) => {
+  return articles.map((article) => {
+    const {title, createdDate, announce, fullText, image} = article;
 
     return generateInsertSqlRow(
-        `'${article.title}', '${createdDate}', '${article.announce}', '${article.fullText}', '${article.image}', ${userId}`
+        `'${title}', '${announce}', '${createdDate}', '${fullText}', '${image}'`
     );
   });
 };
 
-const generateArticlesCategoriesRows = ({categories}, mockedPublications) => {
-  return mockedPublications.reduce((acc, publication, idx) => {
-    const publicationCategorySql = publication.category.map((category) => {
-      const currentCategoryIdx = categories.findIndex((it) => it === category);
-      const publicationId = idx + INCREASE_COUNT_FOR_IDX;
-      const categoryId = currentCategoryIdx + INCREASE_COUNT_FOR_IDX;
+const generateCommentsSqlRows = ({comments}) => {
+  return comments.map((comment) => {
+    const {text, userId, articleId} = comment;
 
-      return `(${publicationId}, ${categoryId})`;
-    });
+    return generateInsertSqlRow(`'${text}', ${userId}, ${articleId}`);
+  });
+};
 
-    return [...acc, ...publicationCategorySql];
-  }, []);
+const generateArticlesCategoriesRows = ({articlesCategories}) => {
+  return articlesCategories.map((articleCategory) => {
+    const {articleId, categoryId} = articleCategory;
+
+    return `(${articleId}, ${categoryId})`;
+  });
 };
 
 module.exports = {
