@@ -1,68 +1,84 @@
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS categories;
 DROP TABLE IF EXISTS articles;
+DROP TABLE IF EXISTS sessions;
 DROP TABLE IF EXISTS comments;
 DROP TABLE IF EXISTS articles_categories;
 
 CREATE TABLE users
 (
   id SERIAL PRIMARY KEY,
-  first_name VARCHAR(50) NOT NULL,
-  last_name VARCHAR(50) NOT NULL,
-  email VARCHAR(50) NOT NULL,
-  password VARCHAR(50) NOT NULL,
-  picture VARCHAR(50) NOT NULL
+  email VARCHAR(255) NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  firstName VARCHAR(255) NOT NULL,
+  lastName VARCHAR(255) NOT NULL,
+  avatar VARCHAR(255) NOT NULL,
+  isAdmin BOOLEAN NOT NULL,
+  createdAt TIMESTAMP DEFAULT current_timestamp,
+  updatedAt TIMESTAMP DEFAULT current_timestamp
 );
 
 CREATE TABLE categories
 (
   id SERIAL PRIMARY KEY,
-  name VARCHAR(50) NOT NULL
+  name VARCHAR(40) NOT NULL,
+  createdAt TIMESTAMP DEFAULT current_timestamp,
+  updatedAt TIMESTAMP DEFAULT current_timestamp
 );
 
 CREATE TABLE articles
 (
   id SERIAL PRIMARY KEY,
-  title VARCHAR(100) NOT NULL,
-  created_date DATE NOT NULL,
-  announce VARCHAR(500) NOT NULL,
-  full_text VARCHAR(1500) NOT NULL,
-  image VARCHAR(50) NOT NULL,
+  title VARCHAR(250) NOT NULL,
+  announce VARCHAR(250) NOT NULL,
+  createdDate TIMESTAMP NOT NULL,
+  fullText VARCHAR(1000),
+  image VARCHAR(150),
+  createdAt TIMESTAMP DEFAULT current_timestamp,
+  updatedAt TIMESTAMP DEFAULT current_timestamp
+);
 
-  user_id INTEGER NOT NULL,
-  FOREIGN KEY (user_id) REFERENCES users (id)
-    ON UPDATE CASCADE
-    ON DELETE CASCADE
+CREATE TABLE sessions
+(
+  sid VARCHAR(255) PRIMARY KEY,
+  expires TIMESTAMP,
+  data VARCHAR(500),
+  createdAt TIMESTAMP DEFAULT current_timestamp,
+  updatedAt TIMESTAMP DEFAULT current_timestamp
 );
 
 CREATE TABLE comments
 (
   id SERIAL PRIMARY KEY,
-  created_date DATE NOT NULL,
-  text VARCHAR(1500) NOT NULL,
+  text VARCHAR(255) NOT NULL,
+  createdAt TIMESTAMP DEFAULT current_timestamp,
+  updatedAt TIMESTAMP DEFAULT current_timestamp,
 
-  user_id INTEGER NOT NULL,
-  FOREIGN KEY (user_id) REFERENCES users (id)
+  userId INTEGER NOT NULL,
+  FOREIGN KEY (userId) REFERENCES users (id)
     ON UPDATE CASCADE
     ON DELETE CASCADE,
 
-  article_id INTEGER NOT NULL,
-  FOREIGN KEY (article_id) REFERENCES articles (id)
+  articleId INTEGER NOT NULL,
+  FOREIGN KEY (articleId) REFERENCES articles (id)
     ON UPDATE CASCADE
     ON DELETE CASCADE
 );
 
 CREATE TABLE articles_categories
 (
-  article_id INTEGER NOT NULL,
-  FOREIGN KEY (article_id) REFERENCES articles (id)
+  createdAt TIMESTAMP DEFAULT current_timestamp,
+  updatedAt TIMESTAMP DEFAULT current_timestamp,
+
+  articleId INTEGER NOT NULL,
+  FOREIGN KEY (articleId) REFERENCES articles (id)
     ON UPDATE CASCADE
     ON DELETE CASCADE,
 
-  category_id INTEGER NOT NULL,
-  FOREIGN KEY (category_id) REFERENCES categories (id)
+  categoryId INTEGER NOT NULL,
+  FOREIGN KEY (categoryId) REFERENCES categories (id)
     ON UPDATE CASCADE
     ON DELETE CASCADE,
 
-  CONSTRAINT articles_categories_pk PRIMARY KEY (article_id, category_id)
+  CONSTRAINT articles_categories_pk PRIMARY KEY (articleId, categoryId)
 );
