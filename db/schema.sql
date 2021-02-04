@@ -51,8 +51,6 @@ CREATE TABLE comments
 (
   "id" SERIAL PRIMARY KEY,
   "text" VARCHAR(255) NOT NULL,
-  "createdAt" TIMESTAMP DEFAULT current_timestamp,
-  "updatedAt" TIMESTAMP DEFAULT current_timestamp,
 
   "userId" INTEGER NOT NULL,
   FOREIGN KEY ("userId") REFERENCES users (id)
@@ -62,14 +60,14 @@ CREATE TABLE comments
   "articleId" INTEGER NOT NULL,
   FOREIGN KEY ("articleId") REFERENCES articles (id)
     ON UPDATE CASCADE
-    ON DELETE CASCADE
+    ON DELETE CASCADE,
+
+  "createdAt" TIMESTAMP DEFAULT current_timestamp,
+  "updatedAt" TIMESTAMP DEFAULT current_timestamp
 );
 
 CREATE TABLE articles_categories
 (
-  "createdAt" TIMESTAMP DEFAULT current_timestamp,
-  "updatedAt" TIMESTAMP DEFAULT current_timestamp,
-
   "articleId" INTEGER NOT NULL,
   FOREIGN KEY ("articleId") REFERENCES articles (id)
     ON UPDATE CASCADE
@@ -79,6 +77,9 @@ CREATE TABLE articles_categories
   FOREIGN KEY ("categoryId") REFERENCES categories (id)
     ON UPDATE CASCADE
     ON DELETE CASCADE,
+
+  "createdAt" TIMESTAMP DEFAULT current_timestamp,
+  "updatedAt" TIMESTAMP DEFAULT current_timestamp,
 
   CONSTRAINT articles_categories_pk PRIMARY KEY ("articleId", "categoryId")
 );
