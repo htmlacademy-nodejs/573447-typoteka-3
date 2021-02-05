@@ -12,7 +12,7 @@ block content
         h2.visually-hidden Основное содержание
         div.post__wrapper
           div.post__head
-            a.post__backwards.button.button--backwards(href='#') Назад
+            a.post__backwards.button.button--backwards(href=backHref) Назад
             time.post__date(datetime=article.createdDate)
               +formattedDate(article.createdDate)
             h2.post__title.title.title--main #{article.title}

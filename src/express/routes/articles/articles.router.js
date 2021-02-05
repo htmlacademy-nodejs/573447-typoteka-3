@@ -110,7 +110,7 @@ const initArticlesRouter = (app, settings) => {
   articlesRouter.get(
       SsrArticlePath.$ARTICLE_ID,
       asyncHandler(async (req, res) => {
-        const {params, session} = req;
+        const {params, session, headers} = req;
         const {id} = params;
         const article = await api.getArticle(id);
 
@@ -118,6 +118,7 @@ const initArticlesRouter = (app, settings) => {
           article,
           commentData: {},
           user: session.user,
+          backHref: headers.referer,
         });
       })
   );
@@ -161,7 +162,7 @@ const initArticlesRouter = (app, settings) => {
   articlesRouter.post(
       [checkUserAuthenticate, SsrArticlePath.$ARTICLE_ID_COMMENT],
       asyncHandler(async (req, res) => {
-        const {body, params, session} = req;
+        const {body, params, session, headers} = req;
         const parsedComment = Number(params.id);
         const commentData = getCommentsData(body);
 
@@ -179,6 +180,7 @@ const initArticlesRouter = (app, settings) => {
             categories,
             errorMessages: getHttpErrors(err),
             user: session.user,
+            backHref: headers.referer,
           });
         }
       })
