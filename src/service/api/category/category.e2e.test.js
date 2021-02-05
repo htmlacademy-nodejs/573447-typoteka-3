@@ -7,7 +7,7 @@ const {Category} = require(`~/service/data`);
 const {initDb} = require(`~/db/init-db`);
 const {ApiPath, HttpCode} = require(`~/common/enums`);
 const {initCategoryApi} = require(`./category`);
-const {mockedArticles, mockedCategories} = require(`./category.mocks`);
+const {mockedCategories} = require(`./category.mocks`);
 
 const createAPI = async () => {
   const app = express();
@@ -19,8 +19,10 @@ const createAPI = async () => {
 
   await initDb(mockedDB, {
     categories: mockedCategories,
-    articles: mockedArticles,
+    articles: [],
     users: [],
+    comments: [],
+    articlesCategories: [],
   });
 
   initCategoryApi(app, {

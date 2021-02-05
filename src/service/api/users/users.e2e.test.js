@@ -26,6 +26,8 @@ const createAPI = async () => {
     categories: [],
     articles: [],
     users: [],
+    comments: [],
+    articlesCategories: [],
   });
 
   initUsersApi(app, {

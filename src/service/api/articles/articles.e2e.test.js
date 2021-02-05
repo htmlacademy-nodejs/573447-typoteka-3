@@ -7,7 +7,13 @@ const {Articles, Comments} = require(`~/service/data`);
 const {initDb} = require(`~/db/init-db`);
 const {ApiPath, HttpCode, ArticleKey} = require(`~/common/enums`);
 const {initArticlesApi} = require(`./articles`);
-const {mockedArticles, mockedCategories, mockedUsers} = require(`./articles.mocks`);
+const {
+  mockedArticles,
+  mockedCategories,
+  mockedComments,
+  mockedUsers,
+  mockedArticlesCategories,
+} = require(`./articles.mocks`);
 
 const createAPI = async () => {
   const app = express();
@@ -21,6 +27,8 @@ const createAPI = async () => {
     categories: mockedCategories,
     articles: mockedArticles,
     users: mockedUsers,
+    comments: mockedComments,
+    articlesCategories: mockedArticlesCategories,
   });
 
   initArticlesApi(app, {
@@ -213,7 +221,6 @@ describe(`API creates a comment if data is valid`, () => {
   });
 
   test(`Status code 201`, () => {
-    console.log(response, `__RESPONSE__`)
     expect(response.status).toBe(HttpCode.CREATED);
   });
 });
