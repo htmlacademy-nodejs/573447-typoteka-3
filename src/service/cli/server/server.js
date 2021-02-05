@@ -7,12 +7,12 @@ const {getLogger, paintMessage} = require(`~/helpers`);
 const {CliCommandName, HttpCode, LoggerName, MessageColor} = require(`~/common/enums`);
 const {API_PREFIX} = require(`~/common/constants`);
 const {DEFAULT_PORT} = require(`./common`);
+const socketServer = require(`../../../socket-server`);
 
 const app = express();
 const logger = getLogger({
   name: LoggerName.API,
 });
-
 
 app.use(express.json());
 app.use((req, res, next) => {
@@ -60,7 +60,7 @@ module.exports = {
     const [customPort] = args;
     const port = Number(customPort) || DEFAULT_PORT;
 
-    const server = app.listen(port, () => {
+    const server = socketServer(app).listen(port, () => {
       return logger.info(
           paintMessage(`Listening to connections on ${port}`, MessageColor.BLUE)
       );
