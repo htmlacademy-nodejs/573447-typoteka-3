@@ -28,7 +28,7 @@
   const getCutDescription = (text, maxLength = MAX_DESCRIPTION_LENGTH) => {
     const hasMore = text.length > maxLength;
 
-    return hasMore ? `${text.slice(0, maxLength)}...` : str;
+    return hasMore ? `${text.slice(0, maxLength)}...` : text;
   };
 
   socket.addEventListener(SocketEvent.UPDATE_ARTICLES, (articles) => {
