@@ -2,13 +2,6 @@
 
 const {Router} = require(`express`);
 const {
-  ApiPath,
-  HttpCode,
-  ArticlesApiPath,
-  RequestParam,
-  RequestQuery,
-} = require(`~/common/enums`);
-const {
   existArticle,
   validateSchema,
   validateParamSchema,
@@ -21,6 +14,21 @@ const {
   queryLimit: queryLimitSchema,
   queryOrder: queryOrderSchema,
 } = require(`~/schemas`);
+const {
+  ApiPath,
+  HttpCode,
+  ArticlesApiPath,
+  RequestParam,
+  RequestQuery,
+  SocketEvent,
+  SortType,
+} = require(`~/common/enums`);
+const {
+  SOCKET_OBJECT,
+  HOT_ARTICLES_COUNT,
+  LAST_COMMENTS_COUNT,
+} = require(`~/common/constants`);
+
 
 const initArticlesApi = (app, {articlesService, commentsService}) => {
   const articlesRouter = new Router();
@@ -192,6 +200,19 @@ const initArticlesApi = (app, {articlesService, commentsService}) => {
       async (req, res) => {
         const {articleId} = req.params;
         const comment = await commentsService.create(Number(articleId), req.body);
+
+        req.app
+        .get(SOCKET_OBJECT)
+        .distribution(
+            SocketEvent.UPDATE_ARTICLES,
+            await articlesService.findMostCommented(HOT_ARTICLES_COUNT)
+        );
+        req.app
+        .get(SOCKET_OBJECT)
+        .distribution(
+            SocketEvent.UPDATE_COMMENTS,
+            await commentsService.findAllWithArticle(LAST_COMMENTS_COUNT, SortType.DESC)
+        );
 
         return res.status(HttpCode.CREATED).json(comment);
       }
