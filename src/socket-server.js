@@ -4,6 +4,7 @@ const http = require(`http`);
 const io = require(`socket.io`);
 const {logger} = require(`~/helpers`);
 const {SocketEvent, HttpMethod} = require(`~/common/enums`);
+const {SOCKET_OBJECT} = require(`./common/constants`);
 
 const MIN_SOCKET_INDEX = 0;
 const USER_COUNT_REMOVE = 1;
@@ -11,7 +12,7 @@ const USER_COUNT_REMOVE = 1;
 module.exports = (app) => {
   logger.info(`SocketIO start`);
 
-  app.set(`socketObject`, {
+  app.set(SOCKET_OBJECT, {
     clients: [],
     distribution(action, data) {
       this.clients.forEach((client) => client.emit(action, data));
