@@ -42,6 +42,16 @@ const define = (sequelize) => {
       },
       {
         tableName: TableName.USERS,
+        hooks: {
+          async beforeSave(user) {
+            const allUsers = await this.findAll();
+            const hasUsers = Boolean(allUsers.length);
+
+            if (!hasUsers) {
+              user.isAdmin = true;
+            }
+          }
+        }
       }
   );
 };
