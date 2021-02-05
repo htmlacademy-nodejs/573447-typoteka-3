@@ -45,6 +45,7 @@ const {
   ArticleCategoryKey,
 } = require(`./article-category/article-category-key.enum`);
 const {AdminAction} = require(`./action`);
+const {SocketEvent} = require(`./socket`);
 
 module.exports = {
   CliCommandName,
@@ -95,4 +96,5 @@ module.exports = {
   SortType,
   ArticleCategoryKey,
   AdminAction,
+  SocketEvent,
 };
