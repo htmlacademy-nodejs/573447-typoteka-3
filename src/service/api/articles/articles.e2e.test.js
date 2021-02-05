@@ -205,26 +205,6 @@ describe(`API returns a list of comments to given article`, () => {
   });
 });
 
-describe(`API creates a comment if data is valid`, () => {
-  const newComment = {
-    text: `Валидному комментарию достаточно этого поля`,
-    userId: 1,
-  };
-  let app = null;
-  let response = null;
-
-  beforeAll(async () => {
-    app = await createAPI();
-    response = await request(app)
-      .post(`${ApiPath.ARTICLES}/2/comments`)
-      .send(newComment);
-  });
-
-  test(`Status code 201`, () => {
-    expect(response.status).toBe(HttpCode.CREATED);
-  });
-});
-
 test(`API refuses to create a comment to non-existent article and returns status code 404`, async () => {
   const app = await createAPI();
   const newComment = {
