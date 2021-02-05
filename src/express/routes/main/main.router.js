@@ -1,6 +1,12 @@
 'use strict';
 
 const {Router} = require(`express`);
+const {checkUserAuthenticate, checkIsAdmin} = require(`~/middlewares`);
+const {
+  getHttpErrors,
+  calculatePagination,
+  getTotalPagesCount,
+} = require(`~/helpers`);
 const {
   SsrPath,
   SsrMainPath,
@@ -8,15 +14,12 @@ const {
   SortType,
   AdminAction,
 } = require(`~/common/enums`);
-const {checkUserAuthenticate, checkIsAdmin} = require(`~/middlewares`);
 const {
-  getHttpErrors,
-  calculatePagination,
-  getTotalPagesCount,
-} = require(`~/helpers`);
-const {ARTICLES_PER_PAGE} = require(`~/common/constants`);
+  ARTICLES_PER_PAGE,
+  HOT_ARTICLES_COUNT,
+  LAST_COMMENTS_COUNT,
+} = require(`~/common/constants`);
 const {getRegisterData, getLoginData, getCategoryData} = require(`./helpers`);
-const {HOT_ARTICLES_COUNT, LAST_COMMENTS_COUNT} = require(`./common`);
 
 const initMainRouter = (app, settings) => {
   const mainRouter = new Router();

@@ -7,8 +7,10 @@ const {
   INITIAL_ARRAY_IDX,
   INCREASE_COUNT_FOR_IDX,
 } = require(`./array.constants`);
-const {ARTICLES_PER_PAGE} = require(`./articles.constants`);
+const {ARTICLES_PER_PAGE, HOT_ARTICLES_COUNT} = require(`./articles.constants`);
 const {USER_PASSWORD_SALT_ROUNDS} = require(`./user.constants`);
+const {SOCKET_OBJECT} = require(`./socket.constants`);
+const {LAST_COMMENTS_COUNT} = require(`./comments.constants`);
 
 module.exports = {
   USER_ARGV_IDX,
@@ -19,4 +21,7 @@ module.exports = {
   INCREASE_COUNT_FOR_IDX,
   ARTICLES_PER_PAGE,
   USER_PASSWORD_SALT_ROUNDS,
+  SOCKET_OBJECT,
+  HOT_ARTICLES_COUNT,
+  LAST_COMMENTS_COUNT,
 };
