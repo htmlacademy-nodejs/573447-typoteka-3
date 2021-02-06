@@ -18,33 +18,6 @@ class Api {
     });
   }
 
-  static getData(response) {
-    return response.data;
-  }
-
-  static catchError(err) {
-    const {response} = err;
-    const status = response.status || HttpCode.INTERNAL_SERVER_ERROR;
-    const messages = response.data.messages || [];
-
-    throw new HttpError({
-      status,
-      messages,
-    });
-  }
-
-  _load(
-      url,
-      options = {
-        method: HttpMethod.GET,
-      }
-  ) {
-    return this._http
-      .request({url, ...options})
-      .then(Api.getData)
-      .catch(Api.catchError);
-  }
-
   getArticles() {
     return this._load(ApiPath.ARTICLES);
   }
@@ -185,6 +158,33 @@ class Api {
     return this._load(`${ApiPath.USERS}${UsersApiPath.LOGIN}`, {
       method: HttpMethod.POST,
       data: payload,
+    });
+  }
+
+  _load(
+      url,
+      options = {
+        method: HttpMethod.GET,
+      }
+  ) {
+    return this._http
+      .request({url, ...options})
+      .then(Api.getData)
+      .catch(Api.catchError);
+  }
+
+  static getData(response) {
+    return response.data;
+  }
+
+  static catchError(err) {
+    const {response} = err;
+    const status = response.status || HttpCode.INTERNAL_SERVER_ERROR;
+    const messages = response.data.messages || [];
+
+    throw new HttpError({
+      status,
+      messages,
     });
   }
 }
