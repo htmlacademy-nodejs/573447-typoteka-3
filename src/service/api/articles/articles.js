@@ -206,9 +206,7 @@ const initArticlesApi = (app, {articlesService, commentsService}) => {
         .distribution(
             SocketEvent.UPDATE_ARTICLES,
             await articlesService.findMostCommented(HOT_ARTICLES_COUNT)
-        );
-        req.app
-        .get(SOCKET_OBJECT)
+        )
         .distribution(
             SocketEvent.UPDATE_COMMENTS,
             await commentsService.findAllWithArticle(LAST_COMMENTS_COUNT, SortType.DESC)
