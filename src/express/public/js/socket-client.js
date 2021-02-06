@@ -52,7 +52,7 @@
     comments.forEach(({text, article, user}) => {
       commentsListNode.appendChild(
         createElement(`<li class="last__list-item">
-        <img class="last__list-image" src="${
+        <img class="last__list-image" src="img/${
           user.avatar
         }" width="20" height="20" alt="Аватар пользователя">
         <b class="last__list-name">${user.firstName} ${user.lastName}</b>
